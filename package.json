@@ -1,0 +1,22 @@
+{
+  "name": "protected-pets-app",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "com": "sui-mono commit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@s-ui/mono": "^2.31.0",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

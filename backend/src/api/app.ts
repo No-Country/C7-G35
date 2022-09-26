@@ -2,7 +2,7 @@ import cors from 'cors';
 import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import httpStatus from 'http-status';
-import { CheckApiStatus } from './CheckApiStatus.route';
+import { registerRoutes } from './registerRoutes';
 import { errorHandler } from './Shared/ErrorHandler';
 
 export class App {
@@ -27,7 +27,7 @@ export class App {
     const router = Router();
     this.app.use('/api', router);
 
-    CheckApiStatus(router);
+    registerRoutes(router);
 
     router.use((err: Error, req: Request, res: Response, next: Function) => {
       errorHandler.handleError(err);

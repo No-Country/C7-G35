@@ -1,6 +1,9 @@
 import cors from 'cors';
-import express, { Router } from 'express';
+import express, { Request, Response } from 'express';
+import Router from 'express-promise-router';
+import httpStatus from 'http-status';
 import { CheckApiStatus } from './CheckApiStatus.route';
+import { errorHandler } from './Shared/ErrorHandler';
 
 export class App {
   private app: express.Express;
@@ -9,9 +12,9 @@ export class App {
 
   constructor() {
     this.app = express();
-    this.port = process.env.PORT || '3000';
+    this.port = process.env.PORT || '8000';
     this.middlewares();
-    this.initRoutes();
+    this.routes();
   }
 
   private middlewares() {
@@ -20,11 +23,16 @@ export class App {
     this.app.use(express.urlencoded({ extended: true }));
   }
 
-  private initRoutes() {
+  private routes() {
     const router = Router();
     this.app.use('/api', router);
 
     CheckApiStatus(router);
+
+    router.use((err: Error, req: Request, res: Response, next: Function) => {
+      errorHandler.handleError(err);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+    });
   }
 
   async listen() {

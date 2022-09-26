@@ -17,6 +17,11 @@
   "license": "ISC",
   "dependencies": {
     "@s-ui/mono": "^2.31.0",
-    "jsonwebtoken": "^8.5.1"
+    "axios": "^0.27.2",
+    "eslint-config-airbnb": "^19.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "react-hook-form": "^7.36.1",
+    "react-router-dom": "^6.4.1",
+    "styled-components": "^5.3.5"
   }
 }

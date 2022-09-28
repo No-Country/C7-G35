@@ -1,4 +1,4 @@
-export interface UserFromGoogle {
+export interface UserFromSocials {
   id: string;
   name: string;
   picture?: string;

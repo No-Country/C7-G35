@@ -3,3 +3,6 @@ node_modules
 dist
 dist2
 .tmp
+project.sql
+project.sql-shm
+project.sql-wal

@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import httpStatus from 'http-status';
+import passport from 'passport';
 import { registerRoutes } from './registerRoutes';
 import { errorHandler } from './Shared/ErrorHandler';
 
@@ -21,6 +22,7 @@ export class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(passport.initialize());
   }
 
   private routes() {

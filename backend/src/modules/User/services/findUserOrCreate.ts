@@ -6,11 +6,15 @@ import { createUser } from './createUser';
 
 export async function findUserOrCreate(user: newUserRequest): Promise<newUserRequest> {
   const userRepository = AppDataSource.getRepository<User>(UserEntity);
-  const userFind = await userRepository.findOneBy({ id: user.id });
+  const userFind = await userRepository.findOneBy({ id: user.id || '' });
 
   if (!userFind) {
     const newUser = await createUser(user);
     return newUser;
+  }
+
+  if (!userFind.isActive) {
+    await userRepository.update(user.id, { _isActive: true } as any);
   }
 
   return {

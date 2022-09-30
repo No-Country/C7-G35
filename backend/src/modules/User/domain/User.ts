@@ -4,7 +4,10 @@ export class User {
   readonly phone: string;
   readonly email: string;
   readonly location: string;
-  private isActive: boolean;
+  private _isActive: boolean;
+  public get isActive(): boolean {
+    return this._isActive;
+  }
 
   constructor(id: string, name: string, phone: string, email: string, location: string, isActive: boolean) {
     this.id = id;
@@ -12,7 +15,7 @@ export class User {
     this.phone = phone;
     this.email = email;
     this.location = location;
-    this.isActive = isActive;
+    this._isActive = isActive;
   }
 
   static register(id: string, name: string, email: string): User {
@@ -25,7 +28,7 @@ export class User {
   }
 
   public deactivate() {
-    this.isActive = false;
+    this._isActive = false;
   }
 
   toResponse() {

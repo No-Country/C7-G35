@@ -1,7 +1,6 @@
 import { EntitySchema } from 'typeorm';
 import { User } from '../domain/User';
 
-//<Checklist>
 export const UserEntity = new EntitySchema({
   name: 'User',
   tableName: 'user',
@@ -27,7 +26,7 @@ export const UserEntity = new EntitySchema({
     phone: {
       type: String
     },
-    isActive: {
+    _isActive: {
       type: Boolean,
       name: 'is_active'
     }

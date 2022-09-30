@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { configEnv } from '../config';
 
 export interface TokenPayload {
-  id: number;
+  id: string;
 }
 
 export function createToken(userId: string): string {

@@ -16,7 +16,8 @@ export function verifyAuthToken(req: Request, res: Response, next: NextFunction)
       return res.status(httpStatus.UNAUTHORIZED).json({ errorMessage: 'token missing or invalid' });
     }
 
-    req.user = decodedToken.id;
+    req.user = { ...decodedToken };
+    req.userId = decodedToken.id;
     next();
   } catch (err: any) {
     res.status(httpStatus.UNAUTHORIZED).json({ errorMessage: 'token missing or invalid' });

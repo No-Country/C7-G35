@@ -54,18 +54,6 @@ const HeaderTitle = styled.div`
   font-family: 'Macondo', cursive;
 `;
 
-const Button = styled.a`
-  text-decoration: none;
-  border: none;
-  color: #fff;
-  background-color: ${(props) => props.bgColor};
-  width: 80%;
-  border-radius: 4px;
-  padding: 0.7rem 0;
-  font-size: 1.2rem;
-  text-align: center;
-`;
-
 const SobreNosotrosWrapper = styled.section`
   background-color: var(--clr-pink-medium);
   padding: 1rem;

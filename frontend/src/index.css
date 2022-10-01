@@ -9,8 +9,8 @@
 :root{
   --clr-blue-dark: rgb(46, 45, 63);
   --clr-blue-light: rgb(46, 45, 63, .05);
-  --clr-pink: rgb(230, 57, 70);
-  --clr-pink-medium: rgba(230,57,70, .7);
+  --clr-pink: rgb(237, 116, 125) ;
+  --clr-pink-medium: rgb(230, 57, 70);
   --clr-pink-light: rgb(230, 57, 70, .07);
 }
 

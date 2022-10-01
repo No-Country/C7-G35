@@ -13,6 +13,7 @@ const WrapperCard = styled.div`
   backface-visibility: .9;
   margin: 1rem 1.5rem;
   border-radius: 1rem;
+  width: min(20rem, 100%);
 `;
 
 const IconoHuella = styled.div`
@@ -21,12 +22,13 @@ const IconoHuella = styled.div`
   top: -20px;
   font-size: 3rem;
   rotate: 45deg;
-  color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-pink)' : 'var(--clr-blue-dark)')};
+  color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
 `;
 
 const NombreMascota = styled.h3`
   font-size: 2rem;
   margin: 0 0 1rem;
+  font-family: 'Macondo', cursive;
 `;
 
 const WrapperImagen = styled.div`
@@ -45,7 +47,11 @@ const Fecha = styled.p`
   margin: 1rem 0;
 `;
 
-const CardMascota = ({ nombre, link, estado }) => {
+const CardMascota = (
+  {
+    id, nombre, link, estado,
+  },
+) => {
   return (
     <WrapperCard estado={estado}>
       <IconoHuella estado={estado}><FaPaw/></IconoHuella>
@@ -54,7 +60,7 @@ const CardMascota = ({ nombre, link, estado }) => {
         <ImagenMascota src={link} />
       </WrapperImagen>
       <Fecha>Fecha: 28/09/2022</Fecha>
-      <ButtonComponent texto={'Ver más detalle'} estado={estado}/>
+      <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>
     </WrapperCard>
   );
 };

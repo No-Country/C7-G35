@@ -1,9 +1,10 @@
 import { FaPaw } from 'react-icons/fa';
 import styled from 'styled-components';
+import ButtonComponent from '../buttom/Button';
 
 const WrapperCard = styled.div`
   position: relative;
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,16 +44,6 @@ const Fecha = styled.p`
   font-weight: bolder;
   margin: 1rem 0;
 `;
-const VerMas = styled.button`
-  width: 80%;
-  border: none;
-  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-pink)' : 'var(--clr-blue-dark)')};
-  color: #fff;
-  border-radius: 10px;
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-`;
 
 const CardMascota = ({ nombre, link, estado }) => {
   return (
@@ -63,7 +54,7 @@ const CardMascota = ({ nombre, link, estado }) => {
         <ImagenMascota src={link} />
       </WrapperImagen>
       <Fecha>Fecha: 28/09/2022</Fecha>
-      <VerMas estado={estado} >Ver más detalle</VerMas>
+      <ButtonComponent texto={'Ver más detalle'} estado={estado}/>
     </WrapperCard>
   );
 };

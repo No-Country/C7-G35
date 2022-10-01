@@ -138,12 +138,8 @@ const Landing = () => {
         </ColumnaUno>
         <ColumnaDos>
           <HeaderTitle>Reencontrate con tu compañero de aventuras!</HeaderTitle>
-          <Button href='/' bgColor='var(--clr-pink)'>
-            Encontré una mascota
-          </Button>
-          <Button href='/' bgColor='var(--clr-blue-dark)'>
-            Perdí a mi mascota
-          </Button>
+          <ButtonComponent texto={'Encontré una mascota'} estado={'Encontrado'}/>
+          <ButtonComponent texto={'Perdí a mi mascota'}/>
         </ColumnaDos>
       </HeaderWrapper>
       <SVG
@@ -182,7 +178,6 @@ const Landing = () => {
           </TextoDesc>
         </Descripcion>
       </SobreNosotrosWrapper>
-      {/* <ButtonComponent/> */}
     </>
   );
 };

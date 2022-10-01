@@ -9,7 +9,7 @@ const WrapperCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-pink-light)' : 'var(--clr-blue-light)')};
+  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
   backface-visibility: .9;
   margin: 1rem 1.5rem;
   border-radius: 1rem;

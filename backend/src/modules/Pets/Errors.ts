@@ -9,3 +9,9 @@ export class IsNotOwner extends Error {
     super(`user: ${ownerId} is not the owner`);
   }
 }
+
+export class ImagesLimitReached extends Error {
+  constructor(limit: number) {
+    super(`images limit (${limit}) reached`);
+  }
+}

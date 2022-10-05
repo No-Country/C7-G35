@@ -6,7 +6,7 @@ export interface newPet {
   type: string;
   images?: string[];
   name?: string;
-  race?: string;
+  breed?: string;
   age?: string;
   isCastrated?: boolean;
   description?: string;
@@ -19,7 +19,7 @@ export interface updatePet {
   type?: string;
   images?: string[];
   name?: string;
-  race?: string;
+  breed?: string;
   age?: string;
   isCastrated?: boolean;
   description?: string;

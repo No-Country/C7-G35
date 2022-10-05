@@ -17,6 +17,16 @@ export class PetServices {
     return pet;
   }
 
+  public async addImage(petId: string, ownerId: string, imageUrl: string): Promise<Pet> {
+    const pet = await this.findPet(petId);
+    this.verifyUserIsOwnerOrFail(ownerId, pet);
+
+    pet.addImageUrl(imageUrl);
+    await this.repository.update(pet.id, { images: pet.images });
+
+    return pet;
+  }
+
   public async findPet(petId: string): Promise<Pet> {
     const pet = await this.repository.findOneBy({ id: petId });
     if (!pet) {

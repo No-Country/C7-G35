@@ -7,5 +7,8 @@ export const petsErrorsHandlerMap: { [key: string]: Function } = {
   },
   IsNotOwner: (err: Error, res: Response) => {
     res.status(httpStatus.UNAUTHORIZED).json({ errorMessage: err.message });
+  },
+  ImagesLimitReached: (err: Error, res: Response) => {
+    res.status(httpStatus.NOT_ACCEPTABLE).json({ errorMessage: err.message });
   }
 };

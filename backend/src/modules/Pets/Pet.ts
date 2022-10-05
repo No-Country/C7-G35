@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ImagesLimitReached } from './Errors';
 import { Gender, newPet } from './types';
 
 @Entity({ name: 'pets' })
@@ -12,7 +13,7 @@ export class Pet {
   @Column()
   type!: string;
   @Column({ nullable: true })
-  race?: string;
+  breed?: string;
   @Column({ nullable: true })
   age?: string;
   @Column({ nullable: true })
@@ -24,12 +25,12 @@ export class Pet {
   @Column({ type: 'simple-array' })
   images?: string[];
 
-  static create({ name, gender, images, owner, type, age, description, isCastrated, race }: newPet): Pet {
+  static create({ name, gender, images, owner, type, age, description, isCastrated, breed }: newPet): Pet {
     const pet = new Pet();
     pet.name = name;
     pet.gender = gender;
     pet.type = type;
-    pet.race = race;
+    pet.breed = breed;
     pet.age = age;
     pet.isCastrated = isCastrated;
     pet.description = description;
@@ -40,5 +41,13 @@ export class Pet {
 
   public userIsOwner(userId: string): boolean {
     return this.owner === userId;
+  }
+
+  public addImageUrl(url: string) {
+    const imagesLimit = 4;
+    if (this.images?.length === imagesLimit) {
+      throw new ImagesLimitReached(imagesLimit);
+    }
+    this.images?.push(url);
   }
 }

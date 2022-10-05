@@ -33,7 +33,7 @@ export class App {
 
     router.use((err: Error, req: Request, res: Response, next: Function) => {
       errorHandler.handleError(err);
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ errorMessage: err.message });
     });
   }
 

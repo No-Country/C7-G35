@@ -21,6 +21,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "jsonwebtoken": "^8.5.1",
     "react-hook-form": "^7.36.1",
+    "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.1",
     "styled-components": "^5.3.6"
   }

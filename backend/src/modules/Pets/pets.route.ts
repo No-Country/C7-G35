@@ -15,7 +15,7 @@ export const register = (router: Router) => {
   router.use('/pets', verifyAuthToken);
 
   router.post('/pets', validateReqSchema(newPetReqSchema), petPostController);
-  router.post('/pets/:id/images', uploadImageMiddelware.single('pets'), petImagePostController);
+  router.post('/pets/:id/images', uploadImageMiddelware.single('image'), petImagePostController);
   router.get('/pets', petsGetController);
   router.put('/pets/:id', validateReqSchema(updatePetReqSchema), petPutController);
   router.delete('/pets/:id', petDeleteController);

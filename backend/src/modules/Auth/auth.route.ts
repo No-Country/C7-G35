@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import passport from 'passport';
 import { findUserOrCreate } from '../User/services/findUserOrCreate';
+import { configEnv } from './config';
 import { facebookStrategy, googleStrategy } from './services/passportSocialStrategys';
 import { createToken } from './services/tokenServices';
 import { UserFromSocials } from './types';
@@ -17,14 +18,21 @@ export const register = (router: Router) => {
   router.get('/auth/google', passport.authenticate('google'));
   router.get(
     '/oauth2/redirect/google',
-    passport.authenticate('google', { failureRedirect: '/login', session: false }),
+    passport.authenticate('google', {
+      failureRedirect: '/login',
+      session: false
+    }),
     async function (req: Request, res: Response) {
       const userFromGoogle = req.user as UserFromSocials;
       try {
         const user = await findUserOrCreate(userFromGoogle);
         const tokenJwt = createToken(user.id);
-        res.status(httpStatus.CREATED).send({ user, token: tokenJwt });
+
+        res.cookie('token', tokenJwt, { maxAge: 120000 });
+        res.cookie('userName', user.name, { maxAge: 120000 });
+        res.redirect(configEnv.frontendHomeUrl);
       } catch (error) {
+        console.error(error);
         res.status(httpStatus.UNAUTHORIZED).send({ errorMessage: 'auth error' });
       }
     }
@@ -43,7 +51,10 @@ export const register = (router: Router) => {
       try {
         const user = await findUserOrCreate(userFromFacebook);
         const tokenJwt = createToken(user.id);
-        res.status(httpStatus.CREATED).send({ user, token: tokenJwt });
+
+        res.cookie('token', tokenJwt, { maxAge: 120000 });
+        res.cookie('userName', user.name, { maxAge: 120000 });
+        res.redirect(configEnv.frontendHomeUrl);
       } catch (error) {
         res.status(httpStatus.UNAUTHORIZED).send({ errorMessage: 'auth error' });
       }

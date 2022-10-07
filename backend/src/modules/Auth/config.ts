@@ -10,5 +10,7 @@ export const configEnv = {
   facebookCredentials: {
     appID: process.env.FACEBOOK_APP_ID || '',
     appSecret: process.env.FACEBOOK_APP_SECRET || ''
-  }
+  },
+
+  frontendHomeUrl: process.env.FRONTEND_HOME_URL || ''
 };

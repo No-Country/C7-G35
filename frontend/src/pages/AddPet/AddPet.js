@@ -2,8 +2,15 @@ import { GiSittingDog, GiEgyptianBird } from 'react-icons/gi';
 import { FaCat, FaRegDotCircle } from 'react-icons/fa';
 import { TbGenderMale, TbGenderFemale } from 'react-icons/tb';
 import styled from 'styled-components';
-import { RadioButtonIconComponent, InputTextComponent, TextAreaComponent } from '../../componentes/inputs/Inputs';
+import mapboxGl from 'mapbox-gl/dist/mapbox-gl';
+import {
+  RadioButtonIconComponent,
+  InputTextComponent,
+  TextAreaComponent,
+  DataListComponent,
+} from '../../componentes/inputs/Inputs';
 import { RadioButtonsIconsGroup } from '../../componentes/forms/GroupForms';
+import { razaPerros } from '../../helpers/ListaRazas';
 
 const WrapperMascotaPerdida = styled.div`
   display: flex;
@@ -11,6 +18,11 @@ const WrapperMascotaPerdida = styled.div`
   gap: 3rem;
   padding: 1rem;
 `;
+mapboxGl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+const map = new mapboxGl.Map({
+  container: 'YOUR_CONTAINER_ELEMENT_ID',
+  style: 'mapbox://styles/mapbox/streets-v11',
+});
 
 const AddPet = () => {
   return (
@@ -67,7 +79,10 @@ const AddPet = () => {
           name={'breed'}
           orientacion={'horizontal'}
         />
+        <DataListComponent Array={razaPerros} />
       </RadioButtonsIconsGroup>
+
+      <div id='map'></div>
 
       <RadioButtonsIconsGroup titulo={'De edad es...'} orientacion={'vertical'}>
         <RadioButtonIconComponent
@@ -94,9 +109,12 @@ const AddPet = () => {
         />
       </RadioButtonsIconsGroup>
 
-      <InputTextComponent label={'Responde al nombre de...'}/>
+      <InputTextComponent label={'Responde al nombre de...'} />
 
-      <RadioButtonsIconsGroup titulo={'¿Esta castrado o esterilizada?'} orientacion={'vertical'}>
+      <RadioButtonsIconsGroup
+        titulo={'¿Esta castrado o esterilizada?'}
+        orientacion={'vertical'}
+      >
         <RadioButtonIconComponent
           labelTexto={'Sí, si lo esta.'}
           labelIcono={<FaRegDotCircle />}
@@ -121,7 +139,12 @@ const AddPet = () => {
         />
       </RadioButtonsIconsGroup>
 
-      <TextAreaComponent label={'Tiene algo que lo diferencia'} placeholder={'Alguna marca, sicatriz, o cualquier cosa que lo diferencie'} />
+      <TextAreaComponent
+        label={'Tiene algo que lo diferencia'}
+        placeholder={
+          'Alguna marca, sicatriz, o cualquier cosa que lo diferencie'
+        }
+      />
     </WrapperMascotaPerdida>
   );
 };

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { FaPaw } from 'react-icons/fa';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
-import Dogs from '../../assets/Dogs.png';
-import DogsUno from '../../assets/grupoUno.png';
 import DogsDos from '../../assets/GrupoDos.png';
 
 import ButtonComponent from '../../componentes/buttom/Button';

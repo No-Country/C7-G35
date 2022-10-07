@@ -1,7 +1,7 @@
 import {
   createBrowserRouter,
-  Route,
 } from 'react-router-dom';
+import AddPet from './pages/AddPet/AddPet';
 import Landing from './pages/landing/Landing';
 
 const Router = createBrowserRouter([
@@ -11,7 +11,7 @@ const Router = createBrowserRouter([
   },
   {
     path: '/form-add-pet',
-    element: 'add pet',
+    element: <AddPet/>,
   },
 ]);
 

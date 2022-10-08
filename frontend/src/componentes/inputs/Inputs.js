@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
+const WrapperInput = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const LabelInputText = styled.label`
+  font-size: 2rem;
+`;
+
+const InputText = styled.input`
+  padding: 1rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 7px;
+  border: 1px solid black;
+`;
 export const InputTextComponent = ({ label }) => {
-  const WrapperInput = styled.div`
-    display: flex;
-    flex-direction: column;
-  `;
-
-  const LabelInputText = styled.label`
-    font-size: 2rem;
-  `;
-
-  const InputText = styled.input`
-    padding: 1rem 1rem;
-    font-size: 1.5rem;
-    border-radius: 7px;
-    border: 1px solid black;
-  `;
   return (
     <WrapperInput>
       <LabelInputText>{label}</LabelInputText>
@@ -24,26 +24,19 @@ export const InputTextComponent = ({ label }) => {
   );
 };
 
-export const RadioButtonIconComponent = ({
-  labelIcono,
-  labelTexto,
-  idFor,
-  name,
-  orientacion,
-}) => {
-  const WrapperRadioButton = styled.div`
+const WrapperRadioButton = styled.div`
     display: flex;
   `;
 
-  const RadioButton = styled.input`
+const RadioButton = styled.input`
     -webkit-appearance: none;
   `;
 
-  const LabelRadioTexto = styled.p`
+const LabelRadioTexto = styled.p`
     font-size: 2rem;
   `;
 
-  const LabelRadioIcono = styled.div`
+const LabelRadioIcono = styled.div`
     font-size: ${(props) => (props.orientacion === 'horizontal' ? '2rem' : '4rem')};
     background-color: var(--clr-pink-light);
     height: ${(props) => (props.orientacion === 'horizontal' ? 'initial' : '8rem')};
@@ -58,7 +51,7 @@ export const RadioButtonIconComponent = ({
     }
   `;
 
-  const LabelRadio = styled.label`
+const LabelRadio = styled.label`
     display: flex;
     flex-direction: ${(props) => (props.orientacion === 'horizontal' ? 'row' : 'column')};
     align-items: center;
@@ -76,6 +69,13 @@ export const RadioButtonIconComponent = ({
       color: var(--clr-pink-medium);
     }
   `;
+export const RadioButtonIconComponent = ({
+  labelIcono,
+  labelTexto,
+  idFor,
+  name,
+  orientacion,
+}) => {
   return (
     <WrapperRadioButton>
       <RadioButton type='radio' id={idFor} name={name} />
@@ -89,12 +89,12 @@ export const RadioButtonIconComponent = ({
   );
 };
 
+const WrapperTextArea = styled.div``;
+
+const LabelTextArea = styled.label``;
+
+const TextArea = styled.textarea``;
 export const TextAreaComponent = ({ label, placeholder }) => {
-  const WrapperTextArea = styled.div``;
-
-  const LabelTextArea = styled.label``;
-
-  const TextArea = styled.textarea``;
   return (
     <WrapperTextArea>
       <LabelTextArea>{label}</LabelTextArea>
@@ -109,18 +109,18 @@ export const TextAreaComponent = ({ label, placeholder }) => {
   );
 };
 
+const WrapperDataList = styled.div``;
+const LabelTadaList = styled.label``;
+const InputList = styled.input`
+  padding: 1rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 7px;
+  border: 1px solid black;
+  width: 100%;
+`;
+const DataList = styled.datalist``;
+const DataListOption = styled.option``;
 export const DataListComponent = ({ Array }) => {
-  const WrapperDataList = styled.div``;
-  const LabelTadaList = styled.label``;
-  const InputList = styled.input`
-    padding: 1rem 1rem;
-    font-size: 1.5rem;
-    border-radius: 7px;
-    border: 1px solid black;
-    width: 100%;
-  `;
-  const DataList = styled.datalist``;
-  const DataListOption = styled.option``;
   return (
     <WrapperDataList>
       <LabelTadaList>
@@ -128,7 +128,7 @@ export const DataListComponent = ({ Array }) => {
         <InputList list='browsers' name='myBrowser' />
       </LabelTadaList>
       <DataList id='browsers'>
-        {Array?.map((raza, index) => (
+        {Array?.gato.map((raza, index) => (
           <DataListOption key={index} value={raza} />
         ))}
       </DataList>

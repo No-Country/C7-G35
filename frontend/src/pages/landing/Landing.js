@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { FaPaw } from 'react-icons/fa';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
 import DogsDos from '../../assets/GrupoDos.png';
-
 import ButtonComponent from '../../componentes/buttom/Button';
 
 const HeaderWrapper = styled.div`

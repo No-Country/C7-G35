@@ -3,6 +3,7 @@ import {
 } from 'react-router-dom';
 import AddPet from './pages/AddPet/AddPet';
 import Landing from './pages/landing/Landing';
+import Login from './pages/login/Login';
 
 const Router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const Router = createBrowserRouter([
   {
     path: '/form-add-pet',
     element: <AddPet/>,
+  },
+  {
+    path: '/login',
+    element: <Login/>,
   },
 ]);
 

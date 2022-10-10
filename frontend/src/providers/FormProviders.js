@@ -5,14 +5,14 @@ const formChangeContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    tipo: '',
+    type: '',
   });
 
   return (
     <formChangeContext.Provider value={setFormData}>
-        <formChangeContext.Provider value={formData}>
+        <formContext.Provider value={formData}>
             {children}
-        </formChangeContext.Provider>
+        </formContext.Provider>
     </formChangeContext.Provider>
   );
 };

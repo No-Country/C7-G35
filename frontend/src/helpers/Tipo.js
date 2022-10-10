@@ -6,18 +6,18 @@ export const mascotaTipoOpciones = [
     labelTexto: 'Perro',
     labelIcono: <GiSittingDog />,
     idFor: 'typePerro',
-    name: 'type',
+    value: 'dog',
   },
   {
     labelTexto: 'Gato',
     labelIcono: <FaCat />,
     idFor: 'typeGato',
-    name: 'type',
+    value: 'cat',
   },
   {
     labelTexto: 'Ave',
     labelIcono: <GiEgyptianBird />,
     idFor: 'typeAve',
-    name: 'type',
+    value: 'bird',
   },
 ];

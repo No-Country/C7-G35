@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { DataListComponent, RadioButtonIconComponent } from '../inputs/Inputs';
+import { RadioButtonIconComponent } from '../inputs/Inputs';
 
-const WrapperRadioButtonIcons = styled.div`
+export const WrapperComponentForm = styled.div`
   background-color: rgba(0, 0, 0, .1);
   `;
 
@@ -14,7 +14,7 @@ const GroupRadioButtons = styled.div`
     flex-wrap: wrap;
 `;
 
-const TituloRadioButtonForm = styled.h3`
+export const TituloForm = styled.h3`
     font-size: 1.5rem;
     color: #fff;
     padding: 0.5rem 1rem;
@@ -23,22 +23,24 @@ const TituloRadioButtonForm = styled.h3`
 `;
 
 export const RadioButtonsIconsGroup = ({
-  titulo, orientacion, data, dataListArray,
+  titulo, orientacion, data, validacion,
 }) => {
   return (
-      <WrapperRadioButtonIcons>
-        { titulo && <TituloRadioButtonForm>{titulo}</TituloRadioButtonForm>}
+      <WrapperComponentForm>
+        <TituloForm>{titulo}</TituloForm>
         <GroupRadioButtons orientacion={orientacion}>{
          data?.map((dato, index) => (
            <RadioButtonIconComponent
            key={index}
            labelTexto={dato?.labelTexto}
            labelIcono={dato?.labelIcono}
-           orientacion={dato?.orientacion}
            idFor={dato?.idFor}
-           name={dato?.name}/>))}
-        {dataListArray && <DataListComponent Array={dataListArray}/>}
+           value={dato?.value}
+           orientacion={dato?.orientacion}
+           validacion={validacion}
+           />
+         ))}
         </GroupRadioButtons>
-      </WrapperRadioButtonIcons>
+      </WrapperComponentForm>
   );
 };

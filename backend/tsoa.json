@@ -1,0 +1,19 @@
+{
+    "entryFile": "src/api/server.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": ["src/modules/**/*.docsSwagger.ts" ] ,
+    "spec": {
+      "outputDirectory": "./src/api/",
+      "specVersion": 3,
+      "name" : "Promag:project-management",
+      "basePath" : "/api",
+      "securityDefinitions": {
+        "jwt": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+    },
+    "routes": {
+    }
+  } 
+}

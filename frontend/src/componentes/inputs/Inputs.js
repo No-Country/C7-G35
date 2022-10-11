@@ -130,13 +130,7 @@ const InputList = styled.input`
 const DataList = styled.datalist``;
 const DataListOption = styled.option``;
 
-export const DataListComponent = ({ Array, tipo, validacion }) => {
-  // console.log(Array);
-  // console.log(tipo);
-  // console.log(`${Array}.${tipo}`);
-  // eslint-disable-line
-  // console.log(Array.`${tipo}`);
-  // console.log(Array.cat);
+export const DataListComponent = ({ Array, tipo = 'dog', validacion }) => {
   return (
     <WrapperDataList>
       <LabelTadaList>
@@ -145,7 +139,7 @@ export const DataListComponent = ({ Array, tipo, validacion }) => {
       </LabelTadaList>
       <DataList id='breed'>
         <DataListOption value={'No tiene raza'} defaultValue />
-        {Array.dog.map((raza, index) => (
+        {Array[tipo]?.map((raza, index) => (
           <DataListOption key={index} value={raza} />
         ))}
       </DataList>

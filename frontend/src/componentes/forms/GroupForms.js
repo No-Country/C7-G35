@@ -3,6 +3,7 @@ import { RadioButtonIconComponent } from '../inputs/Inputs';
 
 export const WrapperComponentForm = styled.div`
   background-color: rgba(0, 0, 0, .1);
+  width: min(500px, 100%);
   `;
 
 const GroupRadioButtons = styled.div`

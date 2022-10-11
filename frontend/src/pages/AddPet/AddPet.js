@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { RiCheckboxCircleFill, RiCheckboxBlankCircleLine } from 'react-icons/ri';
+import {
+  RiCheckboxCircleFill,
+  RiCheckboxBlankCircleLine,
+} from 'react-icons/ri';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import {
   CheckboxComponente,
   DataListComponent,
@@ -29,7 +34,9 @@ const WrapperMascotaPerdida = styled.form`
   flex-direction: column;
   gap: 3rem;
   padding: 1rem;
+  align-items: center;
 `;
+
 const schemaAddLostPet = yup
   .object({
     type: yup.string().required(),
@@ -51,7 +58,17 @@ const AddPet = () => {
   } = useForm({
     resolver: yupResolver(schemaAddLostPet),
   });
-  const onSubmit = (data) => console.log(data);
+
+  const [cookies, setCookie] = useCookies(['token']);
+  function onChange(newName) {
+    setCookie('name', newName, { path: '/' });
+  }
+
+  const handleAddMascota = async (data) => {
+    await axios.post('http://localhost:8000/api/pets', data, {
+      headers: { Authorization: `Bearer ${cookies.token}` },
+    });
+  };
 
   const useFormChange = useFormChangeContext();
 
@@ -84,7 +101,10 @@ const AddPet = () => {
   }, [watch('gender')]);
 
   return (
-    <WrapperMascotaPerdida onSubmit={handleSubmit(onSubmit)}>
+    <WrapperMascotaPerdida
+      onSubmit={handleSubmit(handleAddMascota)}
+      onChange={onChange}
+    >
       <h2>Los primeros 4 campos son obligatorios</h2>
       <RadioButtonsIconsGroup
         titulo={'Se perdio mi...'}
@@ -102,7 +122,7 @@ const AddPet = () => {
         <TituloForm>Raza..</TituloForm>
         <DataListComponent
           Array={razasLista}
-          type={type}
+          tipo={type}
           validacion={{ ...register('breed') }}
         />
       </WrapperComponentForm>
@@ -118,10 +138,16 @@ const AddPet = () => {
         <TituloForm>{castrdoEsterilizada}</TituloForm>
         <CheckboxComponente
           validacion={{ ...register('isCastrated') }}
-          icon={watch('isCastrated') ? <RiCheckboxCircleFill/> : <RiCheckboxBlankCircleLine/>}
+          icon={
+            watch('isCastrated') ? (
+              <RiCheckboxCircleFill />
+            ) : (
+              <RiCheckboxBlankCircleLine />
+            )
+          }
           idFor={'isCastratedLost'}
           label={isCastrated}
-         />
+        />
       </WrapperComponentForm>
 
       <WrapperComponentForm>

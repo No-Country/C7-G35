@@ -200,7 +200,7 @@ const Landing = () => {
             estado={'Encontrado'}
             path={'/'}
           />
-          <ButtonComponent texto={'Busco mi mascota'} path={'/'} />
+          <ButtonComponent texto={'Busco mi mascota'} path={'/form-add-pet'} />
         </ColumnaDos>
       </HeaderWrapper>
       <SVG

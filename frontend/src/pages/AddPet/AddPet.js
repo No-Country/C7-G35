@@ -55,6 +55,7 @@ const AddPet = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm({
     resolver: yupResolver(schemaAddLostPet),
   });
@@ -68,7 +69,26 @@ const AddPet = () => {
     await axios.post('http://localhost:8000/api/pets', data, {
       headers: { Authorization: `Bearer ${cookies.token}` },
     });
+    reset();
   };
+
+  const [pets, setPets] = useState('');
+
+  useEffect(() => {
+    const getMascotas = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/pets', {
+          headers: { Authorization: `Bearer ${cookies.token}` },
+        });
+        setPets(response);
+      } catch (error) {
+        console.log('messaje', error);
+      }
+    };
+    getMascotas();
+  }, []);
+
+  console.log(pets);
 
   const useFormChange = useFormChangeContext();
 

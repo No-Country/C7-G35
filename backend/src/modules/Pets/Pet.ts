@@ -22,7 +22,7 @@ export class Pet {
   description?: string;
   @Column()
   owner!: string;
-  @Column({ type: 'simple-array' })
+  @Column({ type: 'simple-array', nullable: true })
   images?: string[];
 
   static create({ name, gender, images, owner, type, age, description, isCastrated, breed }: newPet): Pet {

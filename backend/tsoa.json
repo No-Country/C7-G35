@@ -5,7 +5,7 @@
     "spec": {
       "outputDirectory": "./src/api/",
       "specVersion": 3,
-      "name" : "Promag:project-management",
+      "name" : "PetSpaces",
       "basePath" : "/api",
       "securityDefinitions": {
         "jwt": {

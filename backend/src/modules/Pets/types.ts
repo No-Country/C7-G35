@@ -4,6 +4,8 @@ export interface newPet {
   gender: Gender;
   owner: string;
   type: string;
+  color: string[];
+  size: string;
   images?: string[];
   name?: string;
   breed?: string;
@@ -17,6 +19,8 @@ export interface updatePet {
   owner: string;
   gender?: Gender;
   type?: string;
+  color?: string[];
+  size?: string;
   images?: string[];
   name?: string;
   breed?: string;

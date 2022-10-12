@@ -11,12 +11,14 @@ const petServices = new PetServices();
 
 export async function petPostController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
-  const { name, gender, images, type, age, description, isCastrated, breed } = req.body as newPet;
+  const { name, gender, images, type, age, description, isCastrated, breed, size, color } = req.body as newPet;
 
   try {
     const pet = await petServices.create({
       gender,
       type,
+      color,
+      size,
       images,
       owner: userId,
       name,

@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
 export const newPetReqSchema = [
   body(['gender', 'type']).exists().isString(),
@@ -8,7 +8,7 @@ export const newPetReqSchema = [
 ];
 
 export const updatePetReqSchema = [
-  body('id').exists().isString(),
+  param('id').exists().isString(),
   body(['name', 'type', 'breed', 'age', 'description', 'gender']).optional().isString(),
   body('isCastrated').optional().isBoolean(),
   body('images').optional().isArray()

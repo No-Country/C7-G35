@@ -6,12 +6,18 @@ import { Gender, newPet } from './types';
 export class Pet {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
+  @Column({ name: 'owner_id' })
+  owner!: string;
   @Column({ nullable: true })
   name?: string;
   @Column()
   gender!: Gender;
   @Column()
   type!: string;
+  @Column({ type: 'simple-array' })
+  color!: string[];
+  @Column()
+  size!: string;
   @Column({ nullable: true })
   breed?: string;
   @Column({ nullable: true })
@@ -20,12 +26,10 @@ export class Pet {
   isCastrated?: boolean;
   @Column({ type: 'text', nullable: true })
   description?: string;
-  @Column()
-  owner!: string;
   @Column({ type: 'simple-array', nullable: true })
   images?: string[];
 
-  static create({ name, gender, images, owner, type, age, description, isCastrated, breed }: newPet): Pet {
+  static create({ name, gender, images, owner, type, age, description, isCastrated, breed, color, size }: newPet): Pet {
     const pet = new Pet();
     pet.name = name;
     pet.gender = gender;
@@ -36,6 +40,8 @@ export class Pet {
     pet.description = description;
     pet.owner = owner;
     pet.images = images;
+    pet.color = color;
+    pet.size = size;
     return pet;
   }
 

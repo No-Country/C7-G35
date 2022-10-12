@@ -4,10 +4,13 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Router from './Router';
+import { FormProvider } from './providers/FormProviders';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={Router} />
+    <FormProvider>
+      <RouterProvider router={Router} />
+    </FormProvider>
   </React.StrictMode>,
 );
 

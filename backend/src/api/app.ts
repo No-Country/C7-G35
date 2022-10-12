@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import httpStatus from 'http-status';
 import passport from 'passport';
+import swaggerUi from 'swagger-ui-express';
 import { registerRoutes } from './registerRoutes';
 import { errorHandler } from './Shared/ErrorHandler';
 
@@ -23,6 +24,9 @@ export class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(passport.initialize());
+    this.app.use('/api/docs', swaggerUi.serve, async (_req: Request, res: Response) => {
+      return res.send(swaggerUi.generateHTML(await import(__dirname + '/swagger.json')));
+    });
   }
 
   private routes() {

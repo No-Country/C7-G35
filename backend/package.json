@@ -4,7 +4,7 @@
   "description": "backend for App pets",
   "scripts": {
     "start": "NODE_ENV=production node dist/src/api/server.js",
-    "dev": "NODE_ENV=dev ts-node ./src/api/server",
+    "dev": "NODE_ENV=dev; npm run build:docs:swagger; ts-node ./src/api/server",
     "test": "npm run test:unit",
     "test:unit": "jest",
     "test:coverage": "jest --coverage",

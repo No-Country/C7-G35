@@ -10,24 +10,29 @@ import {
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import {
+  CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
   InputTextComponent,
+  RadioButtonIconComponent,
   TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
 import {
-  RadioButtonsIconsGroup,
+  OptionGroups,
   TituloForm,
   WrapperComponentForm,
 } from '../../componentes/forms/GroupForms';
 import { razasLista } from '../../helpers/ListaRazas';
 import { mascotaTipoOpciones } from '../../helpers/Tipo';
-import { Genero } from '../../helpers/Genero';
+import { genero } from '../../helpers/Genero';
 import { edad } from '../../helpers/Edad';
 import {
   useFormChangeContext,
   useFormContext,
 } from '../../providers/FormProviders';
+import ButtonComponent from '../../componentes/buttom/Button';
+import { mascotaTamanio } from '../../helpers/Tamaño';
+import { colores } from '../../helpers/Colores';
 
 const WrapperMascotaPerdida = styled.form`
   display: flex;
@@ -39,9 +44,11 @@ const WrapperMascotaPerdida = styled.form`
 
 const schemaAddLostPet = yup
   .object({
-    type: yup.string().required(),
-    gender: yup.string().required(),
-    breed: yup.string().required(),
+    type: yup.string(),
+    gender: yup.string(),
+    size: yup.string(),
+    color: yup.array().ensure(),
+    breed: yup.string(),
     age: yup.string(),
     isCastrated: yup.boolean(),
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
@@ -66,6 +73,7 @@ const AddPet = () => {
   }
 
   const handleAddMascota = async (data) => {
+    console.log(data);
     await axios.post('http://localhost:8000/api/pets', data, {
       headers: { Authorization: `Bearer ${cookies.token}` },
     });
@@ -102,15 +110,6 @@ const AddPet = () => {
   const useFormData = useFormContext();
   const { type } = useFormData;
 
-  const [isCastrated, setIsCastrated] = useState('');
-  useEffect(() => {
-    if (watch('isCastrated')) {
-      setIsCastrated('Si, lo está.');
-    } else {
-      setIsCastrated('No, no lo está.');
-    }
-  }, [watch('isCastrated')]);
-
   const [castrdoEsterilizada, setCastrdoEsterilizada] = useState('');
   useEffect(() => {
     if (watch('gender') === 'male') {
@@ -120,23 +119,86 @@ const AddPet = () => {
     }
   }, [watch('gender')]);
 
+  const [isCastrated, setIsCastrated] = useState('');
+  useEffect(() => {
+    if (watch('isCastrated')) {
+      setIsCastrated('Si, lo está.');
+    } else {
+      setIsCastrated('No, no lo está.');
+    }
+  }, [watch('isCastrated')]);
+
   return (
     <WrapperMascotaPerdida
       onSubmit={handleSubmit(handleAddMascota)}
       onChange={onChange}
     >
       <h2>Los primeros 4 campos son obligatorios</h2>
-      <RadioButtonsIconsGroup
-        titulo={'Se perdio mi...'}
-        data={mascotaTipoOpciones}
-        validacion={{ ...register('type') }}
-      />
+      <WrapperComponentForm>
+        <TituloForm>Se perdio mi...</TituloForm>
+        <OptionGroups>
+          {mascotaTipoOpciones?.map((dato, index) => (
+            <RadioButtonIconComponent
+              key={index}
+              labelTexto={dato?.labelTexto}
+              labelIcono={dato?.labelIcono}
+              idFor={dato?.idFor}
+              value={dato?.value}
+              orientacion={dato?.orientacion}
+              validacion={{ ...register('type') }}
+            />
+          ))}
+        </OptionGroups>
+      </WrapperComponentForm>
 
-      <RadioButtonsIconsGroup
-        titulo={'Es...'}
-        data={Genero}
-        validacion={{ ...register('gender') }}
-      />
+      <WrapperComponentForm>
+        <TituloForm>Es...</TituloForm>
+        <OptionGroups>
+          {genero?.map((dato, index) => (
+            <RadioButtonIconComponent
+              key={index}
+              labelTexto={dato?.labelTexto}
+              labelIcono={dato?.labelIcono}
+              idFor={dato?.idFor}
+              value={dato?.value}
+              orientacion={dato?.orientacion}
+              validacion={{ ...register('gender') }}
+            />
+          ))}
+        </OptionGroups>
+      </WrapperComponentForm>
+      <WrapperComponentForm>
+        <TituloForm>De tamaño...</TituloForm>
+        <OptionGroups orientacion={'vertical'}>
+        {mascotaTamanio?.map((dato, index) => (
+            <RadioButtonIconComponent
+              key={index}
+              labelTexto={dato?.labelTexto}
+              labelIcono={dato?.labelIcono}
+              idFor={dato?.idFor}
+              value={dato?.value}
+              orientacion={dato?.orientacion}
+              validacion={{ ...register('size') }}
+            />
+        ))}
+        </OptionGroups>
+      </WrapperComponentForm>
+      <WrapperComponentForm>
+        <TituloForm>Color..</TituloForm>
+        <OptionGroups>
+        {colores?.map((dato, index) => (
+            <CheckboxComponent
+              key={index}
+              labelTexto={dato?.labelTexto}
+              labelImg={dato?.labelImg}
+              idFor={dato?.idFor}
+              value={dato?.value}
+              orientacion={dato?.orientacion}
+              validacion={{ ...register('color') }}
+            />
+        ))}
+        </OptionGroups>
+      </WrapperComponentForm>
 
       <WrapperComponentForm>
         <TituloForm>Raza..</TituloForm>
@@ -147,17 +209,26 @@ const AddPet = () => {
         />
       </WrapperComponentForm>
 
-      <RadioButtonsIconsGroup
-        titulo={'De edad es...'}
-        orientacion={'vertical'}
-        data={edad}
-        validacion={{ ...register('age') }}
-      />
+      <WrapperComponentForm>
+        <TituloForm>De edad..</TituloForm>
+        <OptionGroups orientacion={'vertical'}>
+          {edad?.map((dato, index) => (
+            <RadioButtonIconComponent
+              key={index}
+              labelTexto={dato?.labelTexto}
+              labelIcono={dato?.labelIcono}
+              idFor={dato?.idFor}
+              value={dato?.value}
+              orientacion={dato?.orientacion}
+              validacion={{ ...register('age') }}
+            />
+          ))}
+        </OptionGroups>
+      </WrapperComponentForm>
 
       <WrapperComponentForm>
         <TituloForm>{castrdoEsterilizada}</TituloForm>
         <CheckboxComponente
-          validacion={{ ...register('isCastrated') }}
           icon={
             watch('isCastrated') ? (
               <RiCheckboxCircleFill />
@@ -167,14 +238,15 @@ const AddPet = () => {
           }
           idFor={'isCastratedLost'}
           label={isCastrated}
+          validacion={{ ...register('isCastrated') }}
         />
       </WrapperComponentForm>
 
       <WrapperComponentForm>
         <InputTextComponent
           label={'Responde al nombre de...'}
-          validacion={{ ...register('name') }}
           idFor={'nameLostPet'}
+          validacion={{ ...register('name') }}
         />
       </WrapperComponentForm>
 
@@ -184,11 +256,17 @@ const AddPet = () => {
           placeholder={
             'Alguna marca, sicatriz, o cualquier cosa que lo diferencie'
           }
-          validacion={{ ...register('description') }}
           idFor={'descriptionLostPet'}
+          validacion={{ ...register('description') }}
         />
       </WrapperComponentForm>
-      <button type='submit'>Enviar</button>
+
+      <ButtonComponent
+        as='button'
+        type={'submit'}
+        estado={'perdido'}
+        texto={'enviar'}
+      />
     </WrapperMascotaPerdida>
   );
 };

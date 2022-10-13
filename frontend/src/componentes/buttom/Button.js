@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Buttom = styled.a`
+const Button = styled.a`
   width: min(80%, 350px);
   border: none;
   background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
@@ -10,10 +10,13 @@ const Buttom = styled.a`
   font-size: 1.2rem;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 `;
 
-const ButtonComponent = ({ texto, estado, path }) => {
-  return <Buttom href={path} estado={estado}>{texto}</Buttom>;
+const ButtonComponent = ({
+  texto, estado, path, type, as,
+}) => {
+  return <Button as={as} href={path} estado={estado} type={type}>{texto}</Button>;
 };
 
 export default ButtonComponent;

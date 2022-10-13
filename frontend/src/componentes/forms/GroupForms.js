@@ -1,18 +1,20 @@
 import styled from 'styled-components';
-import { RadioButtonIconComponent } from '../inputs/Inputs';
 
 export const WrapperComponentForm = styled.div`
   background-color: rgba(0, 0, 0, .1);
-  width: min(500px, 100%);
+  width: min(600px, 100%);
   `;
 
-const GroupRadioButtons = styled.div`
-    padding: ${props => (props.orientacion === 'vertical' ? '1rem' : '1rem 0')};
+export const OptionGroups = styled.div`
+    padding: ${props => (props.orientacion === 'vertical' ? '1rem' : '1.5rem 1rem')};
     display: flex;
     flex-direction: ${props => (props.orientacion === 'vertical' ? 'column' : 'row')};
     align-items: flex-start;
     justify-content: space-around;
     flex-wrap: wrap;
+    row-gap: ${props => (props.orientacion === 'vertical' ? '.5rem' : '2rem')};
+    column-gap: ${props => (props.orientacion === 'vertical' ? '.5rem' : '2rem')};
+    /* row-gap: 2rem; */
 `;
 
 export const TituloForm = styled.h3`
@@ -22,26 +24,3 @@ export const TituloForm = styled.h3`
     border-radius: 7px;
     background-color: var(--clr-pink-medium);
 `;
-
-export const RadioButtonsIconsGroup = ({
-  titulo, orientacion, data, validacion,
-}) => {
-  return (
-      <WrapperComponentForm>
-        <TituloForm>{titulo}</TituloForm>
-        <GroupRadioButtons orientacion={orientacion}>{
-         data?.map((dato, index) => (
-           <RadioButtonIconComponent
-           key={index}
-           labelTexto={dato?.labelTexto}
-           labelIcono={dato?.labelIcono}
-           idFor={dato?.idFor}
-           value={dato?.value}
-           orientacion={dato?.orientacion}
-           validacion={validacion}
-           />
-         ))}
-        </GroupRadioButtons>
-      </WrapperComponentForm>
-  );
-};

@@ -1,5 +1,11 @@
 import styled from 'styled-components';
+import {
+  RiCheckboxCircleFill,
+} from 'react-icons/ri';
 
+const WrapperCheckeableInput = styled.div`
+    display: flex;
+  `;
 const WrapperInput = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,7 +19,7 @@ const LabelInputText = styled.label`
   font-weight: 900;
   padding: 0.5rem 1rem;
   border-radius: 7px;
-`;
+  `;
 
 const InputText = styled.input`
   padding: 1rem 1rem;
@@ -31,16 +37,16 @@ export const InputTextComponent = ({ label, validacion, idFor }) => {
   );
 };
 
-const WrapperRadioButton = styled.div`
-  display: flex;
-`;
-
-const RadioButton = styled.input`
+const CheckeableInput = styled.input`
   -webkit-appearance: none;
 `;
 
 const LabelRadioTexto = styled.p`
   font-size: 2rem;
+  line-height: 1.5rem;
+  text-align: center;
+  width: min-content;
+  width:${(props) => (props.orientacion === 'horizontal' ? 'initial' : 'min-content')};
 `;
 
 const LabelRadioIcono = styled.div`
@@ -55,20 +61,18 @@ const LabelRadioIcono = styled.div`
   place-items: center;
 `;
 
-const LabelRadio = styled.label`
+const LabelCheckeable = styled.label`
   display: flex;
   flex-direction: ${(props) => (props.orientacion === 'horizontal' ? 'row' : 'column')};
   align-items: center;
   justify-content: center;
-  height: ${(props) => (props.orientacion === 'horizontal' ? 'initial' : '10rem')};
-  width: ${(props) => (props.orientacion === 'horizontal' ? 'initial' : '10rem')};
-  gap: ${(props) => (props.orientacion === 'horizontal' ? '1rem' : 'initial')};
+  gap: 1rem;
   color: #878787;
   &:hover {
     font-weight: 700;
-    color: #3c3c3c;
+    color: var(--clr-pink-medium);
   }
-  ${RadioButton}:checked + && {
+  ${CheckeableInput}:checked + && {
     font-weight: 700;
     color: var(--clr-pink-medium);
   }
@@ -82,15 +86,65 @@ export const RadioButtonIconComponent = ({
   value,
 }) => {
   return (
-    <WrapperRadioButton>
-      <RadioButton type='radio' id={idFor} {...validacion} value={value} />
-      <LabelRadio htmlFor={idFor} orientacion={orientacion}>
+    <WrapperCheckeableInput>
+      <CheckeableInput type='radio' id={idFor} {...validacion} value={value} />
+      <LabelCheckeable htmlFor={idFor} orientacion={orientacion}>
         <LabelRadioIcono orientacion={orientacion}>
           {labelIcono}
         </LabelRadioIcono>
+        <LabelRadioTexto orientacion={orientacion}>{labelTexto}</LabelRadioTexto>
+      </LabelCheckeable>
+    </WrapperCheckeableInput>
+  );
+};
+
+const LabelCheckeicon = styled.div`
+  position: absolute; 
+  font-size: 8rem;
+  inset: 0;
+  color: var(--clr-green);
+  opacity: 0;
+  &:hover{
+    opacity: .5;
+  }
+  & ${CheckeableInput}:checked {
+    opacity: .5;
+  }
+ `;
+
+const LabelImagenWrapper = styled.div`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 200vh;
+  overflow: hidden;
+  position: relative; 
+`;
+
+const LabelImagen = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const CheckboxComponent = ({
+  labelImg,
+  labelTexto,
+  idFor,
+  orientacion,
+  validacion,
+  value,
+}) => {
+  return (
+    <WrapperCheckeableInput>
+      <CheckeableInput type='checkbox' id={idFor} {...validacion} value={value} />
+      <LabelCheckeable htmlFor={idFor} orientacion={orientacion}>
+        <LabelImagenWrapper>
+          <LabelImagen orientacion={orientacion} src={labelImg}/>
+          <LabelCheckeicon><RiCheckboxCircleFill/></LabelCheckeicon>
+        </LabelImagenWrapper>
         <LabelRadioTexto>{labelTexto}</LabelRadioTexto>
-      </LabelRadio>
-    </WrapperRadioButton>
+      </LabelCheckeable>
+    </WrapperCheckeableInput>
   );
 };
 

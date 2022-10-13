@@ -1,6 +1,6 @@
 import { TbGenderMale, TbGenderFemale } from 'react-icons/tb';
 
-export const Genero = [
+export const genero = [
   {
     labelTexto: 'Macho',
     labelIcono: <TbGenderMale />,

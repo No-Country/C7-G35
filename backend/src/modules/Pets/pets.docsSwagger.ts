@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags, UploadedFile } from 'tsoa';
+import { Body, Delete, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags } from 'tsoa';
 import { Pet } from './Pet';
 import { newPet, updatePet } from './types';
 
@@ -21,7 +21,12 @@ export class PetsDocsRoutes {
 
   @SuccessResponse('200', 'ok')
   @Post('/{id}/images')
-  static PetsImagePostController(@Path() id: string, @UploadedFile() image: Express.Multer.File) {}
+  static PetsImagePostController(
+    @Path() id: string,
+    @Body() image: { imageUrl: string }
+  ): { Pet: Pet; imageUrl: string } {
+    return {} as any;
+  }
 
   /**
    * get pets from an authenticated user

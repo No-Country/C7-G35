@@ -40,6 +40,8 @@ export class Pet {
     if (this.images?.length === imagesLimit) {
       throw new ImagesLimitReached(imagesLimit);
     }
-    this.images?.push(url);
+    if (!this.images) this.images = [];
+
+    this.images.push(url);
   }
 }

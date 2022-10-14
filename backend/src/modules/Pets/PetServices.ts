@@ -27,7 +27,7 @@ export class PetServices {
   }
 
   public async findPet(petId: string): Promise<Pet> {
-    const pet = await this.repository.findOneBy({ id: petId });
+    const pet = await this.repository.findOneBy({ id: petId || '' });
     if (!pet) {
       throw new PetNotExist(petId);
     }

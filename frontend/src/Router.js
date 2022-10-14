@@ -4,6 +4,7 @@ import {
 import AddPet from './pages/AddPet/AddPet';
 import AddLostPet from './pages/AddPet/AddLostPet';
 import AddPhoto from './pages/AddPet/AddPhoto';
+import DetailPet from './pages/detailPet/DetailPet';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
 
@@ -27,6 +28,10 @@ const Router = createBrowserRouter([
   {
     path: '/add-photo',
     element: <AddPhoto/>,
+  },
+  {
+    path: '/detail-pet',
+    element: <DetailPet/>,
   },
 ]);
 

@@ -51,7 +51,7 @@ const PosteosRecientes = ({
         {datos?.map((mascota, index) => (
           <CardMascota
             key={index}
-            id={mascota?.id}
+            id={'/detail-pet'}
             nombre={mascota?.nombre}
             link={mascota?.link}
             estado={mascota?.estado}

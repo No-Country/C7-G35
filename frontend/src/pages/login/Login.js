@@ -4,8 +4,8 @@ import { useUserChangeContext, useUserContext } from '../../providers/UserProvid
 
 const Login = () => {
   const [cookies, setCookie] = useCookies(['token']);
-  function onChange(newName) {
-    setCookie('name', newName, { path: '/' });
+  function onChange() {
+    setCookie('token', { path: '/' });
   }
 
   const useUserChangeData = useUserChangeContext();

@@ -16,7 +16,7 @@ export const edad = [
     value: 'adult',
   },
   {
-    labelTexto: 'Adulto mayo',
+    labelTexto: 'Adulto mayor',
     labelIcono: <FaRegDotCircle />,
     idFor: 'perdidoAdultoMayor',
     orientacion: 'horizontal',

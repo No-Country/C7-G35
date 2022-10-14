@@ -88,6 +88,7 @@ const schemaAddLostPet = yup
     isCastrated: yup.boolean(),
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
+    date: yup.string(),
   })
   .required();
 
@@ -106,7 +107,6 @@ const AddPet = () => {
   // function onChange(newName) {
   //   setCookie('name', newName, { path: '/' });
   // }
-  console.log(cookies);
 
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
@@ -124,9 +124,10 @@ const AddPet = () => {
   const handleAddMascota = async (data) => {
     const response = await axios.post('http://localhost:8000/api/loss', {
       location: `${city.country}, ${city.state}, ${city.state_district}`,
+      date: data?.date,
       pet: data,
     }, { headers: { Authorization: `Bearer ${cookies.token}` } });
-    console.log(response?.data?.petLoss?.pet?.id);
+    console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
       id: response?.data?.petLoss?.pet?.id,
@@ -138,17 +139,17 @@ const AddPet = () => {
 
   const [pets, setPets] = useState('');
 
+  const getMascotas = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/loss', {
+        headers: { Authorization: `Bearer ${cookies.token}` },
+      });
+      setPets(response);
+    } catch (error) {
+      console.log('messaje', error);
+    }
+  };
   useEffect(() => {
-    const getMascotas = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/loss', {
-          headers: { Authorization: `Bearer ${cookies.token}` },
-        });
-        setPets(response);
-      } catch (error) {
-        console.log('messaje', error);
-      }
-    };
     getMascotas();
   }, []);
   console.log(pets);
@@ -325,6 +326,10 @@ const AddPet = () => {
           idFor={'descriptionLostPet'}
           validacion={{ ...register('description') }}
         />
+      </WrapperComponentForm>
+      <WrapperComponentForm>
+        <TituloForm>En la dia...</TituloForm>
+        <input type='date'{ ...register('date') }/>
       </WrapperComponentForm>
 
       <ButtonComponent

@@ -5,15 +5,17 @@ import UploadImg from '../../componentes/uploadImage/UploadImg';
 import { useFormContext } from '../../providers/FormProviders';
 
 const AddPhoto = () => {
-  const [cookies] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(['token']);
   const { id } = useFormContext();
   const [imgUrl, setImgUrl] = useState('');
-  console.log(id);
+  function onChange() {
+    setCookie('token', { path: '/' });
+  }
 
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
-      `http://localhost:8000/api/pets/${id}/${imgUrl}`,
+      `http://localhost:8000/api/loss/${id}/${imgUrl}`,
       {
         headers: { Authorization: `Bearer ${cookies?.token}` },
       },
@@ -21,7 +23,7 @@ const AddPhoto = () => {
   };
 
   return (
-    <form onSubmit={handleAddFoto}>
+    <form onSubmit={handleAddFoto} onChange={onChange}>
       <div style={{ marginTop: '15px', fontWeight: 'bold' }}>
         <UploadImg setimgUp={setImgUrl} />
         {imgUrl && <img src={imgUrl} width='100' height='150' />}

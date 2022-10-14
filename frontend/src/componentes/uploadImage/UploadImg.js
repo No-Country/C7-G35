@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ButtonComponentShort } from '../buttom/Button';
 import { translationEs, stylesColor } from './UploadImageConfig';
 
 export default function UploadImg({ setimgUp }) {
@@ -32,9 +33,9 @@ export default function UploadImg({ setimgUp }) {
   }
   return (
     <div>
-      <button type='submit' onClick={(e) => uploadImage(e)} >
+      <ButtonComponentShort as={'button'} type={'submit'} texto={'Elegir imagen'} onClick={(e) => uploadImage(e)} >
         Subir foto
-      </button>
+      </ButtonComponentShort>
     </div>
   );
 }

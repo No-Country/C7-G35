@@ -40,7 +40,7 @@ import {
   useFormChangeContext,
   useFormContext,
 } from '../../providers/FormProviders';
-import ButtonComponent from '../../componentes/buttom/Button';
+import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
 

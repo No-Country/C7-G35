@@ -5,25 +5,31 @@ import UploadImg from '../../componentes/uploadImage/UploadImg';
 import { useFormContext } from '../../providers/FormProviders';
 
 const AddPhoto = () => {
-  const [cookies, setCookie] = useCookies(['token']);
+  // const [cookies, setCookie] = useCookies(['token']);
   const { id } = useFormContext();
   const [imgUrl, setImgUrl] = useState('');
-  function onChange() {
-    setCookie('token', { path: '/' });
-  }
+  // function onChange() {
+  //   setCookie('token', { path: '/' });
+  // }
 
+  const Token = JSON.parse(localStorage.getItem('token'));
+  console.log(Token);
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
-      `http://localhost:8000/api/loss/${id}/${imgUrl}`,
+      `http://localhost:8000/api/pets/${id}/images`,
       {
-        headers: { Authorization: `Bearer ${cookies?.token}` },
+        imageUrl: imgUrl,
+      },
+      {
+        headers: { Authorization: `Bearer ${Token.token}` },
       },
     );
+    console.log('enviado');
   };
 
   return (
-    <form onSubmit={handleAddFoto} onChange={onChange}>
+    <form onSubmit={handleAddFoto}>
       <div style={{ marginTop: '15px', fontWeight: 'bold' }}>
         <UploadImg setimgUp={setImgUrl} />
         {imgUrl && <img src={imgUrl} width='100' height='150' />}

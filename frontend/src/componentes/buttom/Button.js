@@ -13,10 +13,20 @@ const Button = styled.a`
   cursor: pointer;
 `;
 
-const ButtonComponent = ({
+const ButtonShort = styled(Button)`
+  width: inherit;
+  padding: .8rem 1.5rem;
+ `;
+
+export const ButtonComponent = ({
   texto, estado, path, type, as,
 }) => {
   return <Button as={as} href={path} estado={estado} type={type}>{texto}</Button>;
 };
 
-export default ButtonComponent;
+export const ButtonComponentShort = ({
+  texto, estado, path, type, as, onClick,
+}) => {
+  return <ButtonShort
+  as={as} href={path} estado={estado} type={type} onClick={onClick}>{texto}</ButtonShort>;
+};

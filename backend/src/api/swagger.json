@@ -622,7 +622,26 @@
 				"operationId": "PetsImagePostController",
 				"responses": {
 					"200": {
-						"description": "ok"
+						"description": "ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"imageUrl": {
+											"type": "string"
+										},
+										"Pet": {
+											"$ref": "#/components/schemas/Pet"
+										}
+									},
+									"required": [
+										"imageUrl",
+										"Pet"
+									],
+									"type": "object"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -646,18 +665,17 @@
 				"requestBody": {
 					"required": true,
 					"content": {
-						"multipart/form-data": {
+						"application/json": {
 							"schema": {
-								"type": "object",
 								"properties": {
-									"image": {
-										"type": "string",
-										"format": "binary"
+									"imageUrl": {
+										"type": "string"
 									}
 								},
 								"required": [
-									"image"
-								]
+									"imageUrl"
+								],
+								"type": "object"
 							}
 						}
 					}

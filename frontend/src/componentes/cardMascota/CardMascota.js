@@ -1,6 +1,6 @@
 import { FaPaw } from 'react-icons/fa';
 import styled from 'styled-components';
-import ButtonComponent from '../buttom/Button';
+import { ButtonComponent } from '../buttom/Button';
 
 const WrapperCard = styled.div`
   position: relative;

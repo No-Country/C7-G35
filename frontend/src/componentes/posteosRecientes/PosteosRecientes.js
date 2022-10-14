@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ButtonComponent from '../buttom/Button';
+import { ButtonComponent } from '../buttom/Button';
 import CardMascota from '../cardMascota/CardMascota';
 
 const WrapperPosteosRecientes = styled.section`

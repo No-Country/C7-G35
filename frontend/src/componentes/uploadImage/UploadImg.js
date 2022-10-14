@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonComponentShort } from '../buttom/Button';
+import { RoundedButtonComponent } from '../buttom/Button';
 import { translationEs, stylesColor } from './UploadImageConfig';
 
 export default function UploadImg({ setimgUp }) {
@@ -33,9 +33,9 @@ export default function UploadImg({ setimgUp }) {
   }
   return (
     <div>
-      <ButtonComponentShort as={'button'} type={'submit'} texto={'Elegir imagen'} onClick={(e) => uploadImage(e)} >
+      <RoundedButtonComponent as={'button'} type={'submit'} texto={'Elegir imagen'} onClick={(e) => uploadImage(e)} >
         Subir foto
-      </ButtonComponentShort>
+      </RoundedButtonComponent>
     </div>
   );
 }

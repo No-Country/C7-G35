@@ -13,8 +13,7 @@ export class PetServices {
 
   public async create(newPet: newPet): Promise<Pet> {
     const pet = Pet.create(newPet);
-    await this.repository.save(pet);
-    return pet;
+    return await this.repository.save(pet);
   }
 
   public async addImage(petId: string, ownerId: string, imageUrl: string): Promise<Pet> {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import {
   RiCheckboxCircleFill,
   RiCheckboxBlankCircleLine,
@@ -10,10 +11,20 @@ import {
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+
+import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
   InputTextComponent,
+  ListaComponentSimple,
   RadioButtonIconComponent,
   TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
@@ -33,6 +44,31 @@ import {
 import ButtonComponent from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
+import useFetch from '../../customHooks/useFetch';
+
+function LocationMarker({ setPos, handleChange }) {
+  const [position, setPosition] = useState(null);
+
+  const map = useMapEvents({
+    click(e) {
+      setPosition(e.latlng);
+      handleChange(e.latlng);
+      setPos(e.latlng);
+    },
+  });
+
+  return position === null ? null : (
+    <Marker
+      icon={L.icon({
+        iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconSize: [25, 35],
+      })}
+      position={position}
+    >
+      <Popup>Fue por aquí!</Popup>
+    </Marker>
+  );
+}
 
 const WrapperMascotaPerdida = styled.form`
   display: flex;
@@ -49,6 +85,7 @@ const schemaAddLostPet = yup
     size: yup.string(),
     color: yup.array().ensure(),
     breed: yup.string(),
+    location: yup.string(),
     age: yup.string(),
     isCastrated: yup.boolean(),
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
@@ -67,39 +104,39 @@ const AddPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const [cookies, setCookie] = useCookies(['token']);
-  function onChange(newName) {
-    setCookie('name', newName, { path: '/' });
-  }
+  // const [cookies, setCookie] = useCookies(['token']);
+  // function onChange(newName) {
+  //   setCookie('name', newName, { path: '/' });
+  // }
 
+  // const navigate = useNavigate();
   const handleAddMascota = async (data) => {
     console.log(data);
-    await axios.post('http://localhost:8000/api/pets', data, {
-      headers: { Authorization: `Bearer ${cookies.token}` },
-    });
-    reset();
+    // await axios.post('http://localhost:8000/api/pets', data, {
+    //   headers: { Authorization: `Bearer ${cookies.token}` },
+    // });
+    // reset();
+    // navigate('/add-photo');
   };
 
-  const [pets, setPets] = useState('');
+  // const [pets, setPets] = useState('');
 
-  useEffect(() => {
-    const getMascotas = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/pets', {
-          headers: { Authorization: `Bearer ${cookies.token}` },
-        });
-        setPets(response);
-      } catch (error) {
-        console.log('messaje', error);
-      }
-    };
-    getMascotas();
-  }, []);
-
-  console.log(pets);
+  // useEffect(() => {
+  //   const getMascotas = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8000/api/pets', {
+  //         headers: { Authorization: `Bearer ${cookies.token}` },
+  //       });
+  //       setPets(response);
+  //     } catch (error) {
+  //       console.log('messaje', error);
+  //     }
+  //   };
+  //   getMascotas();
+  // }, []);
+  // console.log(pets);
 
   const useFormChange = useFormChangeContext();
-
   useEffect(() => {
     useFormChange((prevState) => ({
       ...prevState,
@@ -128,12 +165,33 @@ const AddPet = () => {
     }
   }, [watch('isCastrated')]);
 
+  async function getCity(latitude, longitud) {
+    const response = await axios.get(`https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`);
+    console.log(response?.data?.address);
+  }
+
+  const [pos, setPos] = useState(null);
+  const handleChangePoint = (coord) => {
+    console.log('data', coord);
+    getCity(coord.lat, coord.lng);
+  };
+
   return (
-    <WrapperMascotaPerdida
-      onSubmit={handleSubmit(handleAddMascota)}
-      onChange={onChange}
-    >
+    <WrapperMascotaPerdida onSubmit={handleSubmit(handleAddMascota)}>
       <h2>Los primeros 4 campos son obligatorios</h2>
+      <MapContainer
+        style={{ height: '600px', width: '600px' }}
+        center={[-38.169114135560854, -65.75208708742923]}
+        zoom={5}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        <LocationMarker handleChange={handleChangePoint} setPos={setPos} />
+      </MapContainer>
+
       <WrapperComponentForm>
         <TituloForm>Se perdio mi...</TituloForm>
         <OptionGroups>
@@ -167,10 +225,11 @@ const AddPet = () => {
           ))}
         </OptionGroups>
       </WrapperComponentForm>
+
       <WrapperComponentForm>
         <TituloForm>De tamaño...</TituloForm>
         <OptionGroups orientacion={'vertical'}>
-        {mascotaTamanio?.map((dato, index) => (
+          {mascotaTamanio?.map((dato, index) => (
             <RadioButtonIconComponent
               key={index}
               labelTexto={dato?.labelTexto}
@@ -180,13 +239,14 @@ const AddPet = () => {
               orientacion={dato?.orientacion}
               validacion={{ ...register('size') }}
             />
-        ))}
+          ))}
         </OptionGroups>
       </WrapperComponentForm>
+
       <WrapperComponentForm>
         <TituloForm>Color..</TituloForm>
         <OptionGroups>
-        {colores?.map((dato, index) => (
+          {colores?.map((dato, index) => (
             <CheckboxComponent
               key={index}
               labelTexto={dato?.labelTexto}
@@ -196,7 +256,7 @@ const AddPet = () => {
               orientacion={dato?.orientacion}
               validacion={{ ...register('color') }}
             />
-        ))}
+          ))}
         </OptionGroups>
       </WrapperComponentForm>
 
@@ -265,7 +325,7 @@ const AddPet = () => {
         as='button'
         type={'submit'}
         estado={'perdido'}
-        texto={'enviar'}
+        texto={'Siguiente'}
       />
     </WrapperMascotaPerdida>
   );

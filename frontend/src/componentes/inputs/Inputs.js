@@ -184,7 +184,7 @@ const InputList = styled.input`
 const DataList = styled.datalist``;
 const DataListOption = styled.option``;
 
-export const DataListComponent = ({ Array, tipo = 'dog', validacion }) => {
+export const DataListComponent = ({ Array, tipo, validacion }) => {
   return (
     <WrapperDataList>
       <LabelTadaList>
@@ -193,10 +193,32 @@ export const DataListComponent = ({ Array, tipo = 'dog', validacion }) => {
       </LabelTadaList>
       <DataList id='breed'>
         <DataListOption value={'No tiene raza'} defaultValue />
-        {Array[tipo]?.map((raza, index) => (
-          <DataListOption key={index} value={raza} />
+        {tipo && Array && Array[tipo]?.map((dato, index) => (
+          <DataListOption key={index} value={dato} />
         ))}
       </DataList>
+    </WrapperDataList>
+  );
+};
+
+const List = styled.select`
+  padding: 1rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 7px;
+  border: 1px solid black;
+  width: 100%;
+`;
+const Option = styled.option`
+`;
+export const ListaComponentSimple = ({ Array, validacion, list }) => {
+  return (
+    <WrapperDataList>
+      <List id={list}>
+        <Option value={'Seleccione de la lista'} disabled defaultChecked>Seleccione de la lista</Option>
+        {Array?.map((dato) => (
+          <Option key={dato?.id} value={dato?.id}>{dato?.nombre}</Option>
+        ))}
+      </List>
     </WrapperDataList>
   );
 };
@@ -246,5 +268,19 @@ export const CheckboxComponente = ({
         </LabelTextCheckbox>
       </LabelCheckbox>
     </WrapperCheckbox>
+  );
+};
+
+const WrapperUploadPhoto = styled.div``;
+
+const InputImage = styled.input`
+
+`;
+
+export const UploadPhotoComponente = () => {
+  return (
+    <WrapperUploadPhoto>
+      <InputImage type='hile'/>
+    </WrapperUploadPhoto>
   );
 };

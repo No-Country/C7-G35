@@ -1,0 +1,531 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Gender": {
+				"type": "string",
+				"enum": [
+					"male",
+					"female"
+				]
+			},
+			"Pet": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"owner": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"gender": {
+						"$ref": "#/components/schemas/Gender"
+					},
+					"type": {
+						"type": "string"
+					},
+					"color": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"size": {
+						"type": "string"
+					},
+					"breed": {
+						"type": "string"
+					},
+					"age": {
+						"type": "string"
+					},
+					"isCastrated": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"owner",
+					"gender",
+					"type",
+					"color",
+					"size"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_newPet.Exclude_keyofnewPet.owner__": {
+				"properties": {
+					"gender": {
+						"$ref": "#/components/schemas/Gender"
+					},
+					"type": {
+						"type": "string"
+					},
+					"color": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"size": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"name": {
+						"type": "string"
+					},
+					"breed": {
+						"type": "string"
+					},
+					"age": {
+						"type": "string"
+					},
+					"isCastrated": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"gender",
+					"type",
+					"color",
+					"size"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_newPet.owner_": {
+				"$ref": "#/components/schemas/Pick_newPet.Exclude_keyofnewPet.owner__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"newPetBody": {
+				"$ref": "#/components/schemas/Omit_newPet.owner_"
+			},
+			"Pick_updatePet.Exclude_keyofupdatePet.id-or-owner__": {
+				"properties": {
+					"gender": {
+						"$ref": "#/components/schemas/Gender"
+					},
+					"type": {
+						"type": "string"
+					},
+					"color": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"size": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"name": {
+						"type": "string"
+					},
+					"breed": {
+						"type": "string"
+					},
+					"age": {
+						"type": "string"
+					},
+					"isCastrated": {
+						"type": "boolean"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_updatePet.id-or-owner_": {
+				"$ref": "#/components/schemas/Pick_updatePet.Exclude_keyofupdatePet.id-or-owner__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"updatePetBody": {
+				"$ref": "#/components/schemas/Omit_updatePet.id-or-owner_"
+			},
+			"Pick_userUpdate.Exclude_keyofuserUpdate.id__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_userUpdate.id_": {
+				"$ref": "#/components/schemas/Pick_userUpdate.Exclude_keyofuserUpdate.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"userUpdateBody": {
+				"$ref": "#/components/schemas/Omit_userUpdate.id_"
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"phone",
+					"email",
+					"location"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"info": {
+		"title": "PetSpaces",
+		"version": "1.0.0",
+		"description": "backend for App pets",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/auth/google": {
+			"get": {
+				"operationId": "AuhtGoogleController",
+				"responses": {
+					"200": {
+						"description": "Redirect /home"
+					}
+				},
+				"description": "Redirect to auht whit google",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/auth/facebook": {
+			"get": {
+				"operationId": "AuhtFacebookController",
+				"responses": {
+					"200": {
+						"description": "Redirect /home"
+					}
+				},
+				"description": "Redirect to auht whit Facebook",
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/pets": {
+			"post": {
+				"operationId": "PetPostController",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pet"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/newPetBody"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "PetsGetController",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Pet"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get pets from an authenticated user",
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/pets/{id}": {
+			"put": {
+				"operationId": "PetPutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/updatePetBody"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "PetDeleteController",
+				"responses": {
+					"200": {
+						"description": "deleted"
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/pets/{id}/images": {
+			"post": {
+				"operationId": "PetsImagePostController",
+				"responses": {
+					"200": {
+						"description": "ok"
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"image": {
+										"type": "string",
+										"format": "binary"
+									}
+								},
+								"required": [
+									"image"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/me": {
+			"put": {
+				"operationId": "UserPutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/userUpdateBody"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "UserGetController",
+				"responses": {
+					"200": {
+						"description": "ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"delete": {
+				"operationId": "UserDeactivateController",
+				"responses": {
+					"200": {
+						"description": "deleted"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api"
+		}
+	]
+}

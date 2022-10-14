@@ -1,4 +1,4 @@
-import { GiSittingDog, GiEgyptianBird } from 'react-icons/gi';
+import { GiSittingDog } from 'react-icons/gi';
 import { FaCat } from 'react-icons/fa';
 
 export const mascotaTipoOpciones = [
@@ -13,11 +13,5 @@ export const mascotaTipoOpciones = [
     labelIcono: <FaCat />,
     idFor: 'typeGato',
     value: 'cat',
-  },
-  {
-    labelTexto: 'Ave',
-    labelIcono: <GiEgyptianBird />,
-    idFor: 'typeAve',
-    value: 'bird',
   },
 ];

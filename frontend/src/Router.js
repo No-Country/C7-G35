@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom';
 import AddPet from './pages/AddPet/AddPet';
+import AddLostPet from './pages/AddPet/AddLostPet';
 import AddPhoto from './pages/AddPet/AddPhoto';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
@@ -18,6 +19,10 @@ const Router = createBrowserRouter([
   {
     path: '/form-add-pet',
     element: <AddPet/>,
+  },
+  {
+    path: '/form-add-lost-pet',
+    element: <AddLostPet/>,
   },
   {
     path: '/add-photo',

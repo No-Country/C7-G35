@@ -102,17 +102,36 @@ const AddPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const [cookies, setCookie] = useCookies(['token']);
-  function onChange(newName) {
-    setCookie('name', newName, { path: '/' });
+  const [cookies] = useCookies(['token']);
+  // function onChange(newName) {
+  //   setCookie('name', newName, { path: '/' });
+  // }
+  console.log(cookies);
+
+  const [city, setCity] = useState('');
+  async function getCity(latitude, longitud) {
+    const response = await axios.get(`https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`);
+    setCity(response?.data?.address);
   }
 
+  const handleChangePoint = (coord) => {
+    getCity(coord.lat, coord.lng);
+  };
+
   const navigate = useNavigate();
+  const useFormChange = useFormChangeContext();
+  const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
-    console.log(data);
-    await axios.post('http://localhost:8000/api/pets', data, {
-      headers: { Authorization: `Bearer ${cookies.token}` },
-    });
+    const response = await axios.post('http://localhost:8000/api/loss', {
+      location: `${city.country}, ${city.state}, ${city.state_district}`,
+      pet: data,
+    }, { headers: { Authorization: `Bearer ${cookies.token}` } });
+    console.log(response?.data?.petLoss?.pet?.id);
+    useFormChange((prevState) => ({
+      ...prevState,
+      id: response?.data?.petLoss?.pet?.id,
+    }));
+
     reset();
     navigate('/add-photo');
   };
@@ -122,7 +141,7 @@ const AddPet = () => {
   useEffect(() => {
     const getMascotas = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/pets', {
+        const response = await axios.get('http://localhost:8000/api/loss', {
           headers: { Authorization: `Bearer ${cookies.token}` },
         });
         setPets(response);
@@ -134,7 +153,6 @@ const AddPet = () => {
   }, []);
   console.log(pets);
 
-  const useFormChange = useFormChangeContext();
   useEffect(() => {
     useFormChange((prevState) => ({
       ...prevState,
@@ -142,7 +160,6 @@ const AddPet = () => {
     }));
   }, [watch('type')]);
 
-  const useFormData = useFormContext();
   const { type } = useFormData;
 
   const [castrdoEsterilizada, setCastrdoEsterilizada] = useState('');
@@ -163,19 +180,11 @@ const AddPet = () => {
     }
   }, [watch('isCastrated')]);
 
-  async function getCity(latitude, longitud) {
-    const response = await axios.get(`https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`);
-    console.log(response?.data?.address);
-  }
-
-  const handleChangePoint = (coord) => {
-    console.log('data', coord);
-    getCity(coord.lat, coord.lng);
-  };
-
   return (
-    <WrapperMascotaPerdida onSubmit={handleSubmit(handleAddMascota)} onChange={onChange}>
-      <h2>Solo para registrar mascotas por prevencion</h2>
+    <WrapperMascotaPerdida onSubmit={handleSubmit(handleAddMascota)}
+    // onChange={onChange}
+    >
+      <h2>Registra tu mascota perdida</h2>
       <MapContainer
         style={{ height: '600px', width: '600px' }}
         center={[-38.169114135560854, -65.75208708742923]}

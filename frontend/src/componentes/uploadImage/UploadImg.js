@@ -17,21 +17,22 @@ export default function UploadImg({ setimgUp }) {
       (error, result) => {
         if (!error && result && result.event === 'success') {
           setimgUp(result.info.url);
+          console.log(result.info.url);
         }
       },
     );
     myWidgetConect.open();
     myWidgetConect.close();
-    setmyWidget(myWidgetConect);// eslint-disable-next-line
+    setmyWidget(myWidgetConect);
   }, []);
 
-  async function uploadImage() {
+  async function uploadImage(e) {
+    e.preventDefault();
     await myWidget.open();
   }
-
   return (
     <div>
-      <button type='submit' onClick={() => uploadImage()}>
+      <button type='submit' onClick={(e) => uploadImage(e)} >
         Subir foto
       </button>
     </div>

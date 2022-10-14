@@ -69,6 +69,39 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Loss": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Pet"
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"isRecovered": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"pet",
+					"date",
+					"location",
+					"isRecovered"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Pick_newPet.Exclude_keyofnewPet.owner__": {
 				"properties": {
 					"gender": {
@@ -121,8 +154,33 @@
 				"$ref": "#/components/schemas/Pick_newPet.Exclude_keyofnewPet.owner__",
 				"description": "Construct a type with the properties of T except for those in type K."
 			},
-			"newPetBody": {
-				"$ref": "#/components/schemas/Omit_newPet.owner_"
+			"Pick_newPetLoss.Exclude_keyofnewPetLoss.userId__": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Omit_newPet.owner_"
+					}
+				},
+				"required": [
+					"date",
+					"location",
+					"pet"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_newPetLoss.userId_": {
+				"$ref": "#/components/schemas/Pick_newPetLoss.Exclude_keyofnewPetLoss.userId__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"newPetLossRequest": {
+				"$ref": "#/components/schemas/Omit_newPetLoss.userId_"
 			},
 			"Pick_updatePet.Exclude_keyofupdatePet.id-or-owner__": {
 				"properties": {
@@ -170,11 +228,40 @@
 				"$ref": "#/components/schemas/Pick_updatePet.Exclude_keyofupdatePet.id-or-owner__",
 				"description": "Construct a type with the properties of T except for those in type K."
 			},
+			"Pick_updatePetLoss.Exclude_keyofupdatePetLoss.userId-or-id__": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Omit_updatePet.id-or-owner_"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_updatePetLoss.userId-or-id_": {
+				"$ref": "#/components/schemas/Pick_updatePetLoss.Exclude_keyofupdatePetLoss.userId-or-id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"updatePetLossRequest": {
+				"$ref": "#/components/schemas/Omit_updatePetLoss.userId-or-id_"
+			},
+			"newPetBody": {
+				"$ref": "#/components/schemas/Omit_newPet.owner_"
+			},
 			"updatePetBody": {
 				"$ref": "#/components/schemas/Omit_updatePet.id-or-owner_"
 			},
 			"Pick_userUpdate.Exclude_keyofuserUpdate.id__": {
 				"properties": {
+					"location": {
+						"type": "string"
+					},
 					"name": {
 						"type": "string"
 					},
@@ -182,9 +269,6 @@
 						"type": "string"
 					},
 					"phone": {
-						"type": "string"
-					},
-					"location": {
 						"type": "string"
 					}
 				},
@@ -275,6 +359,134 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/loss/last": {
+			"get": {
+				"operationId": "Controller",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Loss"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get last 3 lost pets",
+				"tags": [
+					"Loss"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/loss": {
+			"post": {
+				"operationId": "LossPostController",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Loss"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Loss"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/newPetLossRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "LossByUserGetController",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Loss"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get pets loss from an authenticated user",
+				"tags": [
+					"Loss"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/loss/{id}": {
+			"put": {
+				"operationId": "LossPutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Loss"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/updatePetLossRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/pets": {

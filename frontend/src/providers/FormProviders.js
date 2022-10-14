@@ -5,7 +5,17 @@ const formChangeContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
     type: '',
+    color: '',
+    size: '',
+    breed: '',
+    age: '',
+    isCastrated: false,
+    description: '',
+    images: '',
+    id: '',
   });
 
   return (

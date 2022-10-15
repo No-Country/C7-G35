@@ -357,7 +357,7 @@ const AddPet = () => {
       </WrapperComponentForm>
 
       <WrapperComponentForm>
-        <TituloForm>En la dia...</TituloForm>
+        <TituloForm>El día...</TituloForm>
         <InputDate
           type='date'
           validacion={{ ...register('date') }}

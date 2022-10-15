@@ -3,6 +3,31 @@ import {
   RiCheckboxCircleFill,
 } from 'react-icons/ri';
 
+const Mensaje = styled.p`
+  color: rgb(38 38 38);
+  margin: .5rem 0 .1rem 1rem;
+`;
+
+export const MensajeAclaracion = ({ text }) => {
+  return (
+    <Mensaje>
+      {text}
+    </Mensaje>
+  );
+};
+const MensajeError = styled.p`
+  color: red;
+  margin: 1rem;
+`;
+
+export const Error = ({ text }) => {
+  return (
+    <MensajeError>
+      {text}
+    </MensajeError>
+  );
+};
+
 const WrapperCheckeableInput = styled.div`
     display: flex;
   `;
@@ -280,13 +305,13 @@ const InputImage = styled.input`
   padding: .5rem;
 `;
 
-export const InputDate = () => {
+export const InputDate = ({ validacion }) => {
   const date = new Date();
   const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
   const today = `${year}-${month + 1}-${day}`;
   return (
     <WrapperInputDate>
-      <InputImage type='date' max={today}/>
+      <InputImage type='date' max={today} {...validacion}/>
     </WrapperInputDate>
   );
 };

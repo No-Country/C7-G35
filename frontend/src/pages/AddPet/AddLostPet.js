@@ -23,8 +23,10 @@ import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
+  Error,
   InputDate,
   InputTextComponent,
+  MensajeAclaracion,
   RadioButtonIconComponent,
   TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
@@ -79,11 +81,11 @@ const WrapperMascotaPerdida = styled.form`
 
 const schemaAddLostPet = yup
   .object({
-    type: yup.string(),
-    gender: yup.string(),
-    size: yup.string(),
-    color: yup.array().ensure(),
-    breed: yup.string(),
+    type: yup.string('Este campo es requerido').nullable().required('Este campo es requerido'),
+    gender: yup.string().nullable().required('Este campo es requerido'),
+    size: yup.string().nullable().required('Este campo es requerido'),
+    color: yup.array().ensure().max('4', 'Elija 4 colores como máximo'),
+    breed: yup.string().required('Este campo es requerido').nullable(),
     location: yup.string(),
     age: yup.string(),
     isCastrated: yup.boolean(),
@@ -108,7 +110,9 @@ const AddPet = () => {
 
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
-    const response = await axios.get(`https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`);
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
+    );
     setCity(response?.data?.address);
   }
 
@@ -120,11 +124,15 @@ const AddPet = () => {
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
-    const response = await axios.post('http://localhost:8000/api/loss', {
-      location: `${city.country}, ${city.state}, ${city.state_district}`,
-      date: data?.date,
-      pet: data,
-    }, { headers: { Authorization: `Bearer ${cookies.token}` } });
+    const response = await axios.post(
+      'http://localhost:8000/api/loss',
+      {
+        location: `${city.country}, ${city.state}, ${city.state_district}`,
+        date: data?.date,
+        pet: data,
+      },
+      { headers: { Authorization: `Bearer ${cookies.token}` } },
+    );
     console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
@@ -180,23 +188,11 @@ const AddPet = () => {
   }, [watch('isCastrated')]);
 
   return (
-    <WrapperMascotaPerdida onSubmit={handleSubmit(handleAddMascota)}
-    // onChange={onChange}
+    <WrapperMascotaPerdida
+      onSubmit={handleSubmit(handleAddMascota)}
+      // onChange={onChange}
     >
-      <h2>Registra tu mascota perdida</h2>
-      <MapContainer
-        style={{ height: '600px', width: '600px' }}
-        center={[-38.169114135560854, -65.75208708742923]}
-        zoom={5}
-        scrollWheelZoom={true}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        />
-        <LocationMarker handleChange={handleChangePoint}/>
-      </MapContainer>
-
+      <h2>Registra tu mascota perdida, los primeros 4 puntos son obligatorios</h2>
       <WrapperComponentForm>
         <TituloForm>Se perdio mi...</TituloForm>
         <OptionGroups>
@@ -212,6 +208,7 @@ const AddPet = () => {
             />
           ))}
         </OptionGroups>
+        {errors.type && <Error text={errors.type.message}/>}
       </WrapperComponentForm>
 
       <WrapperComponentForm>
@@ -229,6 +226,35 @@ const AddPet = () => {
             />
           ))}
         </OptionGroups>
+        {errors.gender && <Error text={errors.gender.message}/>}
+      </WrapperComponentForm>
+
+      <WrapperComponentForm>
+        <TituloForm>Raza..</TituloForm>
+        <DataListComponent
+          Array={razasLista}
+          tipo={type}
+          validacion={{ ...register('breed') }}
+        />
+        {errors.breed && <Error text={errors.breed.message}/>}
+      </WrapperComponentForm>
+
+      <WrapperComponentForm>
+        <TituloForm>{castrdoEsterilizada}</TituloForm>
+        <MensajeAclaracion text={'*Si la respuesta es negativa, deje el campo como está.'}/>
+        <CheckboxComponente
+          icon={
+            watch('isCastrated') ? (
+              <RiCheckboxCircleFill />
+            ) : (
+              <RiCheckboxBlankCircleLine />
+            )
+          }
+          idFor={'isCastratedLost'}
+          label={isCastrated}
+          validacion={{ ...register('isCastrated') }}
+        />
+        {errors.isCastrated && <Error text={errors.isCastrated.message}/>}
       </WrapperComponentForm>
 
       <WrapperComponentForm>
@@ -250,6 +276,9 @@ const AddPet = () => {
 
       <WrapperComponentForm>
         <TituloForm>Color..</TituloForm>
+        <MensajeAclaracion text={'*Máximo 4 colores'} />
+        <MensajeAclaracion text={'*Elija los mas parecidos'} />
+        <MensajeAclaracion text={'*No se fije en el tipo de pelaje'} />
         <OptionGroups>
           {colores?.map((dato, index) => (
             <CheckboxComponent
@@ -263,15 +292,6 @@ const AddPet = () => {
             />
           ))}
         </OptionGroups>
-      </WrapperComponentForm>
-
-      <WrapperComponentForm>
-        <TituloForm>Raza..</TituloForm>
-        <DataListComponent
-          Array={razasLista}
-          tipo={type}
-          validacion={{ ...register('breed') }}
-        />
       </WrapperComponentForm>
 
       <WrapperComponentForm>
@@ -292,22 +312,6 @@ const AddPet = () => {
       </WrapperComponentForm>
 
       <WrapperComponentForm>
-        <TituloForm>{castrdoEsterilizada}</TituloForm>
-        <CheckboxComponente
-          icon={
-            watch('isCastrated') ? (
-              <RiCheckboxCircleFill />
-            ) : (
-              <RiCheckboxBlankCircleLine />
-            )
-          }
-          idFor={'isCastratedLost'}
-          label={isCastrated}
-          validacion={{ ...register('isCastrated') }}
-        />
-      </WrapperComponentForm>
-
-      <WrapperComponentForm>
         <InputTextComponent
           label={'Responde al nombre de...'}
           idFor={'nameLostPet'}
@@ -325,9 +329,31 @@ const AddPet = () => {
           validacion={{ ...register('description') }}
         />
       </WrapperComponentForm>
+
+      <WrapperComponentForm>
+        <TituloForm>Fue en...</TituloForm>
+        <MensajeAclaracion text={'*La ubicación puede ser aproximada'}/>
+        <MapContainer
+          style={{ height: '600px', width: '600px' }}
+          center={[-38.169114135560854, -65.75208708742923]}
+          zoom={5}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+          <LocationMarker handleChange={handleChangePoint} />
+        </MapContainer>
+      </WrapperComponentForm>
+
       <WrapperComponentForm>
         <TituloForm>En la dia...</TituloForm>
-        <InputDate type='date'{ ...register('date') }/>
+        <InputDate
+          type='date'
+          {...register('date')}
+          validacion={{ ...register('date') }}
+        />
       </WrapperComponentForm>
 
       <ButtonComponent

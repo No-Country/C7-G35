@@ -33,31 +33,35 @@ const WrapperCheckeableInput = styled.div`
   `;
 const WrapperInput = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => (props.orientacion === 'horizontal' ? 'row' : 'column')};
+  align-items: ${(props) => (props.orientacion === 'horizontal' ? 'center' : 'initial')};
 `;
 
 const LabelInputText = styled.label`
   font-size: 2rem;
-  background-color: var(--clr-pink-medium);
-  color: #fff;
+  background-color: ${(props) => (props.orientacion === 'horizontal' ? 'none' : 'var(--clr-pink-medium)')};
+  color: ${(props) => (props.orientacion === 'horizontal' ? '#000' : '#fff')};
   font-size: 1.5rem;
   font-weight: 900;
   padding: 0.5rem 1rem;
   border-radius: 7px;
   `;
 
-const InputText = styled.input`
+export const InputText = styled.input`
   padding: 1rem 1rem;
   font-size: 1.5rem;
   border-radius: 7px;
   border: 1px solid black;
   margin: 1rem;
+  flex: 1;
 `;
-export const InputTextComponent = ({ label, validacion, idFor }) => {
+export const InputTextComponent = ({
+  orientacion, idFor, label, type, validacion, placeholder,
+}) => {
   return (
-    <WrapperInput>
-      <LabelInputText htmlFor={idFor}>{label}</LabelInputText>
-      <InputText id={idFor} type='text' {...validacion} />
+    <WrapperInput orientacion={orientacion}>
+      <LabelInputText htmlFor={idFor} orientacion={orientacion}>{label}</LabelInputText>
+      <InputText id={idFor} type={type} {...validacion} placeholder={placeholder} />
     </WrapperInput>
   );
 };

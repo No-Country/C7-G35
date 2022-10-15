@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import 'yup-phone';
 import { useNavigate } from 'react-router-dom';
 import {
   RiCheckboxCircleFill,
@@ -25,6 +26,7 @@ import {
   DataListComponent,
   Error,
   InputDate,
+  InputText,
   InputTextComponent,
   MensajeAclaracion,
   RadioButtonIconComponent,
@@ -92,6 +94,8 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
+    mobile: yup.string().phone(),
+    email: yup.string().email().required('Este campo es requerido'),
   })
   .required();
 
@@ -320,6 +324,7 @@ const AddPet = () => {
           label={'Responde al nombre de...'}
           idFor={'nameLostPet'}
           validacion={{ ...register('name') }}
+          type={'text'}
         />
       </WrapperComponentForm>
 
@@ -355,8 +360,26 @@ const AddPet = () => {
         <TituloForm>En la dia...</TituloForm>
         <InputDate
           type='date'
-          {...register('date')}
           validacion={{ ...register('date') }}
+        />
+      </WrapperComponentForm>
+      <WrapperComponentForm>
+        <TituloForm>Si sabes algo puedes comunicarte por...</TituloForm>
+        <InputTextComponent
+          label={'Teléfono'}
+          idFor={'telOwnerLostPet'}
+          validacion={{ ...register('mobile') }}
+          type={'tel'}
+          orientacion={'horizontal'}
+          placeholder={'+54 3556677441'}
+        />
+         <InputTextComponent
+          label={'E-mail'}
+          idFor={'emailOwnerLostPet'}
+          validacion={{ ...register('email') }}
+          type={'email'}
+          orientacion={'horizontal'}
+          placeholder={'ejemplo@gmail.com'}
         />
       </WrapperComponentForm>
 

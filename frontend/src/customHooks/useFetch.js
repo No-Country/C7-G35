@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useFetch = (url) => {
+const useFetch = (url, headers) => {
   const [useData, setUseData] = useState({
     loading: true,
     error: null,
@@ -9,7 +9,7 @@ const useFetch = (url) => {
   });
 
   const gatData = async () => {
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url`, ${headers}`);
     setUseData(
       {
         loading: false,

@@ -6,7 +6,7 @@
     "test:unit": "jest",
     "test:coverage": "jest --coverage",
     "start": "NODE_ENV=production node dist/src/api/app.js",
-    "dev": "NODE_ENV=dev ts-node ./src/api/app.ts",
+    "dev": "ts-node ./src/api/app.ts",
     "build": "npm run build:clean && npm run build:tsc && npm run build:copy",
     "build:tsc": "tsc -p tsconfig.prod.json",
     "build:copy": "copyfiles 'src/**/*.{json,yaml,html,png,ico,css,js}' 'dist/'",

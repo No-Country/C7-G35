@@ -3,7 +3,7 @@ import { FaPaw } from 'react-icons/fa';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
 import DogsHeader from '../../assets/GrupoDos.png';
 
-import ButtonComponent from '../../componentes/buttom/Button';
+import { ButtonComponent } from '../../componentes/buttom/Button';
 import useFetch from '../../customHooks/useFetch';
 
 const HeaderWrapper = styled.div`
@@ -203,7 +203,7 @@ const Landing = () => {
             estado={'Encontrado'}
             path={'/'}
           />
-          <ButtonComponent texto={'Busco mi mascota'} path={'/'} />
+          <ButtonComponent texto={'Busco mi mascota'} path={'/form-add-lost-pet'} />
         </ColumnaDos>
       </HeaderWrapper>
       <SVG

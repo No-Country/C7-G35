@@ -218,32 +218,10 @@ export const DataListComponent = ({ Array, tipo, validacion }) => {
       </LabelTadaList>
       <DataList id='breed'>
         <DataListOption value={'No tiene raza'} defaultValue />
-        {tipo && Array && Array[tipo]?.map((dato, index) => (
+        {tipo && Array && Array[tipo]?.sort()?.map((dato, index) => (
           <DataListOption key={index} value={dato} />
         ))}
       </DataList>
-    </WrapperDataList>
-  );
-};
-
-const List = styled.select`
-  padding: 1rem 1rem;
-  font-size: 1.5rem;
-  border-radius: 7px;
-  border: 1px solid black;
-  width: 100%;
-`;
-const Option = styled.option`
-`;
-export const ListaComponentSimple = ({ Array, validacion, list }) => {
-  return (
-    <WrapperDataList>
-      <List id={list}>
-        <Option value={'Seleccione de la lista'} disabled defaultChecked>Seleccione de la lista</Option>
-        {Array?.map((dato) => (
-          <Option key={dato?.id} value={dato?.id}>{dato?.nombre}</Option>
-        ))}
-      </List>
     </WrapperDataList>
   );
 };

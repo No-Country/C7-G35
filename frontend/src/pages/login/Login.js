@@ -17,7 +17,9 @@ const Login = () => {
     }));
   }, []);
 
-  window.localStorage.setItem('token', JSON.stringify(cookies.token));
+  useEffect(() => {
+    localStorage.setItem('token', JSON.stringify(cookies));
+  }, []);
 
   return (
     <div onChange={onChange}>

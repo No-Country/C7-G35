@@ -65,7 +65,7 @@ const AddPhoto = () => {
         imageUrl: imgUrl,
       },
       {
-        headers: { Authorization: `Bearer ${Token}` },
+        headers: { Authorization: `Bearer ${Token?.token}` },
       },
     );
     console.log('enviado');

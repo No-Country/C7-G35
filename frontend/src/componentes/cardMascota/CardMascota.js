@@ -53,6 +53,7 @@ const CardMascota = (
     id, nombre, link, estado, fecha,
   },
 ) => {
+  const normalicedDate = new Date(fecha).toLocaleDateString();
   return (
     <WrapperCard estado={estado}>
       <IconoHuella estado={estado}><FaPaw/></IconoHuella>
@@ -60,7 +61,7 @@ const CardMascota = (
       <WrapperImagen>
         <ImagenMascota src={link || SinFotoMascota} />
       </WrapperImagen>
-      <Fecha>Fecha: {fecha}</Fecha>
+      <Fecha>Fecha: {normalicedDate}</Fecha>
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>
     </WrapperCard>
   );

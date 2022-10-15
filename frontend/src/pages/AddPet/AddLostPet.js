@@ -124,11 +124,13 @@ const AddPet = () => {
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
+    const { date } = data;
+    const fecha = new Date(date).toLocaleDateString();
     const response = await axios.post(
       'http://localhost:8000/api/loss',
       {
         location: `${city.country}, ${city.state}, ${city.state_district}`,
-        date: data?.date,
+        date: fecha,
         pet: data,
       },
       { headers: { Authorization: `Bearer ${cookies.token}` } },
@@ -156,9 +158,9 @@ const AddPet = () => {
     }
   };
   useEffect(() => {
-    getMascotas();
+    // getMascotas();
   }, []);
-  console.log(pets);
+  // console.log(pets);
 
   useEffect(() => {
     useFormChange((prevState) => ({

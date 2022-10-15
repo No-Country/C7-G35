@@ -1,6 +1,7 @@
 import { FaPaw } from 'react-icons/fa';
 import styled from 'styled-components';
 import ButtonComponent from '../buttom/Button';
+import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 
 const WrapperCard = styled.div`
   position: relative;
@@ -49,7 +50,7 @@ const Fecha = styled.p`
 
 const CardMascota = (
   {
-    id, nombre, link, estado,
+    id, nombre, link, estado, fecha,
   },
 ) => {
   return (
@@ -57,9 +58,9 @@ const CardMascota = (
       <IconoHuella estado={estado}><FaPaw/></IconoHuella>
       <NombreMascota>{nombre}</NombreMascota>
       <WrapperImagen>
-        <ImagenMascota src={link} />
+        <ImagenMascota src={link || SinFotoMascota} />
       </WrapperImagen>
-      <Fecha>Fecha: 28/09/2022</Fecha>
+      <Fecha>Fecha: {fecha}</Fecha>
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>
     </WrapperCard>
   );

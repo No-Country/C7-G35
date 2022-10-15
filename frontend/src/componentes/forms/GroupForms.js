@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const WrapperComponentForm = styled.div`
   background-color: rgba(0, 0, 0, .1);
   width: min(600px, 100%);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   `;
 
 export const OptionGroups = styled.div`

@@ -23,6 +23,7 @@ import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
+  InputDate,
   InputTextComponent,
   RadioButtonIconComponent,
   TextAreaComponent,
@@ -104,9 +105,6 @@ const AddPet = () => {
   });
 
   const [cookies] = useCookies(['token']);
-  // function onChange(newName) {
-  //   setCookie('name', newName, { path: '/' });
-  // }
 
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
@@ -329,7 +327,7 @@ const AddPet = () => {
       </WrapperComponentForm>
       <WrapperComponentForm>
         <TituloForm>En la dia...</TituloForm>
-        <input type='date'{ ...register('date') }/>
+        <InputDate type='date'{ ...register('date') }/>
       </WrapperComponentForm>
 
       <ButtonComponent

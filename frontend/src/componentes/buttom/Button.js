@@ -26,6 +26,7 @@ const RoundedButton = styled.a`
     font-size: 2rem;
     border-radius: 100vh;
     background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
+    cursor: pointer;
  `;
 
 export const ButtonComponent = ({

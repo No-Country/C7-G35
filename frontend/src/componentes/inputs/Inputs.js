@@ -271,16 +271,22 @@ export const CheckboxComponente = ({
   );
 };
 
-const WrapperUploadPhoto = styled.div``;
-
-const InputImage = styled.input`
-
+const WrapperInputDate = styled.div`
+  padding: 1rem;
 `;
 
-export const UploadPhotoComponente = () => {
+const InputImage = styled.input`
+  font-size: 2rem;
+  padding: .5rem;
+`;
+
+export const InputDate = () => {
+  const date = new Date();
+  const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+  const today = `${year}-${month + 1}-${day}`;
   return (
-    <WrapperUploadPhoto>
-      <InputImage type='hile'/>
-    </WrapperUploadPhoto>
+    <WrapperInputDate>
+      <InputImage type='date' max={today}/>
+    </WrapperInputDate>
   );
 };

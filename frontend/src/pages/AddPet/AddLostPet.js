@@ -292,6 +292,8 @@ const AddPet = () => {
             />
           ))}
         </OptionGroups>
+        {errors.color && <Error text={errors.color.message}/>}
+
       </WrapperComponentForm>
 
       <WrapperComponentForm>

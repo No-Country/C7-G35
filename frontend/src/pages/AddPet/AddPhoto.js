@@ -56,6 +56,7 @@ const AddPhoto = () => {
   const [imgUrl, setImgUrl] = useState('');
 
   const Token = JSON.parse(localStorage.getItem('token'));
+  console.log(Token);
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
@@ -64,7 +65,7 @@ const AddPhoto = () => {
         imageUrl: imgUrl,
       },
       {
-        headers: { Authorization: `Bearer ${Token.token}` },
+        headers: { Authorization: `Bearer ${Token}` },
       },
     );
     console.log('enviado');

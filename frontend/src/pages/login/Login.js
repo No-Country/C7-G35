@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { json } from 'react-router-dom';
 import { useUserChangeContext, useUserContext } from '../../providers/UserProviders';
 
 const Login = () => {
@@ -18,7 +17,7 @@ const Login = () => {
     }));
   }, []);
 
-  window.localStorage.setItem('token', JSON.stringify(cookies));
+  window.localStorage.setItem('token', JSON.stringify(cookies.token));
 
   return (
     <div onChange={onChange}>

@@ -40,7 +40,6 @@ const GroupCards = styled.div`
 const PosteosRecientes = ({
   titulo, datos, estado, pathVerTodos,
 }) => {
-  console.log(datos);
   return (
     <WrapperPosteosRecientes>
       <WrapperTitle>

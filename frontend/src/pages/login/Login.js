@@ -8,18 +8,7 @@ const Login = () => {
     setCookie('token', { path: '/' });
   }
 
-  const useUserChangeData = useUserChangeContext();
-
-  useEffect(() => {
-    useUserChangeData((prevState) => ({
-      ...prevState,
-      token: cookies,
-    }));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('token', JSON.stringify(cookies));
-  }, []);
+  localStorage.setItem('token', JSON.stringify(cookies));
 
   return (
     <div onChange={onChange}>

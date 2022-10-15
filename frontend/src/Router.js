@@ -7,6 +7,7 @@ import AddPhoto from './pages/AddPet/AddPhoto';
 import DetailPet from './pages/detailPet/DetailPet';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
+import UserProfile from './pages/userProfile/UserProfile';
 
 const Router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const Router = createBrowserRouter([
   {
     path: '/detail-pet',
     element: <DetailPet/>,
+  },
+  {
+    path: '/user',
+    element: <UserProfile/>,
   },
 ]);
 

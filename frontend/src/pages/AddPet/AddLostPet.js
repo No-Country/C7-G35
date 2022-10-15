@@ -26,7 +26,6 @@ import {
   DataListComponent,
   Error,
   InputDate,
-  InputText,
   InputTextComponent,
   MensajeAclaracion,
   RadioButtonIconComponent,

@@ -40,6 +40,7 @@ const GroupCards = styled.div`
 const PosteosRecientes = ({
   titulo, datos, estado, pathVerTodos,
 }) => {
+  console.log(datos);
   return (
     <WrapperPosteosRecientes>
       <WrapperTitle>
@@ -52,8 +53,9 @@ const PosteosRecientes = ({
           <CardMascota
             key={index}
             id={'/detail-pet'}
-            nombre={mascota?.nombre}
-            link={mascota?.link}
+            nombre={mascota?.pet?.name}
+            link={mascota?.pet?.images}
+            fecha={mascota?.date}
             estado={mascota?.estado}
           />
         ))}

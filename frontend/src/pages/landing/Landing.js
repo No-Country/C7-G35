@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { FaPaw } from 'react-icons/fa';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
-import DogsDos from '../../assets/GrupoDos.png';
+import DogsHeader from '../../assets/GrupoDos.png';
+
 import { ButtonComponent } from '../../componentes/buttom/Button';
+import useFetch from '../../customHooks/useFetch';
 
 const HeaderWrapper = styled.div`
   background: var(--clr-pink);
@@ -146,6 +148,7 @@ const TituloDesc = styled.h3`
 const TextoDesc = styled.p``;
 
 const Landing = () => {
+  const { data } = useFetch('http://localhost:8000/api/loss/last');
   const mascotasEncontrados = [
     {
       id: '1',
@@ -189,7 +192,7 @@ const Landing = () => {
     <>
       <HeaderWrapper>
         <ColumnaUno>
-          <ImgPerros src={DogsDos} />
+          <ImgPerros src={DogsHeader} alt='Imagen portada de perros' />
         </ColumnaUno>
         <ColumnaDos>
           <HeaderTitle>
@@ -218,7 +221,7 @@ const Landing = () => {
       />
       <PosteosRecientes
         titulo={'Mascotas recién perdidas'}
-        datos={mascotasPerdidos}
+        datos={data?.loss}
         estado={'Perdido'}
         pathVerTodos={'/perdidos'}
       />

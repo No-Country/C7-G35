@@ -7,6 +7,7 @@ import AddPhoto from './pages/AddPet/AddPhoto';
 import DetailPet from './pages/detailPet/DetailPet';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
+import VerTodos from './pages/verTodos/VerTodos';
 
 const Router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const Router = createBrowserRouter([
   {
     path: '/detail-pet',
     element: <DetailPet/>,
+  },
+  {
+    path: '/see-all-lost',
+    element: <VerTodos/>,
   },
 ]);
 

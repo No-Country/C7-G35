@@ -167,27 +167,6 @@ const Landing = () => {
     },
   ];
 
-  const mascotasPerdidos = [
-    {
-      id: '4',
-      nombre: 'Pumi',
-      link: 'https://estaticos-cdn.elperiodico.com/clip/613740eb-f6ab-4abb-8c5e-60db9929e1b8_alta-libre-aspect-ratio_default_0.jpg',
-      estado: 'Perdido',
-    },
-    {
-      id: '5',
-      nombre: 'Tisha',
-      link: 'https://elcomercio.pe/resizer/fZ9ejNDkM_Uct0MB127fzw08OpI=/1200x1200/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/QIAIFGRLBJDFBDSOJ7KDRW5E5M.jpg',
-      estado: 'Perdido',
-    },
-    {
-      id: '6',
-      nombre: 'Oky',
-      link: 'https://st2.depositphotos.com/2166177/5479/i/450/depositphotos_54798677-stock-photo-dog-on-the-railway-platform.jpg',
-      estado: 'Perdido',
-    },
-  ];
-
   return (
     <>
       <HeaderWrapper>
@@ -223,7 +202,7 @@ const Landing = () => {
         titulo={'Mascotas recién perdidas'}
         datos={data?.loss}
         estado={'Perdido'}
-        pathVerTodos={'/perdidos'}
+        pathVerTodos={'/see-all-lost'}
       />
       <SVG
         pinkMedium

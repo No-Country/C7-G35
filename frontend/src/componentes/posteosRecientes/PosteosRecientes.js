@@ -34,7 +34,9 @@ const Title = styled.h2`
 const GroupCards = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
+  margin-bottom: 3rem;
 `;
 
 const PosteosRecientes = ({

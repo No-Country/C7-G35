@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import CardMascota from '../../componentes/cardMascota/CardMascota';
 import { SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 import useFetch from '../../customHooks/useFetch';
+import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 
 const WrapperUserProfile = styled.div`
     color: var(--clr-blue-dark);
@@ -48,17 +50,18 @@ const DescripcionSinRegistro = styled.p`
 
 const WrapperListadoCards = styled.div`
     padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 `;
 
 const UserProfile = () => {
-  const { userName } = JSON.parse(localStorage.getItem('token'));
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const { userName, token } = JSON.parse(localStorage.getItem('token'));
 
-  const MascotasRegistradas = useFetch(
-    'http://localhost:8000/api/pets',
-    { headers: { Authorization: `Bearer ${token}` } },
-  );
+  const MascotasRegistradas = useFetch('http://localhost:8000/api/pets', token);
   console.log(MascotasRegistradas);
+  const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
+  console.log(MascotasRegistradasData);
   return (
 
     <WrapperUserProfile>
@@ -72,7 +75,18 @@ const UserProfile = () => {
                 <Titulo>Tus mascotas registradas</Titulo>
                 <Descripcion>Aquí podrás ver las mascotas que subiste al sitio</Descripcion>
                 <WrapperListadoCards>
-                    <DescripcionSinRegistro>
+                   {MascotasRegistradas
+                     ? MascotasRegistradasData?.map((mascota) => (
+                        <CardMascota
+                          key={mascota?.id}
+                          id={'/detail-pet'}
+                          nombre={mascota?.name}
+                          link={mascota?.images ? mascota?.images[0] : SinFotoMascota}
+                          fecha={mascota?.date}
+                          estado={mascota?.estado}
+                        />
+                     ))
+                     : <DescripcionSinRegistro>
                     Veo que no registraste ninguna mascota,
                     tal vez podrías considerar hacerlo, por
                     precaución. Si tu mascota se pierde, rápidamente
@@ -80,7 +94,7 @@ const UserProfile = () => {
                      No todos los datos son obligatorios, pero mientras mas completo este
                      el formulario, mas posibilidades tienes de encontrarlo si se pierda.
                      <Link to='/'>Registra tu mascota aquí</Link>
-                    </DescripcionSinRegistro>
+                    </DescripcionSinRegistro> }
                 </WrapperListadoCards>
             </WrapperMascotasRegistradas>
             <WrapperMascotasRegistradas>

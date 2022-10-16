@@ -12,7 +12,6 @@ const WrapperCard = styled.div`
   align-items: center;
   background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
   backface-visibility: .9;
-  margin: 1rem 1.5rem;
   border-radius: 1rem;
   width: min(20rem, 100%);
 `;

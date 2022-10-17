@@ -7,31 +7,48 @@ import AddPhoto from './pages/AddPet/AddPhoto';
 import DetailPet from './pages/detailPet/DetailPet';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
+import UserProfile from './pages/userProfile/UserProfile';
+import Navbar from './componentes/navbar/Navbar';
+import AddFoundPet from './pages/AddPet/AddFoundPet';
 
 const Router = createBrowserRouter([
   {
-    path: '/home',
-    element: <Landing/>,
-  },
-  {
-    path: '/login',
-    element: <Login/>,
-  },
-  {
-    path: '/form-add-pet',
-    element: <AddPet/>,
-  },
-  {
-    path: '/form-add-lost-pet',
-    element: <AddLostPet/>,
-  },
-  {
-    path: '/add-photo',
-    element: <AddPhoto/>,
-  },
-  {
-    path: '/detail-pet',
-    element: <DetailPet/>,
+    path: '/',
+    element: <Navbar/>,
+    children: [
+      {
+        index: true,
+        element: <Landing/>,
+      },
+      {
+        path: '/login',
+        element: <Login/>,
+      },
+      {
+        path: '/form-add-pet',
+        element: <AddPet/>,
+      },
+      {
+        path: '/form-add-lost-pet',
+        element: <AddLostPet/>,
+      },
+      {
+        path: '/form-add-found-pet',
+        element: <AddFoundPet/>,
+      },
+      {
+        path: '/add-photo',
+        element: <AddPhoto/>,
+      },
+      {
+        path: '/detail-pet',
+        element: <DetailPet/>,
+      },
+      {
+        path: '/user',
+        element: <UserProfile/>,
+      },
+    ],
   },
 ]);
 

@@ -10,15 +10,25 @@ import {
   RiCheckboxBlankCircleLine,
 } from 'react-icons/ri';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+
 import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
   Error,
+  InputDate,
   InputTextComponent,
   MensajeAclaracion,
   RadioButtonIconComponent,
-  TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
 import {
   OptionGroups,
@@ -36,6 +46,30 @@ import {
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
+
+function LocationMarker({ setPos, handleChange }) {
+  const [position, setPosition] = useState(null);
+
+  const map = useMapEvents({
+    click(e) {
+      setPosition(e.latlng);
+      handleChange(e.latlng);
+      setPos(e.latlng);
+    },
+  });
+
+  return position === null ? null : (
+    <Marker
+      icon={L.icon({
+        iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+        iconSize: [25, 35],
+      })}
+      position={position}
+    >
+      <Popup>Fue por aquí!</Popup>
+    </Marker>
+  );
+}
 
 const WrapperMascotaPerdida = styled.form`
   display: flex;
@@ -63,7 +97,7 @@ const schemaAddLostPet = yup
   })
   .required();
 
-const AddPet = () => {
+const AddFoundPet = () => {
   const {
     register,
     handleSubmit,
@@ -74,16 +108,39 @@ const AddPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const [cookies] = useCookies(['token']);
+
+  const [city, setCity] = useState('');
+  async function getCity(latitude, longitud) {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
+    );
+    setCity(response?.data?.address);
+  }
+
+  const handleChangePoint = (coord) => {
+    getCity(coord.lat, coord.lng);
+  };
 
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
-    const response = await axios.post('http://localhost:8000/api/pets', data, { headers: { Authorization: `Bearer ${token}` } });
+    const { date } = data;
+    const fecha = new Date(date).toLocaleDateString();
+    const response = await axios.post(
+      'http://localhost:8000/api/loss',
+      {
+        location: `${city.country}, ${city.state}, ${city.state_district}`,
+        date: fecha,
+        pet: data,
+      },
+      { headers: { Authorization: `Bearer ${cookies.token}` } },
+    );
+    console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
-      id: response?.data?.pet?.id,
+      id: response?.data?.petLoss?.pet?.id,
     }));
 
     reset();
@@ -121,9 +178,9 @@ const AddPet = () => {
     <WrapperMascotaPerdida
       onSubmit={handleSubmit(handleAddMascota)}
     >
-      <h2>Registra tu mascota, los primeros 4 puntos son obligatorios</h2>
+      <h2>Registra la mascota que encontraste, los primeros 4 puntos son obligatorios</h2>
       <WrapperComponentForm>
-        <TituloForm>Mi mascota es un...</TituloForm>
+        <TituloForm>Encontre un...</TituloForm>
         <OptionGroups>
           {mascotaTipoOpciones?.map((dato, index) => (
             <RadioButtonIconComponent
@@ -243,27 +300,31 @@ const AddPet = () => {
       </WrapperComponentForm>
 
       <WrapperComponentForm>
-        <InputTextComponent
-          label={'Responde al nombre de...'}
-          idFor={'nameLostPet'}
-          validacion={{ ...register('name') }}
-          type={'text'}
-        />
+        <TituloForm>Fue en...</TituloForm>
+        <MensajeAclaracion text={'*La ubicación puede ser aproximada'}/>
+        <MapContainer
+          style={{ height: '600px', width: '600px' }}
+          center={[-38.169114135560854, -65.75208708742923]}
+          zoom={5}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+          <LocationMarker handleChange={handleChangePoint} />
+        </MapContainer>
       </WrapperComponentForm>
 
       <WrapperComponentForm>
-        <TextAreaComponent
-          label={'Tiene algo que lo diferencia'}
-          placeholder={
-            'Alguna marca, sicatriz, o cualquier cosa que lo diferencie'
-          }
-          idFor={'descriptionLostPet'}
-          validacion={{ ...register('description') }}
+        <TituloForm>El día...</TituloForm>
+        <InputDate
+          type='date'
+          validacion={{ ...register('date') }}
         />
       </WrapperComponentForm>
-
       <WrapperComponentForm>
-        <TituloForm>Mis datos de contacto son...</TituloForm>
+        <TituloForm>Si de quien es, comunicate por...</TituloForm>
         <InputTextComponent
           label={'Teléfono'}
           idFor={'telOwnerLostPet'}
@@ -272,7 +333,6 @@ const AddPet = () => {
           orientacion={'horizontal'}
           placeholder={'+54 3556677441'}
         />
-        {errors.mobile && <Error text={errors.mobile.message}/>}
          <InputTextComponent
           label={'E-mail'}
           idFor={'emailOwnerLostPet'}
@@ -293,4 +353,4 @@ const AddPet = () => {
   );
 };
 
-export default AddPet;
+export default AddFoundPet;

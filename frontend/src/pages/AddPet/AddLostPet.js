@@ -148,23 +148,6 @@ const AddLostPet = () => {
     navigate('/add-photo');
   };
 
-  const [pets, setPets] = useState('');
-
-  const getMascotas = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/loss', {
-        headers: { Authorization: `Bearer ${cookies.token}` },
-      });
-      setPets(response);
-    } catch (error) {
-      console.log('messaje', error);
-    }
-  };
-  useEffect(() => {
-    // getMascotas();
-  }, []);
-  // console.log(pets);
-
   useEffect(() => {
     useFormChange((prevState) => ({
       ...prevState,
@@ -195,7 +178,6 @@ const AddLostPet = () => {
   return (
     <WrapperMascotaPerdida
       onSubmit={handleSubmit(handleAddMascota)}
-      // onChange={onChange}
     >
       <h2>Registra tu mascota perdida, los primeros 4 puntos son obligatorios</h2>
       <WrapperComponentForm>

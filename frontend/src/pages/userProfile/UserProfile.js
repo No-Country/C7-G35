@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import CardMascota from '../../componentes/cardMascota/CardMascota';
 import { SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 import useFetch from '../../customHooks/useFetch';
@@ -54,6 +55,7 @@ const WrapperListadoCards = styled.div`
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 `;
 
 const UserProfile = () => {
@@ -67,6 +69,24 @@ const UserProfile = () => {
   console.log(MascotasPerdidas);
 
   const handleDelete = async (id) => {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Borrado!',
+          'Ya no veras esta mascota en tu lista.',
+          'success',
+        );
+      }
+    });
+
     axios.delete(
       `http://localhost:8000/api/pets/${id}`,
       { headers: { Authorization: `Bearer ${token}` } },

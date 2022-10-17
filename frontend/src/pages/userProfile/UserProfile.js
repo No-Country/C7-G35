@@ -79,7 +79,7 @@ const UserProfile = () => {
 
   const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
-  console.log(MascotasPerdidas);
+  console.log(MascotasRegistradasData);
 
   const handleDelete = async (id) => {
     Swal.fire({

@@ -37,6 +37,7 @@ const WrapperImagen = styled.div`
   aspect-ratio: 1/1;
   border-radius: 100rem;
   overflow: hidden;
+  margin-bottom: .5rem;
 `;
 const ImagenMascota = styled.img`
   height: 100%;
@@ -82,7 +83,7 @@ const CardMascota = (
       <WrapperImagen>
         <ImagenMascota src={link || SinFotoMascota} />
       </WrapperImagen>
-      <Fecha>Fecha: {normalicedDate}</Fecha>
+      {fecha && <Fecha>Fecha: {normalicedDate}</Fecha>}
       {
       token
       && <WrapperButtons>

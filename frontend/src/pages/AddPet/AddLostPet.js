@@ -98,7 +98,7 @@ const schemaAddLostPet = yup
   })
   .required();
 
-const AddPet = () => {
+const AddLostPet = () => {
   const {
     register,
     handleSubmit,
@@ -392,4 +392,4 @@ const AddPet = () => {
   );
 };
 
-export default AddPet;
+export default AddLostPet;

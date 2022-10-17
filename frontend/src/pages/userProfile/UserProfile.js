@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import CardMascota from '../../componentes/cardMascota/CardMascota';
 import { SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 import useFetch from '../../customHooks/useFetch';
@@ -59,11 +60,19 @@ const UserProfile = () => {
   const { userName, token } = JSON.parse(localStorage.getItem('token'));
 
   const MascotasRegistradas = useFetch('http://localhost:8000/api/pets', token);
-  console.log(MascotasRegistradas);
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
-  console.log(MascotasRegistradasData);
-  return (
 
+  const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
+  const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+  console.log(MascotasPerdidas);
+
+  const handleDelete = async (id) => {
+    axios.delete(
+      `http://localhost:8000/api/pets/${id}`,
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+  };
+  return (
     <WrapperUserProfile>
         <WrapperSaludo>
             <Saludo>Hola </Saludo>
@@ -84,6 +93,8 @@ const UserProfile = () => {
                           link={mascota?.images ? mascota?.images[0] : SinFotoMascota}
                           fecha={mascota?.date}
                           estado={mascota?.estado}
+                          token={token}
+                          deleteFunction={() => handleDelete(mascota?.id) }
                         />
                      ))
                      : <DescripcionSinRegistro>
@@ -101,9 +112,22 @@ const UserProfile = () => {
                 <Titulo>Tu mascota perdida</Titulo>
                 <Descripcion>Aquí verás la mascota marcada &quot;perdida&quot;</Descripcion>
                 <WrapperListadoCards>
-                    <DescripcionSinRegistro>
+                {MascotasPerdidas
+                  ? MascotasPerdidasData?.map((mascota) => (
+                        <CardMascota
+                          key={mascota?.id}
+                          id={'/detail-pet'}
+                          nombre={mascota?.name}
+                          link={mascota?.images ? mascota?.images[0] : SinFotoMascota}
+                          fecha={mascota?.date}
+                          estado={mascota?.estado}
+                          token={token}
+                          deleteFunction={() => handleDelete(mascota?.id) }
+                        />
+                  ))
+                  : <DescripcionSinRegistro>
                     No tienes ninguna mascota marcada como perdida, que bueno!
-                    </DescripcionSinRegistro>
+                    </DescripcionSinRegistro> }
                 </WrapperListadoCards>
             </WrapperMascotasRegistradas>
         </WrapperTodasLasMascotas>

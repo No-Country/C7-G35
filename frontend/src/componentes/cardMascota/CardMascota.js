@@ -1,4 +1,5 @@
 import { FaPaw } from 'react-icons/fa';
+import { RiDeleteBin6Fill, RiFileEditFill } from 'react-icons/ri';
 import styled from 'styled-components';
 import { ButtonComponent } from '../buttom/Button';
 import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
@@ -47,9 +48,30 @@ const Fecha = styled.p`
   margin: 1rem 0;
 `;
 
+const WrapperButtons = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  `;
+
+const ActionButton = styled.button`
+  border: none;
+  border-radius: 100vh;
+  color: #fff;
+  background-color: red;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 0;
+  height: 2.5rem;
+  aspect-ratio: 1/1;
+`;
+
 const CardMascota = (
   {
-    id, nombre, link, estado, fecha,
+    id, nombre, link, estado, fecha, token, deleteFunction,
   },
 ) => {
   const normalicedDate = new Date(fecha).toLocaleDateString();
@@ -61,6 +83,13 @@ const CardMascota = (
         <ImagenMascota src={link || SinFotoMascota} />
       </WrapperImagen>
       <Fecha>Fecha: {normalicedDate}</Fecha>
+      {
+      token
+      && <WrapperButtons>
+        <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>
+        <ActionButton><RiFileEditFill/></ActionButton>
+      </WrapperButtons>
+      }
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>
     </WrapperCard>
   );

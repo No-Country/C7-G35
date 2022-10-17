@@ -74,31 +74,33 @@ const WrapperListadoCards = styled.div`
 const UserProfile = () => {
   const { userName, token } = JSON.parse(localStorage.getItem('token'));
 
+  const userMe = useFetch('http://localhost:8000/api/users/me', token);
+  console.log(userMe);
+
   const MascotasRegistradas = useFetch('http://localhost:8000/api/pets', token);
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
 
   const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
-  console.log(MascotasRegistradasData);
 
   const handleDelete = async (id) => {
-    Swal.fire({
-      title: 'Estas seguro?',
-      text: 'No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Borrado!',
-          'Ya no veras esta mascota en tu lista.',
-          'success',
-        );
-      }
-    });
+    // Swal.fire({
+    //   title: 'Estas seguro?',
+    //   text: 'No podrás revertir esto!',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Si, borrar',
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     Swal.fire(
+    //       'Borrado!',
+    //       'Ya no veras esta mascota en tu lista.',
+    //       'success',
+    //     );
+    //   }
+    // });
 
     axios.delete(`http://localhost:8000/api/pets/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -108,7 +110,7 @@ const UserProfile = () => {
     <WrapperUserProfile>
       <WrapperSaludo>
         <Saludo>Hola </Saludo>
-        <UserName>{userName}!</UserName>
+        <UserName>{userMe?.data?.user?.name}!</UserName>
         <WrapperButtons>
           <ButtonComponent
             texto={'Encontré una mascota'}

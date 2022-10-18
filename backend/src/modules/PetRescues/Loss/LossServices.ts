@@ -1,6 +1,8 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../database/TypeOrmClient';
 import { Pet } from '../../Pets/Pet';
+import { FiltersToTypeOrmQueryConverter } from '../convertFiltersToTypeOrm';
+import { lossFilters, petFilters } from '../types';
 import { Loss } from './Loss';
 import { newPetLoss, updatePetLoss } from './types';
 
@@ -50,6 +52,26 @@ export class LossServices {
   async findLast(): Promise<Loss[]> {
     //refac...
     const petLoss = await this.repository.find({ where: { isRecovered: false }, order: { date: 'DESC' }, take: 3 });
+    return petLoss;
+  }
+
+  async findAllLossByFilters(
+    lossFilters: lossFilters,
+    petFilters: petFilters,
+    page: number,
+    limit: number,
+    dateOrder?: 'DESC' | 'ASC'
+  ): Promise<Loss[]> {
+    const toQueryConverter = new FiltersToTypeOrmQueryConverter();
+    const query = toQueryConverter.convertLossFiltersToQuery(lossFilters, petFilters);
+    query.skip(limit * (page - 1));
+    query.take(limit);
+    if (dateOrder) {
+      query.addOrderBy('date', dateOrder);
+    }
+
+    const petLoss = await query.getMany();
+
     return petLoss;
   }
 }

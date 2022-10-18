@@ -10,6 +10,7 @@ import Login from './pages/login/Login';
 import UserProfile from './pages/userProfile/UserProfile';
 import Navbar from './componentes/navbar/Navbar';
 import AddFoundPet from './pages/AddPet/AddFoundPet';
+import EditRegisteredPet from './pages/editPets/EditRegisteredPet';
 
 const Router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const Router = createBrowserRouter([
       {
         path: '/add-photo',
         element: <AddPhoto/>,
+      },
+      {
+        path: '/edit-registered-pet/:id',
+        element: <EditRegisteredPet/>,
       },
       {
         path: '/detail-pet',

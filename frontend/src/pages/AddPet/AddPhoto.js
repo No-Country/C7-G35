@@ -56,7 +56,7 @@ const AddPhoto = () => {
   const { id } = useFormContext();
   const [imgUrl, setImgUrl] = useState('');
 
-  const Token = JSON.parse(localStorage.getItem('token'));
+  const { token } = JSON.parse(localStorage.getItem('token'));
   const navigate = useNavigate();
 
   const handleAddFoto = async (e) => {
@@ -67,7 +67,7 @@ const AddPhoto = () => {
         imageUrl: imgUrl,
       },
       {
-        headers: { Authorization: `Bearer ${Token?.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       },
     );
     navigate('/user');

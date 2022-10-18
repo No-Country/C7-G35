@@ -109,8 +109,6 @@ const AddLostPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const [cookies] = useCookies(['token']);
-
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
     const response = await axios.get(
@@ -126,6 +124,7 @@ const AddLostPet = () => {
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
+  const { token } = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
     const fecha = new Date(date).toLocaleDateString();
@@ -136,9 +135,8 @@ const AddLostPet = () => {
         date: fecha,
         pet: data,
       },
-      { headers: { Authorization: `Bearer ${cookies.token}` } },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
-    console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
       id: response?.data?.petLoss?.pet?.id,

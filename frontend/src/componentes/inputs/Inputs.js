@@ -96,7 +96,7 @@ const LabelCheckeable = styled.label`
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  color: #878787;
+  color: var(--clr-grey-dark);
   &:hover {
     font-weight: 700;
     color: var(--clr-pink-medium);
@@ -243,7 +243,7 @@ const LabelCheckbox = styled.label`
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: #878787;
+  color: var(--clr-grey-dark);
   ${Checkbox}:checked + && {
   color: var(--clr-pink-medium);
   font-weight: 700;

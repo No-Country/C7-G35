@@ -1,4 +1,4 @@
-import { Body, Get, Path, Post, Put, Route, Security, SuccessResponse, Tags } from 'tsoa';
+import { Body, Get, Path, Post, Put, Query, Route, Security, SuccessResponse, Tags } from 'tsoa';
 import { Loss } from './Loss';
 import { newPetLoss, updatePetLoss } from './types';
 
@@ -13,7 +13,27 @@ export class PetsDocsRoutes {
    */
   @SuccessResponse('200', 'OK')
   @Get('/last')
-  static Controller(): Loss[] {
+  static LastGetController(): Loss[] {
+    return [];
+  }
+
+  /**
+   * get loss by Filters
+   */
+  @SuccessResponse('200', 'OK')
+  @Get('/by')
+  static LossByFiltersGetController(
+    @Query() location?: string,
+    @Query() date?: Date,
+    @Query() page?: number,
+    @Query() gender?: string,
+    @Query() type?: string,
+    @Query() size?: string,
+    @Query() breed?: string,
+    @Query() age?: string,
+    @Query() isCastrated?: boolean,
+    @Query() color?: string[]
+  ): Loss[] {
     return [];
   }
 

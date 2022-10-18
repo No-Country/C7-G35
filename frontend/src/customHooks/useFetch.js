@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const useFetch = (url) => {
+const useFetch = (url, token) => {
   const [useData, setUseData] = useState({
     loading: true,
     error: null,
@@ -9,7 +9,10 @@ const useFetch = (url) => {
   });
 
   const gatData = async () => {
-    const { data } = await axios.get(url);
+    const { data } = await axios(
+      url,
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
     setUseData(
       {
         loading: false,
@@ -20,7 +23,7 @@ const useFetch = (url) => {
 
   useEffect(() => {
     gatData();
-  }, [url]);
+  }, [url, token]);
 
   return useData;
 };

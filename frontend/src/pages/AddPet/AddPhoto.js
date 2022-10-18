@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import UploadImg from '../../componentes/uploadImage/UploadImg';
 import { useFormContext } from '../../providers/FormProviders';
@@ -56,7 +57,8 @@ const AddPhoto = () => {
   const [imgUrl, setImgUrl] = useState('');
 
   const Token = JSON.parse(localStorage.getItem('token'));
-  console.log(Token);
+  const navigate = useNavigate();
+
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
@@ -68,7 +70,7 @@ const AddPhoto = () => {
         headers: { Authorization: `Bearer ${Token?.token}` },
       },
     );
-    console.log('enviado');
+    navigate('/user');
   };
 
   return (

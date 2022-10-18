@@ -1,9 +1,16 @@
 import { Router } from 'express';
 import { verifyAuthToken } from '../../Auth/verifyAuthTokenMiddelware';
-import { lastLossGetController, lossByUserGetController, lossPostController, lossPutController } from './Controllers';
+import {
+  lastLossGetController,
+  lossByFiltersGetController,
+  lossByUserGetController,
+  lossPostController,
+  lossPutController
+} from './Controllers';
 
 export const register = (router: Router) => {
   router.get('/loss/last', lastLossGetController);
+  router.get('/loss/by', lossByFiltersGetController);
 
   router.use('/loss', verifyAuthToken);
 

@@ -63,7 +63,7 @@ const DescripcionSinRegistro = styled.p`
   background-color: var(--clr-grey-medium);
 `;
 
-const WrapperListadoCards = styled.div`
+export const WrapperListadoCards = styled.div`
   padding: 1rem;
   display: flex;
   gap: 1rem;
@@ -82,6 +82,7 @@ const UserProfile = () => {
   const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
 
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+  console.log(MascotasPerdidasData);
 
   const handleDelete = async (id) => {
     Swal.fire({

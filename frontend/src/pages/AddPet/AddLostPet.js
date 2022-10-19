@@ -47,14 +47,14 @@ import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
 
-function LocationMarker({ setPos, handleChange }) {
+function LocationMarker({ handleChange }) {
   const [position, setPosition] = useState(null);
 
   const map = useMapEvents({
     click(e) {
       setPosition(e.latlng);
       handleChange(e.latlng);
-      setPos(e.latlng);
+      console.log(e.latlng);
     },
   });
 

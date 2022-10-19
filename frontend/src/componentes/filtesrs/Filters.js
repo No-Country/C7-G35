@@ -3,12 +3,26 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styled from 'styled-components';
-import { useQueryChangeContext } from '../../providers/QueryProviders';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+import axios from 'axios';
+import {
+  useQueryChangeContext,
+  useQueryContext,
+} from '../../providers/QueryProviders';
+import { razasLista } from '../../helpers/ListaRazas';
 
 const MainWrapperFilter = styled.form`
   padding: 1rem;
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 `;
 const WrapperInputFilter = styled.div`
   display: flex;
@@ -33,8 +47,17 @@ const InputCheckeable = styled.input`
 
 const InputList = styled.input`
   padding: 0.5rem;
+  margin-top: 0.5rem;
+  width: 100%;
 `;
 const LabelInput = styled.label``;
+
+const InputDate = styled.input`
+  font-size: 2rem;
+  padding: 0.5rem;
+`;
+
+const WrapperGenerico = styled.div``;
 
 const schemaAddLostPet = yup
   .object({
@@ -56,11 +79,72 @@ const Filters = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
+  const query = useQueryContext();
+
+  const date = new Date();
+  const [month, day, year] = [
+    date.getMonth(),
+    date.getDate(),
+    date.getFullYear(),
+  ];
+  const today = `${year}-${month + 1}-${day}`;
+
+  function LocationMarker({ handleChange }) {
+    const [position, setPosition] = useState(null);
+
+    const map = useMapEvents({
+      click(e) {
+        setPosition(e.latlng);
+        handleChange(e.latlng);
+      },
+    });
+
+    return position === null ? null : (
+      <Marker
+        icon={L.icon({
+          iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+          iconSize: [25, 35],
+        })}
+        position={position}
+      >
+        <Popup>Fue por aquí!</Popup>
+      </Marker>
+    );
+  }
+
+  const [city, setCity] = useState('');
+  async function getCity(latitude, longitud) {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
+    );
+    setCity(response?.data?.address);
+  }
+
+  const handleChangePoint = (coord) => {
+    getCity(coord.lat, coord.lng);
+  };
+
   const [datos, setDatos] = useState('');
   const queryChange = useQueryChangeContext();
+
+  const [fechaFormateada, setFechaFormateada] = useState('');
+  useEffect(() => {
+    if (datos?.date) {
+      setFechaFormateada(new Date(datos?.date).toISOString());
+    }
+  }, [datos?.date]);
+
   useEffect(() => {
     queryChange({
-      ...datos,
+      age: datos?.age,
+      breed: datos?.breed,
+      color: datos?.color,
+      date: fechaFormateada,
+      gender: datos?.gender,
+      isCastrated: datos?.isCastrated,
+      size: datos?.size,
+      type: datos?.type,
+      location: city,
     });
   }, [datos]);
 
@@ -299,17 +383,39 @@ const Filters = () => {
       </WrapperInputFilter>
       <WrapperInputFilter>
         <LabelInput>
-          Choose a browser from this list:
+          <TitleInput>Elije una opción de la lista:</TitleInput>
           <InputList list='Razas' {...register('breed')} />
         </LabelInput>
         <datalist id='Razas'>
-          <option value='Chrome' />
-          <option value='Firefox' />
-          <option value='Internet Explorer' />
-          <option value='Opera' />
-          <option value='Safari' />
-          <option value='Microsoft Edge' />
+          <option value='No tiene raza' />
+          {query.type ? (
+            razasLista[query.type].map((mascota, index) => (
+              <option key={index} value={mascota} />
+            ))
+          ) : (
+            <option value={'Primero marca perro o gato'} />
+          )}
         </datalist>
+      </WrapperInputFilter>
+      <WrapperGenerico>
+        <LabelInput>
+          <TitleInput> Fecha:</TitleInput>
+          <InputDate type='date' max={today} {...register('date')} />
+        </LabelInput>
+      </WrapperGenerico>
+      <WrapperInputFilter>
+        <MapContainer
+          style={{ height: '600px', width: '600px' }}
+          center={[-38.169114135560854, -65.75208708742923]}
+          zoom={5}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+          <LocationMarker handleChange={handleChangePoint} />
+        </MapContainer>
       </WrapperInputFilter>
     </MainWrapperFilter>
   );

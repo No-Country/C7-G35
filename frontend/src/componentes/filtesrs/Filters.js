@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styled from 'styled-components';
+import { FaFilter } from 'react-icons/fa';
 import {
   MapContainer,
   TileLayer,
@@ -18,6 +19,22 @@ import {
 } from '../../providers/QueryProviders';
 import { razasLista } from '../../helpers/ListaRazas';
 
+const MainWrapperVerTodos = styled.div``;
+const IconoFiltro = styled.button`
+  display: flex;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  background-color: var(--clr-blue-dark);
+  width: max-content;
+  padding: 1rem;
+  color: #fff;
+  border-radius: 0 7px 7px 0;
+  border: none;
+  cursor: pointer;
+`;
+const TextoFiltro = styled.p`
+`;
+
 const MainWrapperFilter = styled.form`
   padding: 1rem;
   display: flex;
@@ -29,6 +46,8 @@ const WrapperInputFilter = styled.div`
   gap: 0.5rem;
   flex-direction: column;
   padding-bottom: 1rem;
+  border-radius: 7px;
+  overflow: hidden;
   &&:nth-child(even) {
     background-color: var(--clr-grey-medium);
   }
@@ -57,7 +76,10 @@ const InputDate = styled.input`
   padding: 0.5rem;
 `;
 
-const WrapperGenerico = styled.div``;
+const WrapperGenerico = styled.div`
+  border-radius: 7px;
+  overflow: hidden;
+`;
 
 const schemaAddLostPet = yup
   .object({
@@ -149,6 +171,11 @@ const Filters = () => {
   }, [datos]);
 
   return (
+    <MainWrapperVerTodos>
+    <IconoFiltro>
+    <FaFilter/>
+    <TextoFiltro>Filtra tu busqueda</TextoFiltro>
+    </IconoFiltro>
     <MainWrapperFilter
       onChange={() => {
         setDatos(getValues());
@@ -418,6 +445,7 @@ const Filters = () => {
         </MapContainer>
       </WrapperInputFilter>
     </MainWrapperFilter>
+    </MainWrapperVerTodos>
   );
 };
 

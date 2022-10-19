@@ -6,6 +6,8 @@ export interface lossFilters {
   isRecovered: boolean;
 }
 
+export interface rescueFilters extends lossFilters {}
+
 export interface petFilters {
   gender?: Gender;
   type?: string;

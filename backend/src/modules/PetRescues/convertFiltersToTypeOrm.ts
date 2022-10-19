@@ -1,12 +1,16 @@
 import { FindOperator, Like, Repository, SelectQueryBuilder } from 'typeorm';
 import { AppDataSource } from '../../database/TypeOrmClient';
 import { Loss } from './Loss/Loss';
-import { lossFilters, petFilters } from './types';
+import { Rescue } from './LossRescues/Rescue';
+import { lossFilters, petFilters, rescueFilters } from './types';
 
 export class FiltersToTypeOrmQueryConverter {
   private lossRepository: Repository<Loss>;
+  private rescueRepository: Repository<Loss>;
+
   constructor() {
     this.lossRepository = AppDataSource.getRepository(Loss);
+    this.rescueRepository = AppDataSource.getRepository(Rescue);
   }
 
   public convertLossFiltersToQuery(
@@ -33,6 +37,32 @@ export class FiltersToTypeOrmQueryConverter {
     }
 
     return queryLoss;
+  }
+
+  public convertRescueFiltersToQuery(
+    rescueFiltersToParse: rescueFilters,
+    petFiltersToParse: petFilters
+  ): SelectQueryBuilder<Loss> {
+    let queryRescue = this.rescueRepository.createQueryBuilder('rescue').innerJoinAndSelect('rescue.pet', 'pet');
+
+    const lossFiltersFields = Reflect.ownKeys(rescueFiltersToParse);
+    lossFiltersFields.forEach(filterField => {
+      const value = Reflect.get(rescueFiltersToParse, filterField);
+      const valueExists = value !== null && value !== undefined;
+      if (valueExists) {
+        queryRescue.andWhere(`rescue.${String(filterField)} = :${String(filterField)}`, {
+          [filterField]: value
+        });
+      }
+    });
+
+    const { orWheresColors, wheresOptionsPets } = this.convertPetsFilters(petFiltersToParse);
+    queryRescue.andWhere({ pet: wheresOptionsPets });
+    if (orWheresColors) {
+      queryRescue.andWhere(orWheresColors);
+    }
+
+    return queryRescue;
   }
 
   private convertPetsFilters(petFiltersToParse: petFilters) {

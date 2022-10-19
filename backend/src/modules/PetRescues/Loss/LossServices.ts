@@ -31,7 +31,7 @@ export class LossServices {
     const loss = await this.findLoss(lossId);
     const usersIsOwner = loss.userId === userId;
     if (!usersIsOwner) {
-      throw new Error('no tiene permiso sobre esta mascota');
+      throw new Error('user does not have permissions');
     }
 
     await this.repository.update(loss.id, { isRecovered: true });

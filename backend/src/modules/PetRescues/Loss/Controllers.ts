@@ -17,6 +17,31 @@ export async function lossPostController(req: Request, res: Response): Promise<v
   }
 }
 
+export async function lossFromPetPostController(req: Request, res: Response): Promise<void> {
+  const userId = req.userId;
+  const petId = req.params.petId;
+  const { date, location } = req.body as newPetLoss;
+
+  try {
+    const loss = await lossServices.registerPetAsLoss({ date: new Date(date), location, userId }, petId);
+    res.status(httpStatus.CREATED).json({ petLoss: loss });
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function lossIsRecoveredPutController(req: Request, res: Response): Promise<void> {
+  const userId = req.userId;
+  const lossId = req.params.id;
+
+  try {
+    await lossServices.markAPetLossAsRecovered(lossId, userId);
+    res.status(httpStatus.OK).send();
+  } catch (error: any) {
+    throw error;
+  }
+}
+
 export async function lossPutController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
   const lossId = req.params.id;

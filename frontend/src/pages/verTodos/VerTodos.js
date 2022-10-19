@@ -17,7 +17,7 @@ const VerTodos = () => {
 
   const mascotas = useFetch(`http://localhost:8000/api/loss/by${params}`);
   const mascotasPerdidas = mascotas?.data?.petsLoss;
-
+  console.log(query);
   return (
     <MainWrapperVerTodo>
       <Filters/>

@@ -10,7 +10,6 @@ import {
   RiCheckboxBlankCircleLine,
 } from 'react-icons/ri';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import {
   MapContainer,
   TileLayer,

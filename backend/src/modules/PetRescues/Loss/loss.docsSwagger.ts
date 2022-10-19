@@ -43,10 +43,23 @@ export class PetsDocsRoutes {
   static LossPostController(@Body() body: newPetLossRequest): Loss {
     return {} as any;
   }
+
+  @Security('jwt')
+  @SuccessResponse('201', 'Created')
+  @Post('/{petId}')
+  static LossFromPetPostController(@Body() body: Omit<newPetLoss, 'pet' | 'userId'>): Loss {
+    return {} as any;
+  }
+
   @Security('jwt')
   @SuccessResponse('200', 'Updated')
   @Put('/{id}')
   static LossPutController(@Body() body: updatePetLossRequest, @Path() id: string) {}
+
+  @Security('jwt')
+  @SuccessResponse('200', 'Updated')
+  @Put('/{id}/recovered')
+  static LossIsRecoveredPutController(@Path() id: string) {}
 
   /**
    * get pets loss from an authenticated user

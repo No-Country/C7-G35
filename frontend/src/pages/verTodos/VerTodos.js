@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import omitBy from 'lodash/omitBy';
+import isEmpty from 'lodash/isEmpty';
 import CardMascota from '../../componentes/cardMascota/CardMascota';
 import useFetch from '../../customHooks/useFetch';
 import { WrapperListadoCards } from '../userProfile/UserProfile';
@@ -11,12 +13,10 @@ const MainWrapperVerTodo = styled.div``;
 const VerTodos = () => {
   const query = useQueryContext();
 
-  const params = `?${new URLSearchParams(query).toString()}`;
-  console.log(params);
+  const params = `?${new URLSearchParams(omitBy(query, isEmpty)).toString()}`;
 
   const mascotas = useFetch(`http://localhost:8000/api/loss/by${params}`);
   const mascotasPerdidas = mascotas?.data?.petsLoss;
-  console.log(mascotasPerdidas);
 
   return (
     <MainWrapperVerTodo>

@@ -363,7 +363,7 @@
 		},
 		"/loss/last": {
 			"get": {
-				"operationId": "Controller",
+				"operationId": "LastGetController",
 				"responses": {
 					"200": {
 						"description": "OK",
@@ -385,6 +385,118 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/loss/by": {
+			"get": {
+				"operationId": "LossByFiltersGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Loss"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get loss by Filters",
+				"tags": [
+					"Loss"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "location",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "date",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "gender",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "breed",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "age",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "isCastrated",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "color",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				]
 			}
 		},
 		"/loss": {

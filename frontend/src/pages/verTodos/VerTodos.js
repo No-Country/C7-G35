@@ -5,18 +5,19 @@ import { WrapperListadoCards } from '../userProfile/UserProfile';
 import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 
 const VerTodos = () => {
-  const MascotasPerdidas = useFetch('http://localhost:8000/api/pets');
-  const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+  const mascotas = useFetch('http://localhost:8000/api/loss/by?gender=male');
+  const mascotasPerdidas = mascotas?.data?.petsLoss;
+  console.log(mascotasPerdidas);
 
   return (
     <WrapperListadoCards>
-            {MascotasPerdidas?.length !== 0 ? (
-              MascotasPerdidasData?.map((mascota) => (
+            {mascotasPerdidas ? (
+              mascotasPerdidas?.map((mascota) => (
                 <CardMascota
-                  key={mascota?.id}
+                  key={mascota?.pet?.id}
                   id={'/detail-pet'}
-                  nombre={mascota?.name}
-                  link={mascota?.images ? mascota?.images[0] : SinFotoMascota}
+                  nombre={mascota?.pet?.name}
+                  link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
                   fecha={mascota?.date}
                   estado={'perdido'}
                 />
@@ -24,7 +25,7 @@ const VerTodos = () => {
             ) : (
               'nada'
             )}
-          </WrapperListadoCards>
+    </WrapperListadoCards>
   );
 };
 

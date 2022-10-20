@@ -8,7 +8,7 @@
     "test": "npm run test:unit",
     "test:unit": "jest",
     "test:coverage": "jest --coverage",
-    "build": "npm run build:clean && npm run build:tsc && npm run build:docs:swagger && npm run build:copy",
+    "build:backend": "npm run build:clean && npm run build:tsc && npm run build:docs:swagger && npm run build:copy",
     "build:tsc": "tsc -p tsconfig.prod.json",
     "build:copy": "copyfiles 'src/**/*.{json,yaml,html,png,ico,css,js}' 'dist/'",
     "build:clean": "rm -r dist; exit 0",

@@ -13,5 +13,6 @@ export interface updatePetLoss {
   userId: string;
   date?: Date;
   location?: string;
+  publicContact?: string;
   pet?: Omit<updatePet, 'id' | 'owner'>;
 }

@@ -57,11 +57,11 @@ export async function lossIsRecoveredPutController(req: Request, res: Response):
 export async function lossPutController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
   const lossId = req.params.id;
-  const { date, location, pet } = req.body as updatePetLoss;
+  const { date, location, publicContact, pet } = req.body as updatePetLoss;
 
   try {
     const dateFromRequest = date ? new Date(date) : undefined;
-    await lossServices.update({ id: lossId, userId, date: dateFromRequest, location, pet });
+    await lossServices.update({ id: lossId, userId, date: dateFromRequest, location, publicContact, pet });
     res.status(httpStatus.OK).send();
   } catch (error: any) {
     throw error;

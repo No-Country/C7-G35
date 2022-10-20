@@ -69,6 +69,7 @@ export const WrapperListadoCards = styled.div`
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 `;
 
 const UserProfile = () => {

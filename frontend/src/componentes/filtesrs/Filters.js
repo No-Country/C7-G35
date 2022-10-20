@@ -22,6 +22,7 @@ import { razasLista } from '../../helpers/ListaRazas';
 
 const MainWrapperVerTodos = styled.div`
   padding-top: 2rem;
+  align-self: flex-start;
 `;
 const IconoFiltro = styled.button`
   display: flex;
@@ -219,7 +220,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='dog'
+              value='Perro'
               id='dogFilter'
               {...register('type')}
             />
@@ -228,7 +229,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='cat'
+              value='Gato'
               id='catFilter'
               {...register('type')}
             />
@@ -249,7 +250,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='male'
+              value='Macho'
               id='maleFilter'
               {...register('gender')}
             />
@@ -258,7 +259,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='female'
+              value='Hembra'
               name='gender'
               id='femaleFilter'
               {...register('gender')}
@@ -281,7 +282,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='small'
+              value='Pequeño'
               id='sizeFilter'
               {...register('size')}
             />
@@ -290,7 +291,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='medium'
+              value='Mediano'
               id='mediumFilter'
               {...register('size')}
             />
@@ -299,7 +300,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='big'
+              value='Grande'
               id='bigFilter'
               {...register('size')}
             />
@@ -320,7 +321,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='puppy'
+              value='Cachorro'
               id='ageFilter'
               {...register('age')}
             />
@@ -329,7 +330,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='adult'
+              value='Adulto'
               id='adultFilter'
               {...register('age')}
             />
@@ -338,7 +339,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='radio'
-              value='senior'
+              value='Adulto mayor'
               id='seniorFilter'
               {...register('age')}
             />
@@ -359,7 +360,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='white'
+              value='Blanco'
               id='colorWhiteFilter'
               {...register('color')}
             />
@@ -368,7 +369,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='darkBrown'
+              value='Marron oscuro'
               id='colorBrownFilter'
               {...register('color')}
             />
@@ -377,7 +378,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='black'
+              value='Negro'
               id='colorBlackFilter'
               {...register('color')}
             />
@@ -386,7 +387,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='blonde'
+              value='Rubio'
               id='colorBlondeFilter'
               {...register('color')}
             />
@@ -395,7 +396,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='grey'
+              value='Gris'
               id='colorGreyFilter'
               {...register('color')}
             />
@@ -404,7 +405,7 @@ const Filters = () => {
           <WrapperLabelInput>
             <InputCheckeable
               type='checkbox'
-              value='orange'
+              value='Naranja'
               id='colorOrangeFilter'
               {...register('color')}
             />

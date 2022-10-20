@@ -5,7 +5,7 @@ export const mascotaTamanio = [
     labelTexto: 'Pequeño',
     labelIcono: <FaRegDotCircle />,
     idFor: 'smallPet',
-    value: 'small',
+    value: 'Pequeño',
     orientacion: 'horizontal',
 
   },
@@ -13,14 +13,14 @@ export const mascotaTamanio = [
     labelTexto: 'Mediano',
     labelIcono: <FaRegDotCircle />,
     idFor: 'mediumPet',
-    value: 'medium',
+    value: 'Mediano',
     orientacion: 'horizontal',
   },
   {
     labelTexto: 'Grande',
     labelIcono: <FaRegDotCircle />,
     idFor: 'bigPet',
-    value: 'big',
+    value: 'Grande',
     orientacion: 'horizontal',
   },
 ];

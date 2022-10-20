@@ -44,7 +44,7 @@ const Router = createBrowserRouter([
         element: <VerTodos/>,
       },
       {
-        path: '/detail-pet',
+        path: '/detail-pet/:state/:id',
         element: <DetailPet />,
       },
       {

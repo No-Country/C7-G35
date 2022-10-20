@@ -4,6 +4,7 @@ export interface newPetRescue {
   userId: string;
   date: Date;
   location: string;
+  publicContact?: string;
   pet: Omit<newPet, 'owner'>;
 }
 

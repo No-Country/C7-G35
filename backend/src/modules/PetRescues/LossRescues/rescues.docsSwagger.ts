@@ -37,6 +37,12 @@ export class PetsDocsRoutes {
     return [];
   }
 
+  @SuccessResponse('200', 'OK')
+  @Get('/{id}')
+  static RescueGetController(@Path() id: string): Rescue {
+    return {} as any;
+  }
+
   @Security('jwt')
   @SuccessResponse('201', 'Created')
   @Post()

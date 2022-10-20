@@ -3,6 +3,7 @@ import { validateReqSchema } from '../../api/Shared/validateReqSchema';
 import { verifyAuthToken } from '../Auth/verifyAuthTokenMiddelware';
 import {
   petDeleteController,
+  petGetController,
   petImagePostController,
   petPostController,
   petPutController,
@@ -11,6 +12,8 @@ import {
 import { newPetReqSchema, updatePetReqSchema } from './ReqSchemaVaidations';
 
 export const register = (router: Router) => {
+  router.get('/pets/:id', petGetController);
+
   router.use('/pets', verifyAuthToken);
 
   router.post('/pets', validateReqSchema(newPetReqSchema), petPostController);

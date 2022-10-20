@@ -7,10 +7,16 @@ const lossServices = new LossServices();
 
 export async function lossPostController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
-  const { date, location, pet } = req.body as newPetLoss;
+  const { date, location, publicContact, pet } = req.body as newPetLoss;
+  if (!date) {
+    throw new Error('Date is required');
+  }
+  if (!location) {
+    throw new Error('Location is Required');
+  }
 
   try {
-    const loss = await lossServices.create({ date: new Date(date), location, userId, pet });
+    const loss = await lossServices.create({ date: new Date(date), location, userId, publicContact, pet });
     res.status(httpStatus.CREATED).json({ petLoss: loss });
   } catch (error: any) {
     throw error;
@@ -20,10 +26,16 @@ export async function lossPostController(req: Request, res: Response): Promise<v
 export async function lossFromPetPostController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
   const petId = req.params.petId;
-  const { date, location } = req.body as newPetLoss;
+  const { date, location, publicContact } = req.body as newPetLoss;
+  if (!date) {
+    throw new Error('Date is required');
+  }
+  if (!location) {
+    throw new Error('Location is Required');
+  }
 
   try {
-    const loss = await lossServices.registerPetAsLoss({ date: new Date(date), location, userId }, petId);
+    const loss = await lossServices.registerPetAsLoss({ date: new Date(date), location, userId, publicContact }, petId);
     res.status(httpStatus.CREATED).json({ petLoss: loss });
   } catch (error: any) {
     throw error;
@@ -99,6 +111,16 @@ export async function lossByFiltersGetController(req: Request, res: Response): P
       limit
     );
     res.status(httpStatus.OK).json({ petsLoss, page, pageNext: numberPage + 1 });
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function lossGetController(req: Request, res: Response): Promise<void> {
+  const lossId = req.params.id;
+  try {
+    const loss = await lossServices.findLoss(lossId);
+    res.status(httpStatus.CREATED).json({ loss });
   } catch (error: any) {
     throw error;
   }

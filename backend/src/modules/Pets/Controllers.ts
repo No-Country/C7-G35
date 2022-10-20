@@ -84,3 +84,14 @@ export async function petImagePostController(req: Request, res: Response): Promi
     domainErrorHandler(res, error, petsErrorsHandlerMap);
   }
 }
+
+export async function petGetController(req: Request, res: Response): Promise<void> {
+  const petId = req.params.id;
+
+  try {
+    const pet = await petServices.findPet(petId);
+    res.status(httpStatus.OK).json({ pet });
+  } catch (error: any) {
+    domainErrorHandler(res, error, petsErrorsHandlerMap);
+  }
+}

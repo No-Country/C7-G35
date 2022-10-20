@@ -23,6 +23,11 @@ export const RescueEntitySchema = new EntitySchema<Rescue>({
     isRecovered: {
       type: Boolean,
       name: 'is_recovered'
+    },
+    publicContact: {
+      type: String,
+      name: 'public_contact',
+      nullable: true
     }
   },
   relations: {

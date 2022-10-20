@@ -130,7 +130,7 @@ const AddLostPet = () => {
     const response = await axios.post(
       'http://localhost:8000/api/loss',
       {
-        location: `${city.country}, ${city.state}, ${city.state_district}`,
+        location: `${city.country}, ${city.state}`,
         date: fecha,
         pet: {
           ...data,

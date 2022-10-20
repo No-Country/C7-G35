@@ -424,7 +424,7 @@ const Filters = () => {
         </LabelInput>
       </WrapperGenerico>
       <WrapperInputFilter>
-        {/* <MapContainer
+        <MapContainer
           style={{ height: '600px', width: '600px' }}
           center={[-38.169114135560854, -65.75208708742923]}
           zoom={5}
@@ -435,7 +435,7 @@ const Filters = () => {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
           <LocationMarker handleChange={handleChangePoint} />
-        </MapContainer> */}
+        </MapContainer>
       </WrapperInputFilter>
     </MainWrapperFilter>
     </MainWrapperVerTodos>

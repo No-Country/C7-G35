@@ -37,6 +37,12 @@ export class PetsDocsRoutes {
     return [];
   }
 
+  @SuccessResponse('200', 'OK')
+  @Get('/{id}')
+  static LossGetController(@Path() id: string): Loss {
+    return {} as any;
+  }
+
   @Security('jwt')
   @SuccessResponse('201', 'Created')
   @Post()

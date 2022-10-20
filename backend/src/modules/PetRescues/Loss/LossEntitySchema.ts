@@ -23,6 +23,11 @@ export const LossEntitySchema = new EntitySchema<Loss>({
     isRecovered: {
       type: Boolean,
       name: 'is_recovered'
+    },
+    publicContact: {
+      type: String,
+      name: 'public_contact',
+      nullable: true
     }
   },
   relations: {

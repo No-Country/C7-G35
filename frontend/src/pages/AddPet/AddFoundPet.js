@@ -92,7 +92,7 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
-    publicContact: yup.string().phone('ingresa un numero valido').required('Este campo es requerido'),
+    publicContact: yup.string('ingresa un numero valido').phone('ingresa un numero valido').required('Este campo es requerido'),
   })
   .required();
 
@@ -124,6 +124,7 @@ const AddFoundPet = () => {
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
+  const { token } = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
@@ -137,7 +138,7 @@ const AddFoundPet = () => {
           date: undefined,
         },
       },
-      { headers: { Authorization: `Bearer ${cookies.token}` } },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
     useFormChange((prevState) => ({
       ...prevState,
@@ -331,8 +332,9 @@ const AddFoundPet = () => {
           validacion={{ ...register('publicContact') }}
           type={'tel'}
           orientacion={'horizontal'}
-          placeholder={'+543816677441'}
+          placeholder={'3816677441'}
         />
+        {errors.publicContact && <Error text={errors.publicContact.message}/>}
       </WrapperComponentForm>
 
       <ButtonComponent

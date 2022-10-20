@@ -1,5 +1,5 @@
 export const razasLista = {
-  dog: [
+  Perro: [
     'Affenpinscher',
     'Airedale terrier',
     'Akita',
@@ -283,7 +283,7 @@ export const razasLista = {
     'Xoloitzcuintle',
     'Yorkshire Terrier',
   ],
-  cat: [
+  Gato: [
     'Bobtail americano - American bobtail',
     'Abisinio - Abyssinian',
     'Rizo americano - American curl',

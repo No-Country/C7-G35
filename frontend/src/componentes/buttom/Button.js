@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Button = styled.a`
   width: min(80%, 350px);
   border: none;
-  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
+  background-color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
   color: #fff;
   border-radius: 10px;
   padding: 0.8rem;
@@ -25,7 +25,7 @@ const RoundedButton = styled.a`
     color: #fff;
     font-size: 2rem;
     border-radius: 100vh;
-    background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
+    background-color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
     cursor: pointer;
  `;
 

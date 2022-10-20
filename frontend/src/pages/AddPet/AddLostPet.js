@@ -126,13 +126,18 @@ const AddLostPet = () => {
   const { token } = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
-    const fecha = new Date(date).toLocaleDateString();
+    const fecha = new Date(date).toUTCString();
+    console.log(date);
+    console.log(fecha);
     const response = await axios.post(
       'http://localhost:8000/api/loss',
       {
         location: `${city.country}, ${city.state}, ${city.state_district}`,
         date: fecha,
-        pet: data,
+        pet: {
+          ...data,
+          date: undefined,
+        },
       },
       { headers: { Authorization: `Bearer ${token}` } },
     );

@@ -89,6 +89,9 @@
 					},
 					"isRecovered": {
 						"type": "boolean"
+					},
+					"publicContact": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -165,6 +168,9 @@
 					},
 					"pet": {
 						"$ref": "#/components/schemas/Omit_newPet.owner_"
+					},
+					"publicContact": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -181,6 +187,30 @@
 			},
 			"newPetLossRequest": {
 				"$ref": "#/components/schemas/Omit_newPetLoss.userId_"
+			},
+			"Pick_newPetLoss.Exclude_keyofnewPetLoss.pet-or-userId__": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"publicContact": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"date",
+					"location"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_newPetLoss.pet-or-userId_": {
+				"$ref": "#/components/schemas/Pick_newPetLoss.Exclude_keyofnewPetLoss.pet-or-userId__",
+				"description": "Construct a type with the properties of T except for those in type K."
 			},
 			"Pick_updatePet.Exclude_keyofupdatePet.id-or-owner__": {
 				"properties": {
@@ -250,6 +280,96 @@
 			},
 			"updatePetLossRequest": {
 				"$ref": "#/components/schemas/Omit_updatePetLoss.userId-or-id_"
+			},
+			"Rescue": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Pet"
+					},
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"isRecovered": {
+						"type": "boolean"
+					},
+					"publicContact": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"userId",
+					"pet",
+					"date",
+					"location",
+					"isRecovered"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_newPetRescue.Exclude_keyofnewPetRescue.userId__": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Omit_newPet.owner_"
+					},
+					"publicContact": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"date",
+					"location",
+					"pet"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_newPetRescue.userId_": {
+				"$ref": "#/components/schemas/Pick_newPetRescue.Exclude_keyofnewPetRescue.userId__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"newPetRescuesRequest": {
+				"$ref": "#/components/schemas/Omit_newPetRescue.userId_"
+			},
+			"Pick_updatePetRescue.Exclude_keyofupdatePetRescue.userId-or-id__": {
+				"properties": {
+					"date": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"location": {
+						"type": "string"
+					},
+					"pet": {
+						"$ref": "#/components/schemas/Omit_updatePet.id-or-owner_"
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_updatePetRescue.userId-or-id_": {
+				"$ref": "#/components/schemas/Pick_updatePetRescue.Exclude_keyofupdatePetRescue.userId-or-id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"updatePetRescueRequest": {
+				"$ref": "#/components/schemas/Omit_updatePetRescue.userId-or-id_"
 			},
 			"newPetBody": {
 				"$ref": "#/components/schemas/Omit_newPet.owner_"
@@ -499,6 +619,73 @@
 				]
 			}
 		},
+		"/loss/{id}": {
+			"get": {
+				"operationId": "LossGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Loss"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Loss"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "LossPutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Loss"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/updatePetLossRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/loss": {
 			"post": {
 				"operationId": "LossPostController",
@@ -563,9 +750,45 @@
 				"parameters": []
 			}
 		},
-		"/loss/{id}": {
+		"/loss/{petId}": {
+			"post": {
+				"operationId": "LossFromPetPostController",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Loss"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Loss"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_newPetLoss.pet-or-userId_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/loss/{id}/recovered": {
 			"put": {
-				"operationId": "LossPutController",
+				"operationId": "LossIsRecoveredPutController",
 				"responses": {
 					"200": {
 						"description": "Updated"
@@ -588,17 +811,373 @@
 							"type": "string"
 						}
 					}
+				]
+			}
+		},
+		"/rescues/last": {
+			"get": {
+				"operationId": "LastGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Rescue"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get last 3 recues pets",
+				"tags": [
+					"Rescues"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/rescues/by": {
+			"get": {
+				"operationId": "RecuesByFiltersGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Rescue"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get rescues by Filters",
+				"tags": [
+					"Rescues"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "location",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "date",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "gender",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "size",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "breed",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "age",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "isCastrated",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "color",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/rescues/{id}": {
+			"get": {
+				"operationId": "RescueGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rescue"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rescues"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "RescuePutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Rescues"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
 				],
 				"requestBody": {
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/updatePetLossRequest"
+								"$ref": "#/components/schemas/updatePetRescueRequest"
 							}
 						}
 					}
 				}
+			}
+		},
+		"/rescues": {
+			"post": {
+				"operationId": "RescuePostController",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rescue"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rescues"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/newPetRescuesRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "RescueByUserGetController",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Rescue"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "get pets loss from an authenticated user",
+				"tags": [
+					"Rescues"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/pets/{id}": {
+			"get": {
+				"operationId": "PetGetController",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pet"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "PetPutController",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/updatePetBody"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "PetDeleteController",
+				"responses": {
+					"200": {
+						"description": "deleted"
+					}
+				},
+				"tags": [
+					"Pets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/pets": {
@@ -663,70 +1242,6 @@
 					}
 				],
 				"parameters": []
-			}
-		},
-		"/pets/{id}": {
-			"put": {
-				"operationId": "PetPutController",
-				"responses": {
-					"200": {
-						"description": "Updated"
-					}
-				},
-				"tags": [
-					"Pets"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/updatePetBody"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "PetDeleteController",
-				"responses": {
-					"200": {
-						"description": "deleted"
-					}
-				},
-				"tags": [
-					"Pets"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		},
 		"/pets/{id}/images": {

@@ -6,7 +6,7 @@ import { ButtonComponent } from '../../componentes/buttom/Button';
 import UploadImg from '../../componentes/uploadImage/UploadImg';
 import { useFormContext } from '../../providers/FormProviders';
 
-const FormImagen = styled.form`
+export const FormImagen = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,16 +16,16 @@ const FormImagen = styled.form`
   padding: 2rem 0;
 `;
 
-const Mensaje = styled.div`
+export const Mensaje = styled.div`
   font-size: 4rem;
   text-align: center;
   width: min(800px, 100%);
 `;
-const Resalta = styled.span`
+export const Resalta = styled.span`
   font-weight: 700;
 `;
 
-const WrapperFoto = styled.div`
+export const WrapperFoto = styled.div`
   margin: 1rem auto;
   width: 90%;
   display: flex;
@@ -35,7 +35,7 @@ const WrapperFoto = styled.div`
   width: min(800px, 100%);
 `;
 
-const WrapperFotoPreview = styled.div`
+export const WrapperFotoPreview = styled.div`
   background-color: #fff;
   padding: 0.5rem;
   width: min(100%, 500px);
@@ -46,7 +46,7 @@ const WrapperFotoPreview = styled.div`
   border-radius: 3px;
 `;
 
-const FotoSubida = styled.img`
+export const FotoSubida = styled.img`
   width: 100%;
   height: 80%;
   object-fit: cover;

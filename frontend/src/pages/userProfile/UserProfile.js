@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import { SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 import useFetch from '../../customHooks/useFetch';
 import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 import { ButtonComponent, ButtonComponentShort } from '../../componentes/buttom/Button';
+import { useFormChangeContext } from '../../providers/FormProviders';
 
 const WrapperUserProfile = styled.div`
   color: var(--clr-blue-dark);
@@ -95,10 +96,7 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`http://localhost:8000/api/pets/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+      if (result.isConfirmed) {        
         Swal.fire(
           'Borrado!',
           'Ya no veras esta mascota en tu lista.',
@@ -106,6 +104,17 @@ const UserProfile = () => {
         );
       }
     });
+
+    axios.delete(`http://localhost:8000/api/pets/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  };
+
+  const useChengeForm = useFormChangeContext();
+  const navigate = useNavigate();
+  const handleEdit = async (mascota) => {
+    useChengeForm(mascota);
+    navigate(`/edit-registered-pet/${mascota?.id}`);
   };
   return (
     <WrapperUserProfile>
@@ -146,6 +155,7 @@ const UserProfile = () => {
                   estado={'perdido'}
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
+                  editFunction={() => handleEdit(mascota)}
                 />
               ))
             ) : (

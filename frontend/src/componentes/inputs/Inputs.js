@@ -56,12 +56,13 @@ export const InputText = styled.input`
   flex: 1;
 `;
 export const InputTextComponent = ({
-  orientacion, idFor, label, type, validacion, placeholder,
+  orientacion, idFor, label, type, validacion, placeholder, defaultValue,
 }) => {
   return (
     <WrapperInput orientacion={orientacion}>
       <LabelInputText htmlFor={idFor} orientacion={orientacion}>{label}</LabelInputText>
-      <InputText id={idFor} type={type} {...validacion} placeholder={placeholder} />
+      <InputText id={idFor} type={type} {...validacion} placeholder={placeholder}
+      defaultValue={defaultValue}/>
     </WrapperInput>
   );
 };
@@ -113,10 +114,11 @@ export const RadioButtonIconComponent = ({
   orientacion,
   validacion,
   value,
+  defaultChecked,
 }) => {
   return (
     <WrapperCheckeableInput>
-      <CheckeableInput type='radio' id={idFor} {...validacion} value={value} />
+      <CheckeableInput type='radio' id={idFor} {...validacion} value={value} defaultChecked={defaultChecked}/>
       <LabelCheckeable htmlFor={idFor} orientacion={orientacion}>
         <LabelRadioIcono orientacion={orientacion}>
           {labelIcono}
@@ -190,11 +192,13 @@ export const TextAreaComponent = ({
   placeholder,
   validacion,
   idFor,
+  value,
 }) => {
   return (
     <WrapperInput>
       <LabelInputText htmlFor={idFor}>{label}</LabelInputText>
-      <TextArea placeholder={placeholder} {...validacion} id={idFor}></TextArea>
+      <TextArea
+      placeholder={placeholder} {...validacion} id={idFor} defaultValue={value} ></TextArea>
     </WrapperInput>
   );
 };
@@ -213,7 +217,9 @@ const InputList = styled.input`
 const DataList = styled.datalist``;
 const DataListOption = styled.option``;
 
-export const DataListComponent = ({ Array, tipo, validacion }) => {
+export const DataListComponent = ({
+  Array, tipo, validacion, defaultValue,
+}) => {
   return (
     <WrapperDataList>
       <LabelTadaList>
@@ -223,7 +229,7 @@ export const DataListComponent = ({ Array, tipo, validacion }) => {
       <DataList id='breed'>
         <DataListOption value={'No tiene raza'} defaultValue />
         {tipo && Array && Array[tipo]?.sort()?.map((dato, index) => (
-          <DataListOption key={index} value={dato} />
+          <DataListOption key={index} value={dato} defaultValue={defaultValue}/>
         ))}
       </DataList>
     </WrapperDataList>

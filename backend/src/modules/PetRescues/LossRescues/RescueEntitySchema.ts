@@ -1,10 +1,10 @@
 import { EntitySchema } from 'typeorm';
-import { Loss } from './Loss';
+import { Rescue } from './Rescue';
 
-export const LossEntitySchema = new EntitySchema<Loss>({
-  name: 'Loos',
-  tableName: 'loss',
-  target: Loss,
+export const RescueEntitySchema = new EntitySchema<Rescue>({
+  name: 'Rescue',
+  tableName: 'rescues',
+  target: Rescue,
   schema: 'Pet_Rescues',
 
   columns: {

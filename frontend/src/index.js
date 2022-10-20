@@ -6,16 +6,16 @@ import { CookiesProvider } from 'react-cookie';
 import reportWebVitals from './reportWebVitals';
 import Router from './Router';
 import { FormProvider } from './providers/FormProviders';
-import { UserProvider } from './providers/UserProviders';
+import { QueryProvider } from './providers/QueryProviders';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CookiesProvider>
-      <UserProvider>
+      <QueryProvider>
         <FormProvider>
           <RouterProvider router={Router} />
         </FormProvider>
-      </UserProvider>
+      </QueryProvider>
     </CookiesProvider>
   </React.StrictMode>,
 );

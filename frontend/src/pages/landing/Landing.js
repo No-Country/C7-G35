@@ -144,7 +144,6 @@ const TextoDesc = styled.p``;
 const Landing = () => {
   const datosLosts = useFetch('http://localhost:8000/api/loss/last');
   const datosFound = useFetch('http://localhost:8000/api/rescues/last');
-  console.log('rescatados', datosFound);
 
   return (
     <>

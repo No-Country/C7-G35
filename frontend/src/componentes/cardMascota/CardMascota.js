@@ -72,7 +72,7 @@ const ActionButton = styled.button`
 
 const CardMascota = (
   {
-    id, nombre, link, estado, fecha, token, deleteFunction,
+    id, nombre, link, estado, fecha, token, deleteFunction, editFunction,
   },
 ) => {
   const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
@@ -90,7 +90,7 @@ const CardMascota = (
       token
       && <WrapperButtons>
         <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>
-        <ActionButton><RiFileEditFill/></ActionButton>
+        <ActionButton onClick={ editFunction }><RiFileEditFill/></ActionButton>
       </WrapperButtons>
       }
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>

@@ -8,7 +8,9 @@ import Login from './pages/login/Login';
 import VerTodos from './pages/verTodos/VerTodos';
 import UserProfile from './pages/userProfile/UserProfile';
 import AddFoundPet from './pages/AddPet/AddFoundPet';
+import EditRegisteredPet from './pages/editPets/EditRegisteredPet';
 import Layout from './componentes/layout/Layout';
+
 
 const Router = createBrowserRouter([
   {
@@ -42,6 +44,10 @@ const Router = createBrowserRouter([
       {
         path: '/see-all-lost',
         element: <VerTodos/>,
+      },
+      {
+        path: '/edit-registered-pet/:id',
+        element: <EditRegisteredPet/>,
       },
       {
         path: '/detail-pet',

@@ -184,13 +184,13 @@ const Landing = () => {
         titulo={'Mascotas recién encontradas'}
         datos={mascotasEncontrados}
         estado={'Encontrado'}
-        pathVerTodos={'/encontrados'}
+        pathVerTodos={'/see-all-lost/rescues'}
       />
       <PosteosRecientes
         titulo={'Mascotas recién perdidas'}
         datos={data?.loss}
         estado={'loss'}
-        pathVerTodos={'/see-all-lost'}
+        pathVerTodos={'/see-all-lost/loss'}
       />
       <SVGWavesInferior color={'pinkMedium'} top={'4px'}/>
       <SobreNosotrosWrapper>

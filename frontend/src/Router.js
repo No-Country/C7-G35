@@ -40,7 +40,7 @@ const Router = createBrowserRouter([
         element: <AddPhoto />,
       },
       {
-        path: '/see-all-lost',
+        path: '/see-all-lost/:state',
         element: <VerTodos/>,
       },
       {

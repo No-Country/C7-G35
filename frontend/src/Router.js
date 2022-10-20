@@ -11,7 +11,6 @@ import AddFoundPet from './pages/AddPet/AddFoundPet';
 import EditRegisteredPet from './pages/editPets/EditRegisteredPet';
 import Layout from './componentes/layout/Layout';
 
-
 const Router = createBrowserRouter([
   {
     path: '/',

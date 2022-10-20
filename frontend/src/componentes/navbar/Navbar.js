@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Link, LinkContainer, NavContainer } from './Navbar.styled';
+import {
+  Button, Link, LinkContainer, NavContainer,
+} from './Navbar.styled';
 
 import petSpaceLogo from '../../assets/petspace-logo.png';
 

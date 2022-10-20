@@ -10,7 +10,6 @@ import {
   RiCheckboxBlankCircleLine,
 } from 'react-icons/ri';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import {
   MapContainer,
   TileLayer,
@@ -48,14 +47,14 @@ import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
 
-function LocationMarker({ setPos, handleChange }) {
+function LocationMarker({ handleChange }) {
   const [position, setPosition] = useState(null);
 
   const map = useMapEvents({
     click(e) {
       setPosition(e.latlng);
       handleChange(e.latlng);
-      setPos(e.latlng);
+      console.log(e.latlng);
     },
   });
 
@@ -109,8 +108,6 @@ const AddLostPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const [cookies] = useCookies(['token']);
-
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
     const response = await axios.get(
@@ -126,19 +123,22 @@ const AddLostPet = () => {
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
+  const { token } = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
-    const fecha = new Date(date).toLocaleDateString();
+    const fecha = new Date(date).toUTCString();
     const response = await axios.post(
       'http://localhost:8000/api/loss',
       {
-        location: `${city.country}, ${city.state}, ${city.state_district}`,
+        location: `${city.country}, ${city.state}`,
         date: fecha,
-        pet: data,
+        pet: {
+          ...data,
+          date: undefined,
+        },
       },
-      { headers: { Authorization: `Bearer ${cookies.token}` } },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
-    console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
       id: response?.data?.petLoss?.pet?.id,

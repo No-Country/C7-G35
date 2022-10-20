@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { useUserChangeContext, useUserContext } from '../../providers/UserProviders';
 
 const Login = () => {
   const [cookies, setCookie] = useCookies(['token']);

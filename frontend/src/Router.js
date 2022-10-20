@@ -1,6 +1,4 @@
-import {
-  createBrowserRouter,
-} from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import AddPet from './pages/AddPet/AddPet';
 import AddLostPet from './pages/AddPet/AddLostPet';
 import AddPhoto from './pages/AddPet/AddPhoto';
@@ -8,45 +6,45 @@ import DetailPet from './pages/detailPet/DetailPet';
 import Landing from './pages/landing/Landing';
 import Login from './pages/login/Login';
 import UserProfile from './pages/userProfile/UserProfile';
-import Navbar from './componentes/navbar/Navbar';
 import AddFoundPet from './pages/AddPet/AddFoundPet';
+import Layout from './componentes/layout/Layout';
 
 const Router = createBrowserRouter([
   {
     path: '/',
-    element: <Navbar/>,
+    element: <Layout />,
     children: [
       {
         index: true,
-        element: <Landing/>,
+        element: <Landing />,
       },
       {
         path: '/login',
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: '/form-add-pet',
-        element: <AddPet/>,
+        element: <AddPet />,
       },
       {
         path: '/form-add-lost-pet',
-        element: <AddLostPet/>,
+        element: <AddLostPet />,
       },
       {
         path: '/form-add-found-pet',
-        element: <AddFoundPet/>,
+        element: <AddFoundPet />,
       },
       {
         path: '/add-photo',
-        element: <AddPhoto/>,
+        element: <AddPhoto />,
       },
       {
         path: '/detail-pet',
-        element: <DetailPet/>,
+        element: <DetailPet />,
       },
       {
         path: '/user',
-        element: <UserProfile/>,
+        element: <UserProfile />,
       },
     ],
   },

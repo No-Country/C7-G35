@@ -43,11 +43,12 @@ const Router = createBrowserRouter([
       {
         path: '/see-all-lost/:state',
         element: <VerTodos/>,
-      
+      },
       {
         path: '/detail-pet/:state/:id',
         element: <DetailPet/>,
       },
+      {
         path: '/edit-registered-pet/:id',
         element: <EditRegisteredPet/>,
       },

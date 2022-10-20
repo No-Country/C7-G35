@@ -72,7 +72,7 @@ const ActionButton = styled.button`
 
 const CardMascota = (
   {
-    path, nombre, link, estado, fecha, token, deleteFunction, editFunction
+    path, nombre, link, estado, fecha, token, deleteFunction, editFunction,
   },
 ) => {
   const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {

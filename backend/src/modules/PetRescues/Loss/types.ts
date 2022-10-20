@@ -5,6 +5,7 @@ export interface newPetLoss {
   date: Date;
   location: string;
   pet: Omit<newPet, 'owner'>;
+  publicContact?: string;
 }
 
 export interface updatePetLoss {

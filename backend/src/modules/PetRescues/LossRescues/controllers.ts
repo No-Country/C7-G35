@@ -7,10 +7,10 @@ const rescueServices = new RescueServices();
 
 export async function rescuePostController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
-  const { date, location, pet } = req.body as newPetRescue;
+  const { date, location, publicContact, pet } = req.body as newPetRescue;
 
   try {
-    const petRescue = await rescueServices.create({ date: new Date(date), location, userId, pet });
+    const petRescue = await rescueServices.create({ date: new Date(date), location, userId, publicContact, pet });
     res.status(httpStatus.CREATED).json({ petRescue });
   } catch (error: any) {
     throw error;
@@ -43,8 +43,8 @@ export async function ByUserGetController(req: Request, res: Response): Promise<
 
 export async function lastRescueGetController(req: Request, res: Response): Promise<void> {
   try {
-    const rescue = await rescueServices.findLast();
-    res.status(httpStatus.OK).json({ rescue });
+    const rescues = await rescueServices.findLast();
+    res.status(httpStatus.OK).json({ rescue: rescues });
   } catch (error: any) {
     throw error;
   }
@@ -74,6 +74,16 @@ export async function rescueByFiltersGetController(req: Request, res: Response):
       limit
     );
     res.status(httpStatus.OK).json({ petsRescues, page, pageNext: numberPage + 1 });
+  } catch (error: any) {
+    throw error;
+  }
+}
+
+export async function rescueGetController(req: Request, res: Response): Promise<void> {
+  const rescueId = req.params.id;
+  try {
+    const rescue = await rescueServices.find(rescueId);
+    res.status(httpStatus.OK).json({ rescue });
   } catch (error: any) {
     throw error;
   }

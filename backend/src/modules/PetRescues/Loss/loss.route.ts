@@ -5,6 +5,7 @@ import {
   lossByFiltersGetController,
   lossByUserGetController,
   lossFromPetPostController,
+  lossGetController,
   lossIsRecoveredPutController,
   lossPostController,
   lossPutController
@@ -13,6 +14,7 @@ import {
 export const register = (router: Router) => {
   router.get('/loss/last', lastLossGetController);
   router.get('/loss/by', lossByFiltersGetController);
+  router.get('/loss/:id', lossGetController);
 
   router.use('/loss', verifyAuthToken);
 

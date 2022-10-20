@@ -142,24 +142,8 @@ const TituloDesc = styled.h3`
 const TextoDesc = styled.p``;
 
 const Landing = () => {
-  const { data } = useFetch('http://localhost:8000/api/loss/last');
-  const mascotasEncontrados = [
-    {
-      id: '1',
-      link: 'https://www.zooplus.es/magazine/wp-content/uploads/2021/02/perro-perdido.jpeg',
-      estado: 'Encontrado',
-    },
-    {
-      id: '2',
-      link: 'https://www.buscomiperroperdido.com/Catalogo/Item/456_Item/perro-Perdido-Barcelona-Arenys-de-Munt-0.jpg',
-      estado: 'Encontrado',
-    },
-    {
-      id: '3',
-      link: 'https://ep01.epimg.net/verne/imagenes/2017/04/12/mexico/1491951345_926681_1491951517_noticia_normal.jpg',
-      estado: 'Encontrado',
-    },
-  ];
+  const datosLosts = useFetch('http://localhost:8000/api/loss/last');
+  const datosFound = useFetch('http://localhost:8000/api/rescues/last');
 
   return (
     <>
@@ -173,8 +157,8 @@ const Landing = () => {
           </HeaderTitle>
           <ButtonComponent
             texto={'Encontré una mascota'}
-            estado={'Encontrado'}
-            path={'/'}
+            estado={'rescues'}
+            path={'/form-add-found-pet'}
           />
           <ButtonComponent texto={'Busco mi mascota'} path={'/form-add-lost-pet'} />
         </ColumnaDos>
@@ -182,13 +166,13 @@ const Landing = () => {
       <SVGWavesSuperior top={'-0.2px'}/>
       <PosteosRecientes
         titulo={'Mascotas recién encontradas'}
-        datos={mascotasEncontrados}
-        estado={'Encontrado'}
+        datos={datosFound?.data?.rescue}
+        estado={'rescues'}
         pathVerTodos={'/see-all-lost/rescues'}
       />
       <PosteosRecientes
         titulo={'Mascotas recién perdidas'}
-        datos={data?.loss}
+        datos={datosLosts?.data?.loss}
         estado={'loss'}
         pathVerTodos={'/see-all-lost/loss'}
       />

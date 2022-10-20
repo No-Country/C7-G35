@@ -82,9 +82,11 @@ const UserProfile = () => {
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
 
   const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
-
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
   console.log(MascotasPerdidasData);
+
+  const MascotasRescatadas = useFetch('http://localhost:8000/api/rescues', token);
+  const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -96,17 +98,16 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      if (result.isConfirmed) {        
+      axios.delete(`http://localhost:8000/api/pets/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (result.isConfirmed) {
         Swal.fire(
           'Borrado!',
           'Ya no veras esta mascota en tu lista.',
           'success',
         );
       }
-    });
-
-    axios.delete(`http://localhost:8000/api/pets/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
     });
   };
 
@@ -148,11 +149,11 @@ const UserProfile = () => {
               MascotasRegistradasData?.map((mascota) => (
                 <CardMascota
                   key={mascota?.id}
-                  id={'/detail-pet'}
+                  path={`/detail-pet/pets/${mascota?.id}`}
                   nombre={mascota?.name}
                   link={mascota?.images ? mascota?.images[0] : SinFotoMascota}
                   fecha={mascota?.date}
-                  estado={'perdido'}
+                  estado={'pets'}
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   editFunction={() => handleEdit(mascota)}
@@ -177,10 +178,9 @@ const UserProfile = () => {
             Aquí verás la mascota marcada &quot;perdida&quot;
           </Descripcion>
           <WrapperListadoCards>
-            {MascotasPerdidasData?.pet !== null ? (
+            {MascotasPerdidasData?.length !== 0 ? (
               MascotasPerdidasData?.map((mascota) => (
-                mascota?.pet
-                && <CardMascota
+                <CardMascota
                   key={mascota?.id}
                   id={'/detail-pet'}
                   nombre={mascota?.pet?.name}
@@ -194,6 +194,32 @@ const UserProfile = () => {
             ) : (
               <DescripcionSinRegistro>
                 No tienes ninguna mascota marcada como perdida, que bueno!
+              </DescripcionSinRegistro>
+            )}
+          </WrapperListadoCards>
+        </WrapperMascotasRegistradas>
+        <WrapperMascotasRegistradas>
+          <Titulo>Tu mascota perdida</Titulo>
+          <Descripcion>
+            Aquí verás la mascota que encontraste;
+          </Descripcion>
+          <WrapperListadoCards>
+            {MascotasRescatadasData?.length !== 0 ? (
+              MascotasRescatadasData?.map((mascota) => (
+                <CardMascota
+                  key={mascota?.id}
+                  id={'/detail-pet'}
+                  nombre={mascota?.pet?.name}
+                  link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
+                  fecha={mascota?.date}
+                  estado={'perdido'}
+                  token={token}
+                  deleteFunction={() => handleDelete(mascota?.id)}
+                />
+              ))
+            ) : (
+              <DescripcionSinRegistro>
+                No tienes ninguna mascota marcada como encontrada.
               </DescripcionSinRegistro>
             )}
           </WrapperListadoCards>

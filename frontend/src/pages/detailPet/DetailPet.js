@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../customHooks/useFetch';
@@ -65,9 +64,7 @@ const Value = styled.p`
 const DetailPet = () => {
   const { id, state } = useParams();
 
-  const detalleMascota = state === 'loss'
-    ? useFetch(`http://localhost:8000/api/loss/${id}`)
-    : useFetch(`http://localhost:8000/api/rescues/${id}`);
+  const detalleMascota = useFetch(`http://localhost:8000/api/${state}/${id}`);
 
   const datosMostrar = state === 'loss'
     ? detalleMascota?.data?.loss

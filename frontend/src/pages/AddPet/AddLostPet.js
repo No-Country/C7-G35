@@ -92,8 +92,7 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
-    mobile: yup.string().phone(),
-    email: yup.string().email().required('Este campo es requerido'),
+    publicContact: yup.string().phone('ingresa un numero valido').required('Este campo es requerido'),
   })
   .required();
 
@@ -179,7 +178,6 @@ const AddLostPet = () => {
     <WrapperMascotaPerdida
       onSubmit={handleSubmit(handleAddMascota)}
     >
-      <h2>Registra tu mascota perdida, los primeros 4 puntos son obligatorios</h2>
       <WrapperComponentForm>
         <TituloForm>Se perdio mi...</TituloForm>
         <OptionGroups>
@@ -345,23 +343,16 @@ const AddLostPet = () => {
         />
       </WrapperComponentForm>
       <WrapperComponentForm>
-        <TituloForm>Si sabes algo puedes comunicarte por...</TituloForm>
+        <TituloForm>Si sabes algo puedes enviame un mensaje...</TituloForm>
         <InputTextComponent
           label={'Teléfono'}
           idFor={'telOwnerLostPet'}
-          validacion={{ ...register('mobile') }}
+          validacion={{ ...register('publicContact') }}
           type={'tel'}
           orientacion={'horizontal'}
-          placeholder={'+54 3556677441'}
+          placeholder={'+543816677441'}
         />
-         <InputTextComponent
-          label={'E-mail'}
-          idFor={'emailOwnerLostPet'}
-          validacion={{ ...register('email') }}
-          type={'email'}
-          orientacion={'horizontal'}
-          placeholder={'ejemplo@gmail.com'}
-        />
+        {errors.type && <Error text={errors.publicContact.message}/>}
       </WrapperComponentForm>
 
       <ButtonComponent

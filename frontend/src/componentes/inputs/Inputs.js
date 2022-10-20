@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import {
-  RiCheckboxCircleFill,
-} from 'react-icons/ri';
 
 const Mensaje = styled.p`
   color: rgb(38 38 38);
@@ -129,20 +126,6 @@ export const RadioButtonIconComponent = ({
   );
 };
 
-const LabelCheckeicon = styled.div`
-  position: absolute; 
-  font-size: 8rem;
-  inset: 0;
-  color: var(--clr-green);
-  opacity: 0;
-  &:hover{
-    opacity: .5;
-  }
-  & ${CheckeableInput}:checked {
-    opacity: .5;
-  }
- `;
-
 const LabelImagenWrapper = styled.div`
   width: 8rem;
   height: 8rem;
@@ -171,7 +154,6 @@ export const CheckboxComponent = ({
       <LabelCheckeable htmlFor={idFor} orientacion={orientacion}>
         <LabelImagenWrapper>
           <LabelImagen orientacion={orientacion} src={labelImg}/>
-          <LabelCheckeicon><RiCheckboxCircleFill/></LabelCheckeicon>
         </LabelImagenWrapper>
         <LabelRadioTexto>{labelTexto}</LabelRadioTexto>
       </LabelCheckeable>

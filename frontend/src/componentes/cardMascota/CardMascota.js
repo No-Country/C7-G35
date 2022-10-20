@@ -11,7 +11,7 @@ const WrapperCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
+  background-color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
   backface-visibility: .9;
   border-radius: 1rem;
   width: min(20rem, 100%);
@@ -23,7 +23,7 @@ const IconoHuella = styled.div`
   top: -20px;
   font-size: 3rem;
   rotate: 45deg;
-  color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
+  color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
 `;
 
 const NombreMascota = styled.h3`

@@ -42,7 +42,6 @@ const GroupCards = styled.div`
 const PosteosRecientes = ({
   titulo, datos, estado, pathVerTodos,
 }) => {
-  console.log(datos);
   return (
     <WrapperPosteosRecientes>
       <WrapperTitle>
@@ -51,8 +50,9 @@ const PosteosRecientes = ({
         <Line />
       </WrapperTitle>
       <GroupCards>
-        {datos?.map((mascota, index) => (
-          <CardMascota
+        {datos?.pet !== null
+          ? datos?.map((mascota, index) => (
+            <CardMascota
             key={index}
             path={`/detail-pet/${estado}/${mascota?.id}`}
             nombre={mascota?.pet?.name}
@@ -60,7 +60,7 @@ const PosteosRecientes = ({
             fecha={mascota?.date}
             estado={estado}
           />
-        ))}
+          )) : 'No hay mascotas'}
       </GroupCards>
       <ButtonComponent texto={'Ver todos'} estado={estado} path={pathVerTodos} />
 

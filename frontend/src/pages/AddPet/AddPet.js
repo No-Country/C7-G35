@@ -58,8 +58,6 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
-    mobile: yup.string().phone().nullable(),
-    email: yup.string().email().required('Este campo es requerido'),
   })
   .required();
 

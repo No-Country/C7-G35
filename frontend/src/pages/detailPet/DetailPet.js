@@ -1,110 +1,136 @@
-import { TbGenderMale } from 'react-icons/tb';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useFetch from '../../customHooks/useFetch';
 
 const WrapperDetailPet = styled.section`
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 7px;
-    overflow: hidden;
-    width: min(800px, 90%);
-    margin: 3rem auto;
-    background-color: var(--clr-pink-light);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 7px;
+  overflow: hidden;
+  width: min(800px, 90%);
+  margin: 3rem auto;
+  background-color: var(--clr-pink-light);
 `;
 const WrapperImgPet = styled.div`
-    width: 100%;
-    height: 400px;
+  width: 100%;
+  height: 400px;
 `;
 const ImgPet = styled.img`
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 `;
 const WrapperDataPet = styled.div`
-    padding: 1rem;
-    display: grid;
-    place-items: center;
+  padding: 1rem;
+  display: grid;
+  place-items: center;
 `;
 const NameWrapper = styled.div`
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;  
-    flex-direction: column;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  flex-direction: column;
 `;
 const NamePet = styled.h2`
-    color: var(--clr-pink-medium);
+  color: var(--clr-pink-medium);
 `;
 
 const UnderLine = styled.span`
-    background-color: var(--clr-pink-medium);
-    height: 1rem;
-    width: 70%;
-    border-radius: 1rem;
+  background-color: var(--clr-pink-medium);
+  height: 1rem;
+  width: 70%;
+  border-radius: 1rem;
 `;
 const WrapperMoreData = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 4rem;
-    padding: 2rem 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 4rem;
+  padding: 2rem 1rem;
 `;
 const BoxData = styled.div`
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 `;
 const Key = styled.p`
-    color: var(--clr-pink);
+  color: var(--clr-pink);
 `;
 const Value = styled.p`
-    font-weight: 600;
+  font-weight: 600;
 `;
 
 const DetailPet = () => {
+  const { id, state } = useParams();
+
+  const detalleMascota = state === 'loss'
+    ? useFetch(`http://localhost:8000/api/loss/${id}`)
+    : useFetch(`http://localhost:8000/api/rescues/${id}`);
+
+  const datosMostrar = state === 'loss'
+    ? detalleMascota?.data?.loss
+    : detalleMascota?.data?.recues;
+
   return (
     <WrapperDetailPet>
-        <WrapperImgPet>
-        <ImgPet src='https://media.ambito.com/p/cb928e70188562a84888b60513e8134c/adjuntos/239/imagenes/040/169/0040169794/mascotas-perrosjpg.jpg' alt='perro perdido'/>
-        </WrapperImgPet>
-        <WrapperDataPet>
+      <WrapperImgPet>
+        <ImgPet
+          src={datosMostrar?.pet?.images[0]}
+          alt='perro perdido'
+        />
+      </WrapperImgPet>
+      <WrapperDataPet>
         <NameWrapper>
-            <NamePet>Teo</NamePet>
-            <UnderLine></UnderLine>
+          <NamePet>Teo</NamePet>
+          <UnderLine></UnderLine>
         </NameWrapper>
         <WrapperMoreData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
-            <BoxData>
-                <Key>Raza</Key>
-                <Value>No tiene</Value>
-            </BoxData>
+          <BoxData>
+            <Key>Ubicación</Key>
+            <Value>{datosMostrar?.location}</Value>
+          </BoxData>
+          <BoxData>
+            <Key>Es un</Key>
+            <Value>
+              {datosMostrar?.pet?.type}
+            </Value>
+          </BoxData>
+          <BoxData>
+            <Key>Raza</Key>
+            <Value>{datosMostrar?.pet?.breed}</Value>
+          </BoxData>
+          <BoxData>
+            <Key>Genero</Key>
+            <Value>
+              {datosMostrar?.pet?.gender}
+            </Value>
+          </BoxData>
+          <BoxData>
+            <Key>¿Castrado?</Key>
+            <Value>
+              {datosMostrar?.pet?.isCastrated === 'false' ? 'Si' : 'No'}
+            </Value>
+          </BoxData>
+          <BoxData>
+            <Key>Nombre</Key>
+            <Value>{datosMostrar?.pet?.name}</Value>
+          </BoxData>
+          <BoxData>
+            <Key>Tamaño</Key>
+            <Value>{datosMostrar?.pet?.size}</Value>
+          </BoxData>
+          <BoxData>
+            <Key>Edad</Key>
+            <Value>{datosMostrar?.pet?.age}</Value>
+          </BoxData>
+          <BoxData>
+            <Key>Descripción</Key>
+            <Value>{datosMostrar?.pet?.description}</Value>
+          </BoxData>
         </WrapperMoreData>
-        </WrapperDataPet>
+      </WrapperDataPet>
     </WrapperDetailPet>
   );
 };

@@ -5,12 +5,12 @@ export const genero = [
     labelTexto: 'Macho',
     labelIcono: <TbGenderMale />,
     idFor: 'generoPerdidoMacho',
-    value: 'male',
+    value: 'Macho',
   },
   {
     labelTexto: 'Hembra',
     labelIcono: <TbGenderFemale />,
     idFor: 'generoPerdidoHembra',
-    value: 'female',
+    value: 'Hembra',
   },
 ];

@@ -20,3 +20,10 @@
 body{
   font-family: 'Montserrat', sans-serif;
 }
+#root > div{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid red;
+}

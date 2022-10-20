@@ -41,16 +41,15 @@ const Router = createBrowserRouter([
         element: <AddPhoto />,
       },
       {
-        path: '/see-all-lost',
+        path: '/see-all-lost/:state',
         element: <VerTodos/>,
-      },
+      
       {
+        path: '/detail-pet/:state/:id',
+        element: <DetailPet/>,
+      },
         path: '/edit-registered-pet/:id',
         element: <EditRegisteredPet/>,
-      },
-      {
-        path: '/detail-pet',
-        element: <DetailPet />,
       },
       {
         path: '/user',

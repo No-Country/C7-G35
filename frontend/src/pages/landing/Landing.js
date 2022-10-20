@@ -34,13 +34,6 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const SVG = styled.svg`
-  fill: ${(props) => (props.pinkMedium ? 'var(--clr-pink-medium)' : 'var(--clr-pink)')};
-  position: relative;
-  top: ${(props) => props.top || '0px'};
-  z-index: -1;
-`;
-
 const ColumnaUno = styled.div`
   width: 100%;
   display: grid;
@@ -191,13 +184,13 @@ const Landing = () => {
         titulo={'Mascotas recién encontradas'}
         datos={mascotasEncontrados}
         estado={'Encontrado'}
-        pathVerTodos={'/encontrados'}
+        pathVerTodos={'/see-all-lost/rescues'}
       />
       <PosteosRecientes
         titulo={'Mascotas recién perdidas'}
         datos={data?.loss}
-        estado={'Perdido'}
-        pathVerTodos={'/see-all-lost'}
+        estado={'loss'}
+        pathVerTodos={'/see-all-lost/loss'}
       />
       <SVGWavesInferior color={'pinkMedium'} top={'4px'}/>
       <SobreNosotrosWrapper>

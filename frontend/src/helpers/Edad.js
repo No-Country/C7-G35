@@ -6,20 +6,20 @@ export const edad = [
     labelIcono: <FaRegDotCircle />,
     idFor: 'perdidoCachorro',
     orientacion: 'horizontal',
-    value: 'puppy',
+    value: 'Cachorro',
   },
   {
     labelTexto: 'Adulto',
     labelIcono: <FaRegDotCircle />,
     idFor: 'perdidoAdulto',
     orientacion: 'horizontal',
-    value: 'adult',
+    value: 'Adulto',
   },
   {
     labelTexto: 'Adulto mayor',
     labelIcono: <FaRegDotCircle />,
     idFor: 'perdidoAdultoMayor',
     orientacion: 'horizontal',
-    value: 'senior',
+    value: 'Adulto mayor',
   },
 ];

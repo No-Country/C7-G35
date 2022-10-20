@@ -127,8 +127,6 @@ const AddLostPet = () => {
   const handleAddMascota = async (data) => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
-    console.log(date);
-    console.log(fecha);
     const response = await axios.post(
       'http://localhost:8000/api/loss',
       {

@@ -149,13 +149,6 @@ const Filters = () => {
   const [datos, setDatos] = useState('');
   const queryChange = useQueryChangeContext();
 
-  const [fechaFormateada, setFechaFormateada] = useState('');
-  useEffect(() => {
-    if (datos?.date) {
-      setFechaFormateada(new Date(datos?.date).toISOString());
-    }
-  }, [datos]);
-
   useEffect(() => {
     queryChange({
       age: datos?.age,

@@ -75,7 +75,9 @@ const CardMascota = (
     id, nombre, link, estado, fecha, token, deleteFunction,
   },
 ) => {
-  const normalicedDate = new Date(fecha).toLocaleDateString();
+  const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
+    timeZone: 'UTC',
+  });
   return (
     <WrapperCard estado={estado}>
       <IconoHuella estado={estado}><FaPaw/></IconoHuella>

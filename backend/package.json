@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "backend for App pets",
   "scripts": {
-    "start": "NODE_ENV=production node dist/src/api/server.js",
+    "start:backend": "NODE_ENV=production node dist/src/api/server.js",
     "dev": "NODE_ENV=dev; npm run build:docs:swagger; ts-node ./src/api/server",
     "test": "npm run test:unit",
     "test:unit": "jest",

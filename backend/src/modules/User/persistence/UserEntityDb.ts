@@ -5,7 +5,6 @@ export const UserEntity = new EntitySchema({
   name: 'User',
   tableName: 'user',
   target: User,
-  schema: 'user_acess',
 
   columns: {
     id: {

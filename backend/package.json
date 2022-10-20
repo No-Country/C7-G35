@@ -13,8 +13,8 @@
     "build:copy": "copyfiles 'src/**/*.{json,yaml,html,png,ico,css,js}' 'dist/'",
     "build:clean": "rm -r dist; exit 0",
     "build:docs:swagger": "rm -r src/api/swagger.json; tsoa spec",
-    "typeorm": "typeorm-ts-node-esm",
-    "sync:typeorm:schema": "ts-node ./src/database/syncTypeOrmSchema.ts"  
+    "typeorm": "typeorm-ts-node-esm schema:sync -d ./src/database/TypeOrmClient.ts"
+    
   },
   "author": "",
   "license": "ISC",

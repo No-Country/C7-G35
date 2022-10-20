@@ -15,10 +15,11 @@ const VerTodos = () => {
   console.log(query);
 
   const params = `?${new URLSearchParams(omitBy(query, isEmpty)).toString()}`;
-  console.log(params);
 
   const mascotas = useFetch(`http://localhost:8000/api/loss/by${params}`);
   const mascotasPerdidas = mascotas?.data?.petsLoss;
+  console.log(mascotasPerdidas);
+  console.log(query);
   return (
     <MainWrapperVerTodo>
       <Filters/>

@@ -135,12 +135,14 @@ const Filters = () => {
   }
 
   const [city, setCity] = useState('');
+  const { country, state } = city;
   async function getCity(latitude, longitud) {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
     );
     setCity(response?.data?.address);
   }
+  console.log(city);
 
   const handleChangePoint = (coord) => {
     getCity(coord.lat, coord.lng);
@@ -159,9 +161,9 @@ const Filters = () => {
       isCastrated: datos?.isCastrated,
       size: datos?.size,
       type: datos?.type,
-      location: city,
+      location: city ? `${country}, ${state}` : undefined,
     });
-  }, [datos]);
+  }, [datos, city]);
 
   return (
     <MainWrapperVerTodos>

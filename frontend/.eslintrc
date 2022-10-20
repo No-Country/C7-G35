@@ -11,7 +11,7 @@
       "jsx": true
     }
   },
-  "extends": ["airbnb-base", "plugin:react/recommended", "prettier"],
+  "extends": ["airbnb-base", "plugin:react/recommended"],
   "plugins": ["react"],
   "rules": {
     "linebreak-style": 0,

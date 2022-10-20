@@ -20,11 +20,11 @@ export async function rescuePostController(req: Request, res: Response): Promise
 export async function rescuePutController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
   const recuesId = req.params.id;
-  const { date, location, pet } = req.body as updatePetRescue;
+  const { date, location, publicContact, pet } = req.body as updatePetRescue;
 
   try {
     const dateFromRequest = date ? new Date(date) : undefined;
-    await rescueServices.update({ id: recuesId, userId, date: dateFromRequest, location, pet });
+    await rescueServices.update({ id: recuesId, userId, date: dateFromRequest, location, publicContact, pet });
     res.status(httpStatus.OK).send();
   } catch (error: any) {
     throw error;

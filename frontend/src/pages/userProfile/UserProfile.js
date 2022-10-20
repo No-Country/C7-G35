@@ -84,6 +84,7 @@ const UserProfile = () => {
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
 
   const handleDelete = async (id) => {
+    console.log(id);
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esto!',
@@ -94,6 +95,9 @@ const UserProfile = () => {
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
       if (result.isConfirmed) {
+        axios.delete(`http://localhost:8000/api/pets/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         Swal.fire(
           'Borrado!',
           'Ya no veras esta mascota en tu lista.',

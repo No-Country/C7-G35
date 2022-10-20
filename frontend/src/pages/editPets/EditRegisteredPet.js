@@ -61,8 +61,6 @@ const schemaAddLostPet = yup
     isCastrated: yup.boolean(),
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
-    mobile: yup.string().phone().nullable(),
-    email: yup.string().email().required('Este campo es requerido'),
   })
   .required();
 
@@ -83,15 +81,13 @@ const EditRegisteredPet = () => {
   const params = useParams();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
-  const [imgUrl, setImgUrl] = useState('');
+  const [images, setImages] = useState();
 
   const handleAddMascota = async (data) => {
-    useFormChange({
+    await axios.put(`http://localhost:8000/api/pets/${params?.id}`, {
       ...data,
-      images: [imgUrl],
-    });
-    console.log(useFormData);
-    await axios.put(`http://localhost:8000/api/pets/${params?.id}`, useFormData, { headers: { Authorization: `Bearer ${token}` } });
+      images: [images],
+    }, { headers: { Authorization: `Bearer ${token}` } });
 
     reset();
     navigate('/user');
@@ -278,7 +274,7 @@ const EditRegisteredPet = () => {
         />
       </WrapperComponentForm>
 
-      <WrapperComponentForm>
+      {/* <WrapperComponentForm>
         <TituloForm>Mis datos de contacto son...</TituloForm>
         <InputTextComponent
           label={'Teléfono'}
@@ -297,17 +293,17 @@ const EditRegisteredPet = () => {
           orientacion={'horizontal'}
           placeholder={'ejemplo@gmail.com'}
         />
-      </WrapperComponentForm>
+      </WrapperComponentForm> */}
 
       <Mensaje>
         <Resalta>Ya casi! </Resalta>
         Sube al menos 1 foto de tu mascota
       </Mensaje>
       <WrapperFoto>
-        <UploadImg setimgUp={setImgUrl} />
-        {imgUrl && (
+        <UploadImg setimgUp={setImages} />
+        {images && (
           <WrapperFotoPreview>
-            <FotoSubida src={imgUrl} alt='Foto mascota' />
+            <FotoSubida src={images} alt='Foto mascota' />
           </WrapperFotoPreview>
         )}
       </WrapperFoto>

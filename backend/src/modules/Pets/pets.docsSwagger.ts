@@ -9,6 +9,12 @@ type updatePetBody = Omit<updatePet, 'id' | 'owner'>;
 @Route('/pets')
 @Tags('Pets')
 export class PetsDocsRoutes {
+  @SuccessResponse('200', 'OK')
+  @Get('/{id}')
+  static PetGetController(@Path() id: string): Pet {
+    return {} as any;
+  }
+
   @SuccessResponse('201', 'Created')
   @Post()
   static PetPostController(@Body() body: newPetBody): Pet {

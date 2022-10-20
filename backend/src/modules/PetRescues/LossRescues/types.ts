@@ -1,14 +1,14 @@
 import { newPet, updatePet } from '../../Pets/types';
 
-export interface newPetLoss {
+export interface newPetRescue {
   userId: string;
   date: Date;
   location: string;
-  pet: Omit<newPet, 'owner'>;
   publicContact?: string;
+  pet: Omit<newPet, 'owner'>;
 }
 
-export interface updatePetLoss {
+export interface updatePetRescue {
   id: string;
   userId: string;
   date?: Date;

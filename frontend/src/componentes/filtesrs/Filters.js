@@ -464,6 +464,7 @@ const Filters = () => {
             <InputDate type='date' max={today} {...register('date')} />
           </LabelInput>
         </WrapperGenerico>
+        </ListFilters>
         <WrapperMapa>
           <MapContainer
             style={{ height: '500px', width: '100%' }}
@@ -479,7 +480,6 @@ const Filters = () => {
           </MapContainer>
           { city && <p>{city.country}, {city.state}</p>}
         </WrapperMapa>
-        </ListFilters>
       </MainWrapperFilter>
     </MainWrapperVerTodos>
   );

@@ -92,8 +92,7 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
-    mobile: yup.string().phone().nullable(),
-    email: yup.string().email().required('Este campo es requerido'),
+    publicContact: yup.string().phone('ingresa un numero valido').required('Este campo es requerido'),
   })
   .required();
 
@@ -127,17 +126,19 @@ const AddFoundPet = () => {
   const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
     const { date } = data;
-    const fecha = new Date(date).toLocaleDateString();
+    const fecha = new Date(date).toUTCString();
     const response = await axios.post(
-      'http://localhost:8000/api/loss',
+      'http://localhost:8000/api/rescues',
       {
-        location: `${city.country}, ${city.state}, ${city.state_district}`,
+        location: `${city.country}, ${city.state}`,
         date: fecha,
-        pet: data,
+        pet: {
+          ...data,
+          date: undefined,
+        },
       },
       { headers: { Authorization: `Bearer ${cookies.token}` } },
     );
-    console.log(response);
     useFormChange((prevState) => ({
       ...prevState,
       id: response?.data?.petLoss?.pet?.id,
@@ -178,7 +179,6 @@ const AddFoundPet = () => {
     <WrapperMascotaPerdida
       onSubmit={handleSubmit(handleAddMascota)}
     >
-      <h2>Registra la mascota que encontraste, los primeros 4 puntos son obligatorios</h2>
       <WrapperComponentForm>
         <TituloForm>Encontre un...</TituloForm>
         <OptionGroups>
@@ -324,22 +324,14 @@ const AddFoundPet = () => {
         />
       </WrapperComponentForm>
       <WrapperComponentForm>
-        <TituloForm>Si de quien es, comunicate por...</TituloForm>
+        <TituloForm>Si es tu mascota, enviame un mensaje...</TituloForm>
         <InputTextComponent
           label={'Teléfono'}
           idFor={'telOwnerLostPet'}
-          validacion={{ ...register('mobile') }}
+          validacion={{ ...register('publicContact') }}
           type={'tel'}
           orientacion={'horizontal'}
-          placeholder={'+54 3556677441'}
-        />
-         <InputTextComponent
-          label={'E-mail'}
-          idFor={'emailOwnerLostPet'}
-          validacion={{ ...register('email') }}
-          type={'email'}
-          orientacion={'horizontal'}
-          placeholder={'ejemplo@gmail.com'}
+          placeholder={'+543816677441'}
         />
       </WrapperComponentForm>
 

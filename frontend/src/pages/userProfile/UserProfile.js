@@ -96,7 +96,7 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         Swal.fire(
           'Borrado!',
           'Ya no veras esta mascota en tu lista.',

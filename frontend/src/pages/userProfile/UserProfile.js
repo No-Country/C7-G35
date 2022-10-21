@@ -255,6 +255,9 @@ const UserProfile = () => {
     modal.current.close();
   };
 
+  const handleMascotaRcuperada = () => {
+  };
+
   return (
     <WrapperUserProfile>
       <WrapperSaludo>
@@ -336,6 +339,7 @@ const UserProfile = () => {
                   estado={'loss'}
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
+                  openModalRecuperado={handleMascotaRcuperada(mascota?.id)}
                 />
               ))
             ) : (
@@ -361,7 +365,7 @@ const UserProfile = () => {
                       : SinFotoMascota
                   }
                   fecha={mascota?.date}
-                  estado={'loss'}
+                  estado={'rescues'}
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                 />

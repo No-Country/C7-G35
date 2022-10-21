@@ -93,6 +93,28 @@ export const UserName = styled.span`
   cursor: pointer;
 `;
 
+export const UserNameLink = styled.a`
+  background-color: #ed747d;
+  padding: 10px 35px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+`;
+
+export const CerrarSesion = styled.span`
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+`;
+
 export const Opciones = styled.div`
   background-color: var(--clr-blue-dark);
   position: absolute;
@@ -107,13 +129,12 @@ export const Opciones = styled.div`
   text-align: right;
   border-radius: 7px;
   display: none;
-
 `;
 
 export const UserConfig = styled.span`
   position: relative;
   display: none;
-  &:hover > ${Opciones}{
+  &:hover > ${Opciones} {
     display: flex;
   }
   @media screen and (min-width: 900px) {

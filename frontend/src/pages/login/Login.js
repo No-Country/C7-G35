@@ -10,7 +10,7 @@ const Login = () => {
 
   return (
     <div onChange={onChange}>
-      <a href='http://localhost:8000/api/auth/google'> login </a>
+      <a href='https://pet-spaces-production.up.railway.app/api/auth/google'> login </a>
     </div>
   );
 };

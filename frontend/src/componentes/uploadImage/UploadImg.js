@@ -18,7 +18,6 @@ export default function UploadImg({ setimgUp }) {
       (error, result) => {
         if (!error && result && result.event === 'success') {
           setimgUp(result.info.url);
-          console.log(result.info.url);
         }
       },
     );

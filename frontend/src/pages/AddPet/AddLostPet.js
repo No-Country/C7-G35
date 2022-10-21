@@ -54,7 +54,6 @@ function LocationMarker({ handleChange }) {
     click(e) {
       setPosition(e.latlng);
       handleChange(e.latlng);
-      console.log(e.latlng);
     },
   });
 
@@ -122,12 +121,12 @@ const AddLostPet = () => {
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
     const response = await axios.post(
-      'http://localhost:8000/api/loss',
+      'https://pet-spaces-production.up.railway.app/api/loss',
       {
         location: `${city.country}, ${city.state}`,
         date: fecha,

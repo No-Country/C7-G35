@@ -75,7 +75,7 @@ const EditRegisteredPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
 
   const navigate = useNavigate();
   const params = useParams();
@@ -84,7 +84,7 @@ const EditRegisteredPet = () => {
   const [images, setImages] = useState();
 
   const handleAddMascota = async (data) => {
-    await axios.put(`http://localhost:8000/api/pets/${params?.id}`, {
+    await axios.put(`https://pet-spaces-production.up.railway.app/api/pets/${params?.id}`, {
       ...data,
       images: [images],
     }, { headers: { Authorization: `Bearer ${token}` } });

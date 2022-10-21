@@ -56,13 +56,13 @@ const AddPhoto = () => {
   const { id } = useFormContext();
   const [imgUrl, setImgUrl] = useState('');
 
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
   const navigate = useNavigate();
 
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
-      `http://localhost:8000/api/pets/${id}/images`,
+      `https://pet-spaces-production.up.railway.app/api/pets/${id}/images`,
       {
         imageUrl: imgUrl,
       },

@@ -431,6 +431,7 @@ const UserProfile = () => {
               </MapContainer>
             </div>
           </DatosSolicitados>
+            {<p>{city.country}, {city.state}</p>}
           <WrapperBotones>
             <ButtonComponentShort
               as={'button'}

@@ -38,6 +38,8 @@ const Navbar = () => {
     localStorage.removeItem('token');
     navigate('/');
   };
+
+  console.log(dataUser);
   return (
     <NavContainer>
       <LinkHome href='/'>
@@ -55,17 +57,18 @@ const Navbar = () => {
           <Link href='/see-all-lost/rescue'>Mascotas Encontradas</Link>
         </span>
       </LinkContainer>
-      {!dataUser.data && !token ? (
+      {dataUser?.data === null && (
         <ButtonLogin href='/login'>Login</ButtonLogin>
-      ) : (
-        <UserConfig>
+      ) }
+     { dataUser?.data?.user
+     && <UserConfig>
           <UserName>{dataUser?.data?.user?.name}</UserName>
           <Opciones>
             <Item href='/user'>Ver perfil</Item>
             <Item onClick={handleLogout}>Cerrar Sesión</Item>
           </Opciones>
         </UserConfig>
-      )}
+     }
       <IconoMenu
         onClick={() => {
           setClicked(!clicked);

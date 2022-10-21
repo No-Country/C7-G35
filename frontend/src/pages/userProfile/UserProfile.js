@@ -1,12 +1,27 @@
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import axios from 'axios';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
 import Swal from 'sweetalert2';
 import CardMascota from '../../componentes/cardMascota/CardMascota';
 import { SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 import useFetch from '../../customHooks/useFetch';
 import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
-import { ButtonComponent, ButtonComponentShort } from '../../componentes/buttom/Button';
+import {
+  ButtonComponent,
+  ButtonComponentShort,
+} from '../../componentes/buttom/Button';
 import { useFormChangeContext } from '../../providers/FormProviders';
 
 const WrapperUserProfile = styled.div`
@@ -54,7 +69,7 @@ const Titulo = styled.h3`
 
 const Descripcion = styled.p`
   margin-left: 0.5rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   color: var(--clr-grey-dark);
 `;
 
@@ -73,19 +88,54 @@ export const WrapperListadoCards = styled.div`
   align-items: center;
 `;
 
+const Modal = styled.dialog`
+  z-index: 4456;
+  border: none;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  margin: 2rem auto;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+`;
+
+const DatosSolicitados = styled.div``;
+const FormDatos = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 1rem;
+`;
+
+const WrapperBotones = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const UserProfile = () => {
   const token = JSON.parse(localStorage.getItem('token'));
 
-  const userMe = useFetch('https://pet-spaces-production.up.railway.app/api/users/me', token);
+  const userMe = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/users/me',
+    token,
+  );
 
-  const MascotasRegistradas = useFetch('https://pet-spaces-production.up.railway.app/api/pets', token);
+  const MascotasRegistradas = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/pets',
+    token,
+  );
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
 
-  const MascotasPerdidas = useFetch('https://pet-spaces-production.up.railway.app/api/loss', token);
+  const MascotasPerdidas = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/loss',
+    token,
+  );
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
-  console.log(MascotasPerdidasData);
 
-  const MascotasRescatadas = useFetch('https://pet-spaces-production.up.railway.app/api/rescues', token);
+  const MascotasRescatadas = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/rescues',
+    token,
+  );
   const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
 
   const handleDelete = async (id) => {
@@ -98,9 +148,12 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      axios.delete(` https://pet-spaces-production.up.railway.app/api/pets/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      axios.delete(
+        ` https://pet-spaces-production.up.railway.app/api/pets/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (result.isConfirmed) {
         Swal.fire(
           'Borrado!',
@@ -117,6 +170,91 @@ const UserProfile = () => {
     useChengeForm(mascota);
     navigate(`/edit-registered-pet/${mascota?.id}`);
   };
+  const schemaSendToLosts = yup
+    .object({
+      date: yup.string().required('Este campo es requerido'),
+      name: yup.string().required('Este campo es requerido'),
+      location: yup.string().required('Este campo es requerido'),
+      publicContact: yup.string().phone().required('Este campo es requerido'),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm({
+    resolver: yupResolver(schemaSendToLosts),
+  });
+
+  function LocationMarker({ setPos, handleChange }) {
+    const [position, setPosition] = useState(null);
+
+    const map = useMapEvents({
+      click(e) {
+        setPosition(e.latlng);
+        handleChange(e.latlng);
+        setPos(e.latlng);
+      },
+    });
+
+    return position === null ? null : (
+      <Marker
+        icon={L.icon({
+          iconUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+          iconSize: [25, 35],
+        })}
+        position={position}
+      >
+        <Popup>Fue por aquí!</Popup>
+      </Marker>
+    );
+  }
+
+  const [city, setCity] = useState('');
+  async function getCity(latitude, longitud) {
+    const response = await axios.get(
+      `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
+    );
+    setCity(response?.data?.address);
+  }
+
+  const handleChangePoint = (coord) => {
+    getCity(coord.lat, coord.lng);
+  };
+
+  const objDatos = {
+    date: watch('date'),
+    publicContact: watch('publicContact'),
+    location: `${city.country}, ${city.state}`,
+  };
+
+  const [idMascota, setIdMascota] = useState('');
+  const handlePet = (e) => {
+    e.preventDefault();
+    axios.post(
+      `https://pet-spaces-production.up.railway.app/api/loss/${idMascota}`,
+      objDatos,
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+  };
+
+  const modal = useRef();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const openModal = () => {
+    setIsOpenModal(true);
+    modal.current.showModal();
+  };
+  const HandleOpenModal = (id) => {
+    openModal();
+    setIdMascota(id);
+  };
+
+  const cerrarModal = () => {
+    modal.current.close();
+  };
+
   return (
     <WrapperUserProfile>
       <WrapperSaludo>
@@ -137,13 +275,17 @@ const UserProfile = () => {
       <SVGWavesSuperior />
       <WrapperTodasLasMascotas>
         <WrapperMascotasRegistradas>
-            <WapperInfoSection>
-                <Titulo>Tus mascotas registradas</Titulo>
-                <Descripcion>
-                     Aquí podrás ver las mascotas que subiste al sitio
-                </Descripcion>
-                <ButtonComponentShort as={'a'} texto={'Agregar una mascota'} path={'/form-add-pet'}/>
-            </WapperInfoSection>
+          <WapperInfoSection>
+            <Titulo>Tus mascotas registradas</Titulo>
+            <Descripcion>
+              Aquí podrás ver las mascotas que subiste al sitio
+            </Descripcion>
+            <ButtonComponentShort
+              as={'a'}
+              texto={'Agregar una mascota'}
+              path={'/form-add-pet'}
+            />
+          </WapperInfoSection>
           <WrapperListadoCards>
             {MascotasRegistradasData?.length !== 0 ? (
               MascotasRegistradasData?.map((mascota) => (
@@ -157,6 +299,7 @@ const UserProfile = () => {
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   editFunction={() => handleEdit(mascota)}
+                  openModal={() => HandleOpenModal(mascota?.id)}
                 />
               ))
             ) : (
@@ -184,7 +327,11 @@ const UserProfile = () => {
                   key={mascota?.id}
                   path={`/detail-pet/loss/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
-                  link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
+                  link={
+                    mascota?.pet?.images
+                      ? mascota?.pet?.images[0]
+                      : SinFotoMascota
+                  }
                   fecha={mascota?.date}
                   estado={'loss'}
                   token={token}
@@ -200,9 +347,7 @@ const UserProfile = () => {
         </WrapperMascotasRegistradas>
         <WrapperMascotasRegistradas>
           <Titulo>Mascotas que encontraste</Titulo>
-          <Descripcion>
-            Aquí verás la mascota que encontraste;
-          </Descripcion>
+          <Descripcion>Aquí verás la mascota que encontraste;</Descripcion>
           <WrapperListadoCards>
             {MascotasRescatadasData?.length !== 0 ? (
               MascotasRescatadasData?.map((mascota) => (
@@ -210,7 +355,11 @@ const UserProfile = () => {
                   key={mascota?.id}
                   path={`/detail-pet/rescues/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
-                  link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
+                  link={
+                    mascota?.pet?.images
+                      ? mascota?.pet?.images[0]
+                      : SinFotoMascota
+                  }
                   fecha={mascota?.date}
                   estado={'loss'}
                   token={token}
@@ -225,6 +374,49 @@ const UserProfile = () => {
           </WrapperListadoCards>
         </WrapperMascotasRegistradas>
       </WrapperTodasLasMascotas>
+      {isOpenModal
+      && <Modal close method="dialog" ref={modal}>
+        <h3>Se perdio tu mascota?</h3>
+        <p>Necesitamos un par de datos para poder publicarla</p>
+        <FormDatos>
+          <DatosSolicitados>
+            <label>
+              <p>Teléfono</p>
+              <input type='tel' {...register('publicContact')} />
+              {errors.publicContact && <p>{errors.publicContact.message}</p>}
+            </label>
+            <label>
+              <p>Fecha</p>
+              <input type='date' {...register('date')} />
+              {errors.date && <p>{errors.date.message}</p>}
+            </label>
+            <div>
+              <p>Fue en...</p>
+              <MapContainer
+                style={{ height: '600px', width: '600px' }}
+                center={[-38.169114135560854, -65.75208708742923]}
+                zoom={5}
+                scrollWheelZoom={true}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap"</a> contributors'
+                  url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                />
+                <LocationMarker handleChange={handleChangePoint} />
+              </MapContainer>
+            </div>
+          </DatosSolicitados>
+          <WrapperBotones>
+            <ButtonComponentShort
+              as={'button'}
+              texto={'Enviar'}
+              onClick={(e) => handlePet(e)}
+            />
+          </WrapperBotones>
+          </FormDatos>
+          <ButtonComponentShort as={'button'} type={'button'} texto={'Cancelar'} onClick={cerrarModal} />
+      </Modal>
+      }
     </WrapperUserProfile>
   );
 };

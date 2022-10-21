@@ -465,7 +465,8 @@ const Filters = () => {
           </LabelInput>
         </WrapperGenerico>
         </ListFilters>
-        <WrapperMapa>
+        {showFilter
+         && <WrapperMapa>
           <MapContainer
             style={{ height: '500px', width: '100%' }}
             center={[-38.169114135560854, -65.75208708742923]}
@@ -480,6 +481,7 @@ const Filters = () => {
           </MapContainer>
           { city && <p>{city.country}, {city.state}</p>}
         </WrapperMapa>
+        }
       </MainWrapperFilter>
     </MainWrapperVerTodos>
   );

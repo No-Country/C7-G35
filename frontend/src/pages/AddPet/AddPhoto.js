@@ -64,7 +64,7 @@ const AddPhoto = () => {
     await axios.post(
       `https://pet-spaces-production.up.railway.app/api/pets/${id}/images`,
       {
-        imageUrl: imgUrl,
+        imageUrl: [imgUrl],
       },
       {
         headers: { Authorization: `Bearer ${token}` },

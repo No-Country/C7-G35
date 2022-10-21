@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdMenu } from 'react-icons/md';
 import {
   ButtonLogin,
@@ -20,13 +20,15 @@ import useFetch from '../../customHooks/useFetch';
 
 const Navbar = () => {
   const token = JSON.parse(localStorage.getItem('token'));
-
+  const [dataUser, setDataUser] = useState('');
   const userMe = useFetch(
     'https://pet-spaces-production.up.railway.app/api/users/me',
     token,
   );
-
-  console.log(userMe);
+  useEffect(() => {
+    setDataUser(userMe);
+  }, [token]);
+  console.log(dataUser);
 
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
@@ -48,14 +50,17 @@ const Navbar = () => {
           <Link href='/see-all-lost/rescue'>Mascotas Encontradas</Link>
         </span>
       </LinkContainer>
-      {!userMe.data && !token ? <ButtonLogin href='/login'>Login</ButtonLogin>
-        : <UserConfig>
-            <UserName>{userMe?.data?.user?.name}</UserName>
-            <Opciones>
-              <Item href='/user'>Ver perfil</Item>
-              <Item onClick={handleLogout}>Cerrar Sesión</Item>
-            </Opciones>
-          </UserConfig>}
+      {!dataUser.data && !token ? (
+        <ButtonLogin href='/login'>Login</ButtonLogin>
+      ) : (
+        <UserConfig>
+          <UserName>{dataUser?.data?.user?.name}</UserName>
+          <Opciones>
+            <Item href='/user'>Ver perfil</Item>
+            <Item onClick={handleLogout}>Cerrar Sesión</Item>
+          </Opciones>
+        </UserConfig>
+      )}
       <IconoMenu
         onClick={() => {
           setClicked(!clicked);

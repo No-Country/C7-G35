@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { deleteImageInCloud, uploadImageCloud } from '../../api/Shared/cloudinary';
 import { domainErrorHandler } from '../../api/Shared/domainErrorHandler';
 import { UploadImageFail } from '../../api/Shared/uploadImageMulter';
 import { petsErrorsHandlerMap } from './petsErrorsHandler';
@@ -11,12 +10,14 @@ const petServices = new PetServices();
 
 export async function petPostController(req: Request, res: Response): Promise<void> {
   const userId = req.userId;
-  const { name, gender, images, type, age, description, isCastrated, breed } = req.body as newPet;
+  const { name, gender, images, type, age, description, isCastrated, breed, size, color } = req.body as newPet;
 
   try {
     const pet = await petServices.create({
       gender,
       type,
+      color,
+      size,
       images,
       owner: userId,
       name,
@@ -68,18 +69,29 @@ export async function petDeleteController(req: Request, res: Response): Promise<
 }
 
 export async function petImagePostController(req: Request, res: Response): Promise<void> {
-  const petId = req.params.id;
   const userId = req.userId;
-  if (!req.file?.path) {
-    throw new UploadImageFail('Path not found');
+  const petId = req.params.id;
+  const imageUrl = req.body.imageUrl;
+
+  if (!imageUrl) {
+    throw new UploadImageFail('no url received');
   }
-  const imageUrl = await uploadImageCloud(req.file.path);
 
   try {
     const pet = await petServices.addImage(petId, userId, imageUrl);
-    res.send({ pet, imageUrl: req.body.imageUrl });
+    res.send({ pet, imageUrl });
   } catch (error: any) {
-    deleteImageInCloud(imageUrl);
+    domainErrorHandler(res, error, petsErrorsHandlerMap);
+  }
+}
+
+export async function petGetController(req: Request, res: Response): Promise<void> {
+  const petId = req.params.id;
+
+  try {
+    const pet = await petServices.findPet(petId);
+    res.status(httpStatus.OK).json({ pet });
+  } catch (error: any) {
     domainErrorHandler(res, error, petsErrorsHandlerMap);
   }
 }

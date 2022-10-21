@@ -1,6 +1,8 @@
 import { FaPaw } from 'react-icons/fa';
+import { RiDeleteBin6Fill, RiFileEditFill } from 'react-icons/ri';
 import styled from 'styled-components';
-import ButtonComponent from '../buttom/Button';
+import { ButtonComponent } from '../buttom/Button';
+import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 
 const WrapperCard = styled.div`
   position: relative;
@@ -9,9 +11,8 @@ const WrapperCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
+  background-color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-light)' : 'var(--clr-pink-light)')};
   backface-visibility: .9;
-  margin: 1rem 1.5rem;
   border-radius: 1rem;
   width: min(20rem, 100%);
 `;
@@ -22,7 +23,7 @@ const IconoHuella = styled.div`
   top: -20px;
   font-size: 3rem;
   rotate: 45deg;
-  color: ${props => (props.estado === 'Encontrado' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
+  color: ${props => (props.estado === 'rescues' ? 'var(--clr-blue-dark)' : 'var(--clr-pink-medium)')};
 `;
 
 const NombreMascota = styled.h3`
@@ -36,6 +37,7 @@ const WrapperImagen = styled.div`
   aspect-ratio: 1/1;
   border-radius: 100rem;
   overflow: hidden;
+  margin-bottom: .5rem;
 `;
 const ImagenMascota = styled.img`
   height: 100%;
@@ -47,20 +49,51 @@ const Fecha = styled.p`
   margin: 1rem 0;
 `;
 
+const WrapperButtons = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  `;
+
+const ActionButton = styled.button`
+  border: none;
+  border-radius: 100vh;
+  color: #fff;
+  background-color: red;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 0;
+  height: 2.5rem;
+  aspect-ratio: 1/1;
+`;
+
 const CardMascota = (
   {
-    id, nombre, link, estado,
+    path, nombre, link, estado, fecha, token, deleteFunction, editFunction,
   },
 ) => {
+  const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
+    timeZone: 'UTC',
+  });
   return (
     <WrapperCard estado={estado}>
       <IconoHuella estado={estado}><FaPaw/></IconoHuella>
       <NombreMascota>{nombre}</NombreMascota>
       <WrapperImagen>
-        <ImagenMascota src={link} />
+        <ImagenMascota src={link || SinFotoMascota} />
       </WrapperImagen>
-      <Fecha>Fecha: 28/09/2022</Fecha>
-      <ButtonComponent texto={'Ver más detalle'} estado={estado} path={id}/>
+      {fecha && <Fecha>Fecha: {normalicedDate}</Fecha>}
+      {
+      token
+      && <WrapperButtons>
+        <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>
+        <ActionButton onClick={ editFunction }><RiFileEditFill/></ActionButton>
+      </WrapperButtons>
+      }
+      <ButtonComponent texto={'Ver más detalle'} estado={estado} path={path}/>
     </WrapperCard>
   );
 };

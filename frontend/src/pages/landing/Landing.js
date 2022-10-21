@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { FaPaw } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
-import Dogs from '../../assets/Dogs.png';
-import DogsUno from '../../assets/grupoUno.png';
-import DogsDos from '../../assets/GrupoDos.png';
-
-import ButtonComponent from '../../componentes/buttom/Button';
+import DogsHeader from '../../assets/GrupoDos.png';
+import { ButtonComponent } from '../../componentes/buttom/Button';
+import useFetch from '../../customHooks/useFetch';
+import { SVGWavesInferior, SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
 
 const HeaderWrapper = styled.div`
   background: var(--clr-pink);
@@ -32,13 +32,6 @@ const HeaderWrapper = styled.div`
     flex-direction: row;
     padding: 3rem 8rem 0rem;
   }
-`;
-
-const SVG = styled.svg`
-  fill: ${(props) => (props.pinkMedium ? 'var(--clr-pink-medium)' : 'var(--clr-pink)')};
-  position: relative;
-  top: ${(props) => props.top || '0px'};
-  z-index: -1;
 `;
 
 const ColumnaUno = styled.div`
@@ -149,50 +142,22 @@ const TituloDesc = styled.h3`
 const TextoDesc = styled.p``;
 
 const Landing = () => {
-  const mascotasEncontrados = [
-    {
-      id: '1',
-      link: 'https://www.zooplus.es/magazine/wp-content/uploads/2021/02/perro-perdido.jpeg',
-      estado: 'Encontrado',
-    },
-    {
-      id: '2',
-      link: 'https://www.buscomiperroperdido.com/Catalogo/Item/456_Item/perro-Perdido-Barcelona-Arenys-de-Munt-0.jpg',
-      estado: 'Encontrado',
-    },
-    {
-      id: '3',
-      link: 'https://ep01.epimg.net/verne/imagenes/2017/04/12/mexico/1491951345_926681_1491951517_noticia_normal.jpg',
-      estado: 'Encontrado',
-    },
-  ];
+  const datosLosts = useFetch('https://pet-spaces-production.up.railway.app/api/loss/last');
+  const datosFound = useFetch('https://pet-spaces-production.up.railway.app/api/rescues/last');
+  const location = useLocation();
+  const tokenDeParams = location.search;
 
-  const mascotasPerdidos = [
-    {
-      id: '4',
-      nombre: 'Pumi',
-      link: 'https://estaticos-cdn.elperiodico.com/clip/613740eb-f6ab-4abb-8c5e-60db9929e1b8_alta-libre-aspect-ratio_default_0.jpg',
-      estado: 'Perdido',
-    },
-    {
-      id: '5',
-      nombre: 'Tisha',
-      link: 'https://elcomercio.pe/resizer/fZ9ejNDkM_Uct0MB127fzw08OpI=/1200x1200/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/QIAIFGRLBJDFBDSOJ7KDRW5E5M.jpg',
-      estado: 'Perdido',
-    },
-    {
-      id: '6',
-      nombre: 'Oky',
-      link: 'https://st2.depositphotos.com/2166177/5479/i/450/depositphotos_54798677-stock-photo-dog-on-the-railway-platform.jpg',
-      estado: 'Perdido',
-    },
-  ];
+  const tokenFromParams = Object.fromEntries(new URL(window.location).searchParams).token;
+
+  if (tokenFromParams) {
+    localStorage.setItem('token', JSON.stringify(tokenDeParams));
+  }
 
   return (
     <>
       <HeaderWrapper>
         <ColumnaUno>
-          <ImgPerros src={DogsDos} />
+          <ImgPerros src={DogsHeader} alt='Imagen portada de perros' />
         </ColumnaUno>
         <ColumnaDos>
           <HeaderTitle>
@@ -200,39 +165,26 @@ const Landing = () => {
           </HeaderTitle>
           <ButtonComponent
             texto={'Encontré una mascota'}
-            estado={'Encontrado'}
-            path={'/'}
+            estado={'rescues'}
+            path={'/form-add-found-pet'}
           />
-          <ButtonComponent texto={'Busco mi mascota'} path={'/'} />
+          <ButtonComponent texto={'Busco mi mascota'} path={'/form-add-lost-pet'} />
         </ColumnaDos>
       </HeaderWrapper>
-      <SVG
-        top={'-0.2px'}
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 1440 320'
-      >
-        <path d='M0,64L48,90.7C96,117,192,171,288,202.7C384,235,480,245,576,234.7C672,224,768,192,864,170.7C960,149,1056,139,1152,149.3C1248,160,1344,192,1392,208L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'></path>
-      </SVG>
+      <SVGWavesSuperior top={'-0.2px'}/>
       <PosteosRecientes
         titulo={'Mascotas recién encontradas'}
-        datos={mascotasEncontrados}
-        estado={'Encontrado'}
-        pathVerTodos={'/encontrados'}
+        datos={datosFound?.data?.rescue}
+        estado={'rescues'}
+        pathVerTodos={'/see-all-lost/rescues'}
       />
       <PosteosRecientes
         titulo={'Mascotas recién perdidas'}
-        datos={mascotasPerdidos}
-        estado={'Perdido'}
-        pathVerTodos={'/perdidos'}
+        datos={datosLosts?.data?.loss}
+        estado={'loss'}
+        pathVerTodos={'/see-all-lost/loss'}
       />
-      <SVG
-        pinkMedium
-        top={'4px'}
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 1440 320'
-      >
-        <path d='M0,64L48,90.7C96,117,192,171,288,202.7C384,235,480,245,576,234.7C672,224,768,192,864,170.7C960,149,1056,139,1152,149.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'></path>
-      </SVG>
+      <SVGWavesInferior color={'pinkMedium'} top={'4px'}/>
       <SobreNosotrosWrapper>
         <IconoHuella>
           <FaPaw />

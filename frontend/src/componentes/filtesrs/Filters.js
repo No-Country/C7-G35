@@ -130,7 +130,7 @@ const schemaAddLostPet = yup
 
 const Filters = () => {
   const {
-    register, getValues, setValue, reset,
+    register, getValues, reset,
   } = useForm({
     resolver: yupResolver(schemaAddLostPet),
   });

@@ -2,13 +2,21 @@ import styled from 'styled-components';
 
 export const FooterContainer = styled.footer`
   width: 100%;
-  height: 338.5px;
   background-color: #2f2d3f;
 
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+  gap: 2rem;
+  ;
 
   font-family: 'Macondo', monospace;
   color: #fff;
+
+  @media screen and (min-width: 900px) {
+    flex-direction: row;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -30,10 +38,10 @@ export const FollowUsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   flex: 1;
 
-  gap: 50px;
+  gap: 2rem;
 `;
 
 export const Logo = styled.img``;
@@ -54,7 +62,11 @@ export const SocialMediaContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+  flex-direction: column;
+  gap: 2rem;
+  @media screen and (min-width: 900px) {
+    flex-direction: row;
+  }
 `;
 
 export const SocialMedia = styled.a``;

@@ -58,8 +58,7 @@ const Navbar = () => {
       </LinkContainer>
       {!dataUser.data && !token ? (
         <ButtonLogin href='/login'>Login</ButtonLogin>
-      ) : dataUser?.data?.user
-     && <UserConfig>
+      ) : <UserConfig>
           <UserName>{dataUser?.data?.user?.name}</UserName>
           <Opciones>
             <Item href='/user'>Ver perfil</Item>

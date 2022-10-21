@@ -14,7 +14,7 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 
 [TOC]
 
-##Stack/Tecnologias 🛠️ :
+## Stack/Tecnologias 🛠️ :
 
 - **Frontend** : React JS
 - **Backend: Typescript** - Node.js/Express , express- validators
@@ -23,13 +23,14 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 - **Semantic commit** : Sui ui
 - **Documentacion** : OpenApi / Swagger
 
-## Integrantes 🧑‍💻
+## Integrantes 🧑‍💻 :
 
 **Cintia Jimena Martinez** : Front-End developer [Github](https://github.com/KatuGT)
 **Benjamin Diaz**: Front-end Developer [Github](https://github.com/D-Benja)
 **Alfredo Villegas** : Back-end Developer [Github](https://github.com/AlfredoVillegas)
 **Sebastian Ramirez** : Team leader
 
-##Links de Produccion :
+## Links de Produccion :
+
 Front-end : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
 API Docs : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)

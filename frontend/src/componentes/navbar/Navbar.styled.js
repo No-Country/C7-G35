@@ -112,8 +112,12 @@ export const Opciones = styled.div`
 
 export const UserConfig = styled.span`
   position: relative;
+  display: none;
   &:hover > ${Opciones}{
     display: flex;
+  }
+  @media screen and (min-width: 900px) {
+    display: initial;
   }
 `;
 

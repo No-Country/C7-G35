@@ -26,8 +26,6 @@ const Navbar = () => {
     token,
   );
 
-  console.log(userMe);
-
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -41,6 +39,10 @@ const Navbar = () => {
         <ImgLogo src={petSpaceLogo} alt='Logo Pet Space' />
       </LinkHome>
       <LinkContainer clicked={clicked}>
+      <UserName as='a' href='/user'>{userMe?.data?.user?.name}</UserName>
+        <span onClick={handleLogout}>
+          <Link href='/'>Cerrar sesión</Link>
+        </span>
         <span>
           <Link href='/see-all-lost/loss'>Mascotas Perdidas</Link>
         </span>

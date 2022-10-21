@@ -34,8 +34,9 @@ export const LinkContainer = styled.span`
   padding: 4rem;
   gap: 3rem;
   transition: .7s ease translate;
-  translate:0 ${(props) => (props.clicked ? '0' : '-150%')} ;
+  translate:0 ${(props) => (props.clicked ? '0' : '-500%')} ;
   @media screen and (min-width: 900px)  {
+    translate: 0;
     position: relative;
     padding: 0;
     width: max-content;

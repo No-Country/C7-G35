@@ -85,7 +85,6 @@ const CardMascota = (
     openModalRecuperado,
   },
 ) => {
-  console.log(estado);
   const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
     timeZone: 'UTC',
   });

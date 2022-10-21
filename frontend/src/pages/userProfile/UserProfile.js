@@ -114,7 +114,6 @@ const WrapperBotones = styled.div`
 
 const UserProfile = () => {
   const token = JSON.parse(localStorage.getItem('token'));
-
   const userMe = useFetch(
     'https://pet-spaces-production.up.railway.app/api/users/me',
     token,
@@ -181,7 +180,6 @@ const UserProfile = () => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
     watch,
   } = useForm({
@@ -231,9 +229,9 @@ const UserProfile = () => {
   };
 
   const [idMascota, setIdMascota] = useState('');
-  const handlePet = (e) => {
+  const handlePet = async (e) => {
     e.preventDefault();
-    axios.post(
+    await axios.post(
       `https://pet-spaces-production.up.railway.app/api/loss/${idMascota}`,
       objDatos,
       { headers: { Authorization: `Bearer ${token}` } },
@@ -255,7 +253,30 @@ const UserProfile = () => {
     modal.current.close();
   };
 
-  const handleMascotaRcuperada = () => {
+  const handleMascotaRcuperada = async (id) => {
+    await Swal.fire({
+      title: 'He recuperado esta mascota',
+      text: 'Ya no necesito buscar mas',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Dejar de buscar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(
+          ` https://pet-spaces-production.up.railway.app/api/loss/${id}/recovered`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        Swal.fire(
+          'Que bueno!!',
+          'Ya no veras esta mascota en tu lista de mascotas perdidas.',
+          'success',
+        );
+      }
+    });
   };
 
   return (
@@ -339,7 +360,7 @@ const UserProfile = () => {
                   estado={'loss'}
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
-                  openModalRecuperado={handleMascotaRcuperada(mascota?.id)}
+                  openModalRecuperado={() => handleMascotaRcuperada(mascota?.id)}
                 />
               ))
             ) : (

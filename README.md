@@ -11,7 +11,6 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 - Busca mascotas peridas o encontradas aplicando filtros.
 
 **Table of Contents**
-
 [TOC]
 
 ## Stack/Tecnologias 🛠️ :
@@ -25,12 +24,12 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 
 ## Integrantes 🧑‍💻 :
 
-**Cintia Jimena Martinez** : Front-End developer [Github](https://github.com/KatuGT)
-**Benjamin Diaz**: Front-end Developer [Github](https://github.com/D-Benja)
-**Alfredo Villegas** : Back-end Developer [Github](https://github.com/AlfredoVillegas)
-**Sebastian Ramirez** : Team leader
+- **Cintia Jimena Martinez** : Front-End developer [Github](https://github.com/KatuGT)
+- **Benjamin Diaz**: Front-end Developer [Github](https://github.com/D-Benja)
+- **Alfredo Villegas** : Back-end Developer [Github](https://github.com/AlfredoVillegas)
+- **Sebastian Ramirez** : Team leader
 
 ## Links de Produccion :
 
-Front-end : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
-API Docs : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)
+**Front-end** : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
+**API Docs** : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)

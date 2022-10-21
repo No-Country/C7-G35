@@ -2,15 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import reportWebVitals from './reportWebVitals';
 import Router from './Router';
 import { FormProvider } from './providers/FormProviders';
+import { QueryProvider } from './providers/QueryProviders';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <FormProvider>
-      <RouterProvider router={Router} />
-    </FormProvider>
+    <CookiesProvider>
+      <QueryProvider>
+        <FormProvider>
+          <RouterProvider router={Router} />
+        </FormProvider>
+      </QueryProvider>
+    </CookiesProvider>
   </React.StrictMode>,
 );
 

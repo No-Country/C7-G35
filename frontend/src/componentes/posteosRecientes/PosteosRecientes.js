@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ButtonComponent from '../buttom/Button';
+import { ButtonComponent } from '../buttom/Button';
 import CardMascota from '../cardMascota/CardMascota';
 
 const WrapperPosteosRecientes = styled.section`
@@ -34,7 +34,9 @@ const Title = styled.h2`
 const GroupCards = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
+  margin-bottom: 3rem;
 `;
 
 const PosteosRecientes = ({
@@ -48,15 +50,17 @@ const PosteosRecientes = ({
         <Line />
       </WrapperTitle>
       <GroupCards>
-        {datos?.map((mascota, index) => (
-          <CardMascota
+        {datos?.pet !== null
+          ? datos?.map((mascota, index) => (
+            <CardMascota
             key={index}
-            id={mascota?.id}
-            nombre={mascota?.nombre}
-            link={mascota?.link}
-            estado={mascota?.estado}
+            path={`/detail-pet/${estado}/${mascota?.id}`}
+            nombre={mascota?.pet?.name}
+            link={mascota?.pet?.images}
+            fecha={mascota?.date}
+            estado={estado}
           />
-        ))}
+          )) : 'No hay mascotas'}
       </GroupCards>
       <ButtonComponent texto={'Ver todos'} estado={estado} path={pathVerTodos} />
 

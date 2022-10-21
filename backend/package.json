@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "description": "backend for App pets",
   "scripts": {
-    "start": "NODE_ENV=production node dist/src/api/server.js",
-    "dev": "ts-node ./src/api/server",
+    "start:backend": "NODE_ENV=production node dist/src/api/server.js",
+    "dev": "NODE_ENV=dev; npm run build:docs:swagger; ts-node ./src/api/server",
     "test": "npm run test:unit",
     "test:unit": "jest",
     "test:coverage": "jest --coverage",
-    "build": "npm run build:clean && npm run build:tsc && npm run build:docs:swagger && npm run build:copy",
+    "build:backend": "npm run build:clean && npm run build:tsc && npm run build:docs:swagger && npm run build:copy",
     "build:tsc": "tsc -p tsconfig.prod.json",
     "build:copy": "copyfiles 'src/**/*.{json,yaml,html,png,ico,css,js}' 'dist/'",
     "build:clean": "rm -r dist; exit 0",
-    "build:docs:swagger": "tsoa spec",
-    "typeorm": "typeorm-ts-node-esm",
-    "sync:typeorm:schema": "ts-node ./src/database/syncTypeOrmSchema.ts"  
+    "build:docs:swagger": "rm -r src/api/swagger.json; tsoa spec",
+    "typeorm": "typeorm-ts-node-esm schema:sync -d ./src/database/TypeOrmClient.ts"
+    
   },
   "author": "",
   "license": "ISC",

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { MdMenu } from 'react-icons/md';
 import {
   ButtonLogin,
+  CerrarSesion,
   IconoMenu,
   ImgLogo,
   Item,
@@ -13,6 +14,7 @@ import {
   Opciones,
   UserConfig,
   UserName,
+  UserNameLink,
 } from './Navbar.styled';
 
 import petSpaceLogo from '../../assets/petspace-logo.png';
@@ -28,7 +30,6 @@ const Navbar = () => {
   useEffect(() => {
     setDataUser(userMe);
   }, [token]);
-  console.log(dataUser);
 
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
@@ -43,6 +44,10 @@ const Navbar = () => {
         <ImgLogo src={petSpaceLogo} alt='Logo Pet Space' />
       </LinkHome>
       <LinkContainer clicked={clicked}>
+        <UserNameLink href='/user'>{userMe?.data?.user?.name}</UserNameLink>
+        <CerrarSesion className='cerrar-seison' onClick={handleLogout}>
+          <Link href='/'>Cerrar sesión</Link>
+        </CerrarSesion>
         <span>
           <Link href='/see-all-lost/loss'>Mascotas Perdidas</Link>
         </span>

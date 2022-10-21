@@ -1,3 +1,4 @@
+import { BsCheckLg } from 'react-icons/bs';
 import { FaPaw, FaSearch } from 'react-icons/fa';
 import { RiDeleteBin6Fill, RiFileEditFill } from 'react-icons/ri';
 import styled from 'styled-components';
@@ -72,9 +73,19 @@ const ActionButton = styled.button`
 
 const CardMascota = (
   {
-    path, nombre, link, estado, fecha, token, deleteFunction, editFunction, openModal,
+    path,
+    nombre,
+    link,
+    estado,
+    fecha,
+    token,
+    deleteFunction,
+    editFunction,
+    openModal,
+    openModalRecuperado,
   },
 ) => {
+  console.log(estado);
   const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
     timeZone: 'UTC',
   });
@@ -91,7 +102,8 @@ const CardMascota = (
       && <WrapperButtons>
         <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>
         <ActionButton onClick={ editFunction }><RiFileEditFill/></ActionButton>
-        <ActionButton onClick={ openModal }><FaSearch/></ActionButton>
+        {estado === 'pets' && <ActionButton onClick={ openModal }><FaSearch/></ActionButton>}
+        {estado === 'loss' && <ActionButton onClick={ openModalRecuperado }><BsCheckLg/></ActionButton>}
       </WrapperButtons>
       }
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={path}/>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MdMenu } from 'react-icons/md';
 import {
-  Button,
+  ButtonLogin,
   IconoMenu,
   ImgLogo,
   Link,
@@ -13,9 +13,8 @@ import {
 import petSpaceLogo from '../../assets/petspace-logo.png';
 
 const Navbar = () => {
-  const [clicked, setClicked] = useState(true);
+  const [clicked, setClicked] = useState(false);
   return (
-    <div>
       <NavContainer>
         <LinkHome href='/'>
           <ImgLogo src={petSpaceLogo} alt='Logo Pet Space' />
@@ -28,12 +27,11 @@ const Navbar = () => {
             <Link href='/see-all-lost/rescue'>Mascotas Encontradas</Link>
           </span>
         </LinkContainer>
-        <Button>Login</Button>
+        <ButtonLogin href='/login'>Login</ButtonLogin>
         <IconoMenu onClick={() => { setClicked(!clicked); }}>
           <MdMenu />
         </IconoMenu>
       </NavContainer>
-    </div>
   );
 };
 

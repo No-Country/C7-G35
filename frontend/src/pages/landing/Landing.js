@@ -144,13 +144,11 @@ const TextoDesc = styled.p``;
 const Landing = () => {
   const datosLosts = useFetch('https://pet-spaces-production.up.railway.app/api/loss/last');
   const datosFound = useFetch('https://pet-spaces-production.up.railway.app/api/rescues/last');
-  const location = useLocation();
-  const tokenDeParams = location.search;
 
   const tokenFromParams = Object.fromEntries(new URL(window.location).searchParams).token;
 
   if (tokenFromParams) {
-    localStorage.setItem('token', JSON.stringify(tokenDeParams));
+    localStorage.setItem('token', JSON.stringify(tokenFromParams));
   }
 
   return (

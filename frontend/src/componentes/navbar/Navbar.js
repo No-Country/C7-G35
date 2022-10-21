@@ -56,10 +56,9 @@ const Navbar = () => {
           <Link href='/see-all-lost/rescue'>Mascotas Encontradas</Link>
         </span>
       </LinkContainer>
-      {dataUser?.data === null && (
+      {!dataUser.data && !token ? (
         <ButtonLogin href='/login'>Login</ButtonLogin>
-      ) }
-     { dataUser?.data?.user
+      ) : dataUser?.data?.user
      && <UserConfig>
           <UserName>{dataUser?.data?.user?.name}</UserName>
           <Opciones>

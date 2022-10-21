@@ -8,7 +8,7 @@ export const NavContainer = styled.nav`
   justify-content: space-between;
   background-color: #2f2d3f;
   padding: 1rem;
-  @media screen and (min-width: 900px){
+  @media screen and (min-width: 900px) {
     justify-content: space-evenly;
   }
 `;
@@ -33,9 +33,9 @@ export const LinkContainer = styled.span`
   align-items: center;
   padding: 4rem;
   gap: 3rem;
-  transition: .7s ease translate;
-  translate:0 ${(props) => (props.clicked ? '0' : '-500%')} ;
-  @media screen and (min-width: 900px)  {
+  transition: 0.7s ease translate;
+  translate: 0 ${(props) => (props.clicked ? '0' : '-500%')};
+  @media screen and (min-width: 900px) {
     translate: 0;
     position: relative;
     padding: 0;
@@ -80,10 +80,6 @@ export const ButtonLogin = styled.a`
   cursor: pointer;
 `;
 
-export const UserConfig = styled.span`
-
-`;
-
 export const UserName = styled.span`
   background-color: #ed747d;
   padding: 10px 35px;
@@ -94,5 +90,35 @@ export const UserName = styled.span`
 
   border: none;
   border-radius: 10px;
+  cursor: pointer;
+`;
+
+export const Opciones = styled.div`
+  background-color: var(--clr-blue-dark);
+  position: absolute;
+  top: 140%;
+  color: #fff;
+  z-index: 45345;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  text-align: right;
+  border-radius: 7px;
+  display: none;
+
+`;
+
+export const UserConfig = styled.span`
+  position: relative;
+  &:hover > ${Opciones}{
+    display: flex;
+  }
+`;
+
+export const Item = styled.a`
+  text-decoration: none;
+  color: #fff;
   cursor: pointer;
 `;

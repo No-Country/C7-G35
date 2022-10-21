@@ -16,10 +16,10 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 ## Stack/Tecnologias 🛠️ :
 
 - **Frontend** : React JS
-- **Backend: Typescript** - Node.js/Express , express- validators
+- **Backend**: Typescript - Node.js/Express , express-validators
 - **Databases y Orms** : Postgres con TypeOrm
 - **Cloud de imagenes** : Cloudynary
-- **Semantic commit** : Sui ui
+- **Semantic commit** : @s-ui/mono
 - **Documentacion** : OpenApi / Swagger
 
 ## Integrantes 🧑‍💻 :
@@ -32,4 +32,5 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 ## Links de Produccion :
 
 **Front-end** : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
+
 **API Docs** : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)

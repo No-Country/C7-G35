@@ -259,28 +259,6 @@ const AddPet = () => {
           validacion={{ ...register('description') }}
         />
       </WrapperComponentForm>
-
-      <WrapperComponentForm>
-        <TituloForm>Mis datos de contacto son...</TituloForm>
-        <InputTextComponent
-          label={'Teléfono'}
-          idFor={'telOwnerLostPet'}
-          validacion={{ ...register('mobile') }}
-          type={'tel'}
-          orientacion={'horizontal'}
-          placeholder={'+54 3556677441'}
-        />
-        {errors.mobile && <Error text={errors.mobile.message}/>}
-         <InputTextComponent
-          label={'E-mail'}
-          idFor={'emailOwnerLostPet'}
-          validacion={{ ...register('email') }}
-          type={'email'}
-          orientacion={'horizontal'}
-          placeholder={'ejemplo@gmail.com'}
-        />
-      </WrapperComponentForm>
-
       <ButtonComponent
         as='button'
         type={'submit'}

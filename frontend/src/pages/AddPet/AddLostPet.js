@@ -130,9 +130,11 @@ const AddLostPet = () => {
       {
         location: `${city.country}, ${city.state}`,
         date: fecha,
+        publicContact: data.publicContact,
         pet: {
           ...data,
           date: undefined,
+          publicContact: undefined,
         },
       },
       { headers: { Authorization: `Bearer ${token}` } },

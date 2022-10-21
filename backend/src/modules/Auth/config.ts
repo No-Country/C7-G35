@@ -12,5 +12,6 @@ export const configEnv = {
     appSecret: process.env.FACEBOOK_APP_SECRET || ''
   },
 
-  frontendHomeUrl: process.env.FRONTEND_HOME_URL || ''
+  frontendHomeUrl: process.env.FRONTEND_HOME_URL || '',
+  backendHomeUrl: process.env.BACKEND_HOME_URL || undefined
 };

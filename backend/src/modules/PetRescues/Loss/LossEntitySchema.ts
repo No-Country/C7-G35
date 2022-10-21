@@ -5,7 +5,6 @@ export const LossEntitySchema = new EntitySchema<Loss>({
   name: 'Loos',
   tableName: 'loss',
   target: Loss,
-  schema: 'Pet_Rescues',
 
   columns: {
     id: {

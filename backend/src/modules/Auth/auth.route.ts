@@ -27,10 +27,9 @@ export const register = (router: Router) => {
       try {
         const user = await findUserOrCreate(userFromGoogle);
         const tokenJwt = createToken(user.id);
-
-        res.cookie('token', tokenJwt, { maxAge: 120000 });
-        res.cookie('userName', user.name, { maxAge: 120000 });
-        res.redirect(configEnv.frontendHomeUrl);
+        //res.cookie('token', tokenJwt, { maxAge: 120000 });
+        //res.cookie('userName', user.name, { maxAge: 120000 });
+        res.redirect(`${configEnv.frontendHomeUrl}?token=${tokenJwt}`);
       } catch (error) {
         console.error(error);
         res.status(httpStatus.UNAUTHORIZED).send({ errorMessage: 'auth error' });

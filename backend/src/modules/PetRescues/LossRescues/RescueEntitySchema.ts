@@ -5,7 +5,6 @@ export const RescueEntitySchema = new EntitySchema<Rescue>({
   name: 'Rescue',
   tableName: 'rescues',
   target: Rescue,
-  schema: 'Pet_Rescues',
 
   columns: {
     id: {

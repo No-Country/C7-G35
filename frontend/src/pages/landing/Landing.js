@@ -5,7 +5,10 @@ import PosteosRecientes from '../../componentes/posteosRecientes/PosteosReciente
 import DogsHeader from '../../assets/GrupoDos.png';
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import useFetch from '../../customHooks/useFetch';
-import { SVGWavesInferior, SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
+import {
+  SVGWavesInferior,
+  SVGWavesSuperior,
+} from '../../componentes/SVGWaves/SVGWaves';
 
 const HeaderWrapper = styled.div`
   background: var(--clr-pink);
@@ -20,7 +23,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   z-index: 99;
   padding: 1rem;
-  @media screen and (min-width: 1000px){
+  @media screen and (min-width: 1000px) {
     padding: 3rem 8rem;
   }
   @media screen and (min-width: 1200px) {
@@ -142,10 +145,16 @@ const TituloDesc = styled.h3`
 const TextoDesc = styled.p``;
 
 const Landing = () => {
-  const datosLosts = useFetch('https://pet-spaces-production.up.railway.app/api/loss/last');
-  const datosFound = useFetch('https://pet-spaces-production.up.railway.app/api/rescues/last');
+  const datosLosts = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/loss/last',
+  );
+  const datosFound = useFetch(
+    'https://pet-spaces-production.up.railway.app/api/rescues/last',
+  );
 
-  const tokenFromParams = Object.fromEntries(new URL(window.location).searchParams).token;
+  const tokenFromParams = Object.fromEntries(
+    new URL(window.location).searchParams,
+  ).token;
 
   if (tokenFromParams) {
     localStorage.setItem('token', JSON.stringify(tokenFromParams));
@@ -166,10 +175,13 @@ const Landing = () => {
             estado={'rescues'}
             path={'/form-add-found-pet'}
           />
-          <ButtonComponent texto={'Busco mi mascota'} path={'/form-add-lost-pet'} />
+          <ButtonComponent
+            texto={'Busco mi mascota'}
+            path={'/form-add-lost-pet'}
+          />
         </ColumnaDos>
       </HeaderWrapper>
-      <SVGWavesSuperior top={'-0.2px'}/>
+      <SVGWavesSuperior top={'-0.2px'} />
       <PosteosRecientes
         titulo={'Mascotas recién encontradas'}
         datos={datosFound?.data?.rescue}
@@ -182,7 +194,7 @@ const Landing = () => {
         estado={'loss'}
         pathVerTodos={'/see-all-lost/loss'}
       />
-      <SVGWavesInferior color={'pinkMedium'} top={'4px'}/>
+      <SVGWavesInferior color={'pinkMedium'} top={'4px'} />
       <SobreNosotrosWrapper>
         <IconoHuella>
           <FaPaw />
@@ -193,10 +205,11 @@ const Landing = () => {
         <Descripcion>
           <TituloDesc>Sobre Nosotros</TituloDesc>
           <TextoDesc>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos quia
-            dolore modi harum animi! Sequi quam nemo suscipit, sed ut non cumque
-            provident dolorum, pariatur soluta tempora aspernatur cupiditate
-            alias.
+            Todos los días mascotas se desaparecen, posiblemente para siempre,
+            quien sabe cuál será el destino de nuestra amada mascota?. Nosotros
+            queremos ayudarte, que tu mascota que vuelva, que si encuentras una,
+            puedas reunirla con su verdadera familia. Ellos sufren, nosotros
+            también.
           </TextoDesc>
         </Descripcion>
       </SobreNosotrosWrapper>

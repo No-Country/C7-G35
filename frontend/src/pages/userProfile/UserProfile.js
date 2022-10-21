@@ -80,10 +80,10 @@ const UserProfile = () => {
 
   const MascotasRegistradas = useFetch('https://pet-spaces-production.up.railway.app/api/pets', token);
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
-  console.log(MascotasRegistradasData);
 
   const MascotasPerdidas = useFetch('https://pet-spaces-production.up.railway.app/api/loss', token);
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+  console.log(MascotasPerdidasData);
 
   const MascotasRescatadas = useFetch('https://pet-spaces-production.up.railway.app/api/rescues', token);
   const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
@@ -125,7 +125,7 @@ const UserProfile = () => {
         <WrapperButtons>
           <ButtonComponent
             texto={'Encontré una mascota'}
-            estado={'Encontrado'}
+            estado={'rescues'}
             path={'/form-add-found-pet'}
           />
           <ButtonComponent
@@ -182,7 +182,7 @@ const UserProfile = () => {
               MascotasPerdidasData?.map((mascota) => (
                 <CardMascota
                   key={mascota?.id}
-                  id={`/detail-pet/loss/${mascota?.id}`}
+                  path={`/detail-pet/loss/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
                   link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
                   fecha={mascota?.date}

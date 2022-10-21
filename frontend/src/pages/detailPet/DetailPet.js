@@ -47,14 +47,21 @@ const UnderLine = styled.span`
 const WrapperMoreData = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 1rem;
   padding: 2rem 1rem;
+  @media screen and (min-width: 500px) {
+    justify-content: space-around;
+  }
 `;
 
-const ColumnaUno = styled.div``;
-const ColumnaDos = styled.div``;
+const ColumnaUno = styled.div`
+display: flex;
+flex-direction: column;
+gap: 1rem;
+`;
 const BoxData = styled.div`
   font-size: 1.5rem;
 `;
@@ -69,7 +76,6 @@ const DetailPet = () => {
   const { id, state } = useParams();
 
   const detalleMascota = useFetch(`https://pet-spaces-production.up.railway.app/api/${state}/${id}`);
-  console.log(detalleMascota);
 
   let dataMostar = state === 'rescues' && detalleMascota?.data?.rescue;
   dataMostar = state === 'loss' && detalleMascota?.data?.loss;
@@ -119,14 +125,14 @@ const DetailPet = () => {
               {dataMostar?.pet?.gender}
             </Value>
           </BoxData>
-          </ColumnaUno>
-          <ColumnaDos>
           <BoxData>
             <Key>¿Castrado?</Key>
             <Value>
               {dataMostar?.pet?.isCastrated === 'false' ? 'Si' : 'No'}
             </Value>
           </BoxData>
+          </ColumnaUno>
+          <ColumnaUno>
           <BoxData>
             <Key>Tamaño</Key>
             <Value>{dataMostar?.pet?.size}</Value>
@@ -136,10 +142,14 @@ const DetailPet = () => {
             <Value>{dataMostar?.pet?.age}</Value>
           </BoxData>
           <BoxData>
-            <Key>Descripción</Key>
-            <Value>{dataMostar?.pet?.description}</Value>
+            <Key>Color/es</Key>
+            {dataMostar?.pet.color?.map((color, index) => <Value key={index}>{color}</Value>)}
           </BoxData>
-          </ColumnaDos>
+          <BoxData>
+            <Key>Contacto</Key>
+            <Value>{dataMostar?.publicContact}</Value>
+          </BoxData>
+          </ColumnaUno>
         </WrapperMoreData>
       </WrapperDataPet>
     </WrapperDetailPet>

@@ -39,7 +39,6 @@ const Navbar = () => {
     navigate('/');
   };
 
-  console.log(dataUser);
   return (
     <NavContainer>
       <LinkHome href='/'>

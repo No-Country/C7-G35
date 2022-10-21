@@ -79,3 +79,20 @@ export const ButtonLogin = styled.a`
   border-radius: 10px;
   cursor: pointer;
 `;
+
+export const UserConfig = styled.span`
+
+`;
+
+export const UserName = styled.span`
+  background-color: #ed747d;
+  padding: 10px 35px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+`;

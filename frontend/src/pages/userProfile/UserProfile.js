@@ -74,7 +74,7 @@ export const WrapperListadoCards = styled.div`
 `;
 
 const UserProfile = () => {
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
 
   const userMe = useFetch('http://localhost:8000/api/users/me', token);
 
@@ -83,7 +83,6 @@ const UserProfile = () => {
 
   const MascotasPerdidas = useFetch('http://localhost:8000/api/loss', token);
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
-  console.log(MascotasPerdidasData);
 
   const MascotasRescatadas = useFetch('http://localhost:8000/api/rescues', token);
   const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
@@ -98,7 +97,7 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      axios.delete(`http://localhost:8000/api/pets/${id}`, {
+      axios.delete(` https://pet-spaces-production.up.railway.app/api/pets/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (result.isConfirmed) {
@@ -182,7 +181,7 @@ const UserProfile = () => {
               MascotasPerdidasData?.map((mascota) => (
                 <CardMascota
                   key={mascota?.id}
-                  id={'/detail-pet'}
+                  id={`/detail-pet/loss/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
                   link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
                   fecha={mascota?.date}
@@ -199,7 +198,7 @@ const UserProfile = () => {
           </WrapperListadoCards>
         </WrapperMascotasRegistradas>
         <WrapperMascotasRegistradas>
-          <Titulo>Tu mascota perdida</Titulo>
+          <Titulo>Mascotas que encontraste</Titulo>
           <Descripcion>
             Aquí verás la mascota que encontraste;
           </Descripcion>
@@ -208,7 +207,7 @@ const UserProfile = () => {
               MascotasRescatadasData?.map((mascota) => (
                 <CardMascota
                   key={mascota?.id}
-                  id={'/detail-pet'}
+                  id={`/detail-pet/rescues/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
                   link={mascota?.pet?.images ? mascota?.pet?.images[0] : SinFotoMascota}
                   fecha={mascota?.date}

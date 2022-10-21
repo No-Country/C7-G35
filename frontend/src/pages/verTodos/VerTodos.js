@@ -20,7 +20,6 @@ const VerTodos = () => {
   const { state } = useParams();
   const mascotas = (state === 'loss' ? useFetch(`http://localhost:8000/api/loss/by${searchParams}`) : useFetch(`http://localhost:8000/api/rescues/by${searchParams}`));
   const mascotasPerdidas = mascotas?.data?.petsLoss;
-  console.log(mascotasPerdidas);
   return (
     <MainWrapperVerTodo>
       <Filters/>

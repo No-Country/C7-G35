@@ -10,7 +10,6 @@ import {
   RiCheckboxBlankCircleLine,
 } from 'react-icons/ri';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import {
   MapContainer,
   TileLayer,
@@ -92,7 +91,7 @@ const schemaAddLostPet = yup
     name: yup.string().max(30, 'Ingresa como máximo 30 caractéres.'),
     description: yup.string().max(250, 'Ingresa como máximo 250 caractéres.'),
     date: yup.string(),
-    publicContact: yup.string('ingresa un numero valido').phone('ingresa un numero valido').required('Este campo es requerido'),
+    publicContact: yup.string().phone().required('Este campo es requerido'),
   })
   .required();
 
@@ -106,8 +105,6 @@ const AddFoundPet = () => {
   } = useForm({
     resolver: yupResolver(schemaAddLostPet),
   });
-
-  const [cookies] = useCookies(['token']);
 
   const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
@@ -124,7 +121,7 @@ const AddFoundPet = () => {
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
   const handleAddMascota = async (data) => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
@@ -133,9 +130,11 @@ const AddFoundPet = () => {
       {
         location: `${city.country}, ${city.state}`,
         date: fecha,
+        publicContact: data.publicContact,
         pet: {
           ...data,
           date: undefined,
+          publicContact: undefined,
         },
       },
       { headers: { Authorization: `Bearer ${token}` } },

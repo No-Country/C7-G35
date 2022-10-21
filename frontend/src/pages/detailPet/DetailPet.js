@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../customHooks/useFetch';
+import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 
 const WrapperDetailPet = styled.section`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
@@ -68,14 +69,15 @@ const DetailPet = () => {
 
   const datosMostrar = state === 'loss'
     ? detalleMascota?.data?.loss
-    : detalleMascota?.data?.recues;
+    : detalleMascota?.data?.rescue;
 
   return (
     <WrapperDetailPet>
       <WrapperImgPet>
         <ImgPet
-          src={datosMostrar?.pet?.images[0]}
-          alt='perro perdido'
+          src={datosMostrar?.pet?.images !== null
+            ? datosMostrar?.pet?.images[0] : SinFotoMascota}
+          alt='Mascota perdida'
         />
       </WrapperImgPet>
       <WrapperDataPet>

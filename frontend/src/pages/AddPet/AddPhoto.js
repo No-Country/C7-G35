@@ -56,7 +56,7 @@ const AddPhoto = () => {
   const { id } = useFormContext();
   const [imgUrl, setImgUrl] = useState('');
 
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
   const navigate = useNavigate();
 
   const handleAddFoto = async (e) => {

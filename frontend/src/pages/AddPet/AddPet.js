@@ -72,7 +72,7 @@ const AddPet = () => {
     resolver: yupResolver(schemaAddLostPet),
   });
 
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
 
   const navigate = useNavigate();
   const useFormChange = useFormChangeContext();

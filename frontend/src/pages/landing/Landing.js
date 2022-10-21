@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { FaPaw } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 import PosteosRecientes from '../../componentes/posteosRecientes/PosteosRecientes';
 import DogsHeader from '../../assets/GrupoDos.png';
-
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import useFetch from '../../customHooks/useFetch';
 import { SVGWavesInferior, SVGWavesSuperior } from '../../componentes/SVGWaves/SVGWaves';
@@ -144,6 +144,14 @@ const TextoDesc = styled.p``;
 const Landing = () => {
   const datosLosts = useFetch('http://localhost:8000/api/loss/last');
   const datosFound = useFetch('http://localhost:8000/api/rescues/last');
+  const location = useLocation();
+  const tokenDeParams = location.search.slice(7);
+
+  const tokenFromParams = Object.fromEntries(new URL(window.location).searchParams).token;
+
+  if (tokenFromParams) {
+    localStorage.setItem('token', JSON.stringify(tokenDeParams));
+  }
 
   return (
     <>

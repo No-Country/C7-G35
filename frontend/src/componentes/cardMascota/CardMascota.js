@@ -1,4 +1,4 @@
-import { FaPaw } from 'react-icons/fa';
+import { FaPaw, FaSearch } from 'react-icons/fa';
 import { RiDeleteBin6Fill, RiFileEditFill } from 'react-icons/ri';
 import styled from 'styled-components';
 import { ButtonComponent } from '../buttom/Button';
@@ -72,7 +72,7 @@ const ActionButton = styled.button`
 
 const CardMascota = (
   {
-    path, nombre, link, estado, fecha, token, deleteFunction, editFunction,
+    path, nombre, link, estado, fecha, token, deleteFunction, editFunction, openModal,
   },
 ) => {
   const normalicedDate = new Date(fecha).toLocaleDateString(undefined, {
@@ -91,6 +91,7 @@ const CardMascota = (
       && <WrapperButtons>
         <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>
         <ActionButton onClick={ editFunction }><RiFileEditFill/></ActionButton>
+        <ActionButton onClick={ openModal }><FaSearch/></ActionButton>
       </WrapperButtons>
       }
       <ButtonComponent texto={'Ver más detalle'} estado={estado} path={path}/>

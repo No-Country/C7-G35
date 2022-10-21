@@ -39,7 +39,8 @@ export const ButtonComponentShort = ({
   texto, estado, path, type, as, onClick,
 }) => {
   return <ButtonShort
-  as={as} href={path} estado={estado} type={type} onClick={onClick}>{texto}</ButtonShort>;
+  as={as} href={path} estado={estado}
+  type={type} onClick={onClick}>{texto}</ButtonShort>;
 };
 
 export const RoundedButtonComponent = ({

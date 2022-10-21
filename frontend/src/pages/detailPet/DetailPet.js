@@ -52,6 +52,9 @@ const WrapperMoreData = styled.div`
   gap: 4rem;
   padding: 2rem 1rem;
 `;
+
+const ColumnaUno = styled.div``;
+const ColumnaDos = styled.div``;
 const BoxData = styled.div`
   font-size: 1.5rem;
 `;
@@ -65,69 +68,78 @@ const Value = styled.p`
 const DetailPet = () => {
   const { id, state } = useParams();
 
-  const detalleMascota = useFetch(`http://localhost:8000/api/${state}/${id}`);
+  const detalleMascota = useFetch(`https://pet-spaces-production.up.railway.app/api/${state}/${id}`);
+  console.log(detalleMascota);
 
-  const datosMostrar = state === 'loss'
-    ? detalleMascota?.data?.loss
-    : detalleMascota?.data?.rescue;
+  let dataMostar = state === 'rescues' && detalleMascota?.data?.rescue;
+  dataMostar = state === 'loss' && detalleMascota?.data?.loss;
+  dataMostar = state === 'pets' && detalleMascota?.data;
+
+  if (state === 'rescues') {
+    dataMostar = detalleMascota?.data?.rescue;
+  } else if (state === 'loss') {
+    dataMostar = detalleMascota?.data?.loss;
+  } else if (state === 'pets') {
+    dataMostar = detalleMascota?.data;
+  }
 
   return (
     <WrapperDetailPet>
       <WrapperImgPet>
         <ImgPet
-          src={datosMostrar?.pet?.images !== null
-            ? datosMostrar?.pet?.images[0] : SinFotoMascota}
+          src={dataMostar?.pet?.images !== null
+            ? dataMostar?.pet?.images[0] : SinFotoMascota}
           alt='Mascota perdida'
         />
       </WrapperImgPet>
       <WrapperDataPet>
         <NameWrapper>
-          <NamePet>Teo</NamePet>
+          <NamePet>{dataMostar?.pet?.name}</NamePet>
           <UnderLine></UnderLine>
         </NameWrapper>
         <WrapperMoreData>
-          <BoxData>
+          <ColumnaUno>
+          {dataMostar?.location && <BoxData>
             <Key>Ubicación</Key>
-            <Value>{datosMostrar?.location}</Value>
-          </BoxData>
+            <Value>{dataMostar?.location}</Value>
+          </BoxData>}
           <BoxData>
             <Key>Es un</Key>
             <Value>
-              {datosMostrar?.pet?.type}
+              {dataMostar?.pet?.type}
             </Value>
           </BoxData>
           <BoxData>
             <Key>Raza</Key>
-            <Value>{datosMostrar?.pet?.breed}</Value>
+            <Value>{dataMostar?.pet?.breed}</Value>
           </BoxData>
           <BoxData>
             <Key>Genero</Key>
             <Value>
-              {datosMostrar?.pet?.gender}
+              {dataMostar?.pet?.gender}
             </Value>
           </BoxData>
+          </ColumnaUno>
+          <ColumnaDos>
           <BoxData>
             <Key>¿Castrado?</Key>
             <Value>
-              {datosMostrar?.pet?.isCastrated === 'false' ? 'Si' : 'No'}
+              {dataMostar?.pet?.isCastrated === 'false' ? 'Si' : 'No'}
             </Value>
           </BoxData>
           <BoxData>
-            <Key>Nombre</Key>
-            <Value>{datosMostrar?.pet?.name}</Value>
-          </BoxData>
-          <BoxData>
             <Key>Tamaño</Key>
-            <Value>{datosMostrar?.pet?.size}</Value>
+            <Value>{dataMostar?.pet?.size}</Value>
           </BoxData>
           <BoxData>
             <Key>Edad</Key>
-            <Value>{datosMostrar?.pet?.age}</Value>
+            <Value>{dataMostar?.pet?.age}</Value>
           </BoxData>
           <BoxData>
             <Key>Descripción</Key>
-            <Value>{datosMostrar?.pet?.description}</Value>
+            <Value>{dataMostar?.pet?.description}</Value>
           </BoxData>
+          </ColumnaDos>
         </WrapperMoreData>
       </WrapperDataPet>
     </WrapperDetailPet>

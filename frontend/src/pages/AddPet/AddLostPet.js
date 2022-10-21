@@ -126,7 +126,7 @@ const AddLostPet = () => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
     const response = await axios.post(
-      'http://localhost:8000/api/loss',
+      'https://pet-spaces-production.up.railway.app/api/loss',
       {
         location: `${city.country}, ${city.state}`,
         date: fecha,

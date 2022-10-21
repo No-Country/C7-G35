@@ -62,7 +62,7 @@ const AddPhoto = () => {
   const handleAddFoto = async (e) => {
     e.preventDefault();
     await axios.post(
-      `http://localhost:8000/api/pets/${id}/images`,
+      `https://pet-spaces-production.up.railway.app/api/pets/${id}/images`,
       {
         imageUrl: imgUrl,
       },

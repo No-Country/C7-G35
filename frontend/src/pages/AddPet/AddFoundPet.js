@@ -126,7 +126,7 @@ const AddFoundPet = () => {
     const { date } = data;
     const fecha = new Date(date).toUTCString();
     const response = await axios.post(
-      'http://localhost:8000/api/rescues',
+      ' https://pet-spaces-production.up.railway.app/api/rescues',
       {
         location: `${city.country}, ${city.state}`,
         date: fecha,

@@ -78,7 +78,7 @@ const AddPet = () => {
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
   const handleAddMascota = async (data) => {
-    const response = await axios.post('http://localhost:8000/api/pets', data, { headers: { Authorization: `Bearer ${token}` } });
+    const response = await axios.post('https://pet-spaces-production.up.railway.app/api/pets', data, { headers: { Authorization: `Bearer ${token}` } });
     useFormChange((prevState) => ({
       ...prevState,
       id: response?.data?.pet?.id,

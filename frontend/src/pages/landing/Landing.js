@@ -142,10 +142,10 @@ const TituloDesc = styled.h3`
 const TextoDesc = styled.p``;
 
 const Landing = () => {
-  const datosLosts = useFetch('http://localhost:8000/api/loss/last');
-  const datosFound = useFetch('http://localhost:8000/api/rescues/last');
+  const datosLosts = useFetch('https://pet-spaces-production.up.railway.app/api/loss/last');
+  const datosFound = useFetch('https://pet-spaces-production.up.railway.app/api/rescues/last');
   const location = useLocation();
-  const tokenDeParams = location.search.slice(7);
+  const tokenDeParams = location.search;
 
   const tokenFromParams = Object.fromEntries(new URL(window.location).searchParams).token;
 

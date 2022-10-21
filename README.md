@@ -11,25 +11,26 @@ Una web donde puedes registrar tus mascotas y pertenecer a una comunidad que se 
 - Busca mascotas peridas o encontradas aplicando filtros.
 
 **Table of Contents**
-
 [TOC]
 
-##Stack/Tecnologias 🛠️ :
+## Stack/Tecnologias 🛠️ :
 
 - **Frontend** : React JS
-- **Backend: Typescript** - Node.js/Express , express- validators
+- **Backend**: Typescript - Node.js/Express , express-validators
 - **Databases y Orms** : Postgres con TypeOrm
 - **Cloud de imagenes** : Cloudynary
-- **Semantic commit** : Sui ui
+- **Semantic commit** : @s-ui/mono
 - **Documentacion** : OpenApi / Swagger
 
-## Integrantes 🧑‍💻
+## Integrantes 🧑‍💻 :
 
-**Cintia Jimena Martinez** : Front-End developer [Github](https://github.com/KatuGT)
-**Benjamin Diaz**: Front-end Developer [Github](https://github.com/D-Benja)
-**Alfredo Villegas** : Back-end Developer [Github](https://github.com/AlfredoVillegas)
-**Sebastian Ramirez** : Team leader
+- **Cintia Jimena Martinez** : Front-End developer [Github](https://github.com/KatuGT)
+- **Benjamin Diaz**: Front-end Developer [Github](https://github.com/D-Benja)
+- **Alfredo Villegas** : Back-end Developer [Github](https://github.com/AlfredoVillegas)
+- **Sebastian Ramirez** : Team leader
 
-##Links de Produccion :
-Front-end : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
-API Docs : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)
+## Links de Produccion :
+
+**Front-end** : [https://petspace-frontend-nine.vercel.app/](https://petspace-frontend-nine.vercel.app/)
+
+**API Docs** : [https://pet-spaces-production.up.railway.app/api/docs](https://pet-spaces-production.up.railway.app/api/docs)

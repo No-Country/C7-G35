@@ -147,3 +147,7 @@ export const Item = styled.a`
   color: #fff;
   cursor: pointer;
 `;
+
+export const ItemMobile = styled.span`
+text-align: center;
+`;

@@ -7,6 +7,7 @@ import {
   IconoMenu,
   ImgLogo,
   Item,
+  ItemMobile,
   Link,
   LinkContainer,
   LinkHome,
@@ -49,12 +50,12 @@ const Navbar = () => {
         <CerrarSesion className='cerrar-seison' onClick={handleLogout}>
           <Link href='/'>Cerrar sesión</Link>
         </CerrarSesion>
-        <span>
+        <ItemMobile>
           <Link href='/see-all-lost/loss'>Mascotas Perdidas</Link>
-        </span>
-        <span>
+        </ItemMobile>
+        <ItemMobile>
           <Link href='/see-all-lost/rescue'>Mascotas Encontradas</Link>
-        </span>
+        </ItemMobile>
       </LinkContainer>
       {!dataUser.data && !token ? (
         <ButtonLogin href='/login'>Login</ButtonLogin>

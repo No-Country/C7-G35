@@ -15,6 +15,7 @@ const Button = styled.a`
 
 const ButtonShort = styled(Button)`
   width: max-content;
+  height: min-content;
   padding: .8rem 1.5rem;
  `;
 

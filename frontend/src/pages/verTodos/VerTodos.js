@@ -19,7 +19,10 @@ const VerTodos = () => {
   const searchParams = `?${new URLSearchParams(omitBy(query, isEmpty)).toString()}`;
   const { state } = useParams();
 
- const mascotas = (state === 'loss' && useFetch(`https://pet-spaces-production.up.railway.app/api/loss/by${searchParams}`));
+  const url = (state === 'loss' ? `https://pet-spaces-production.up.railway.app/api/loss/by${searchParams}`
+    : `https://pet-spaces-production.up.railway.app/api/rescues/by${searchParams}`);
+
+  const mascotas = useFetch(url);
 
   const mascotasPerdidas = (state === 'loss' ? mascotas?.data?.petsLoss : mascotas?.data?.petsRescues);
   return (

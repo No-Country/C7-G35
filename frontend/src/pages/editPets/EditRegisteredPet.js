@@ -81,7 +81,8 @@ const EditRegisteredPet = () => {
   const params = useParams();
   const useFormChange = useFormChangeContext();
   const useFormData = useFormContext();
-  const [images, setImages] = useState();
+  console.log(useFormData);
+  const [images, setImages] = useState(useFormData.images);
 
   const handleAddMascota = async (data) => {
     await axios.put(`https://pet-spaces-production.up.railway.app/api/pets/${params?.id}`, {
@@ -312,7 +313,7 @@ const EditRegisteredPet = () => {
         as='button'
         type={'submit'}
         estado={'perdido'}
-        texto={'Siguiente'}
+        texto={'Enviar'}
       />
     </WrapperMascotaPerdida>
   );

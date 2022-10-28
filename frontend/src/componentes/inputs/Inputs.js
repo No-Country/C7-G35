@@ -206,12 +206,12 @@ export const DataListComponent = ({
     <WrapperDataList>
       <LabelTadaList>
         Seleccione de la lista
-        <InputList list='breed' {...validacion} />
+        <InputList list='breed' {...validacion} defaultValue={defaultValue} />
       </LabelTadaList>
       <DataList id='breed'>
-        <DataListOption value={'No tiene raza'} defaultValue />
+        <DataListOption value={'No tiene raza'} />
         {tipo && Array && Array[tipo]?.sort()?.map((dato, index) => (
-          <DataListOption key={index} value={dato} defaultValue={defaultValue}/>
+          <DataListOption key={index} value={dato}/>
         ))}
       </DataList>
     </WrapperDataList>

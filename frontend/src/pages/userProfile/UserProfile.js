@@ -89,14 +89,23 @@ export const WrapperListadoCards = styled.div`
 `;
 
 const Modal = styled.dialog`
+    width: max-content;
+    height: auto;
+    border: none;
+    margin: 2rem auto;
+    box-shadow: rgba(0, 0, 0, .8) 0px 20px 30px -10px;
+    border-radius: 7px;
+    &&::backdrop{
+      background-color: rgba(0, 0, 0, .8);
+    }
+`;
+
+const WrapperModal = styled.div`
   z-index: 4456;
   border: none;
   padding: 3rem;
   display: flex;
   flex-direction: column;
-  border-radius: 7px;
-  margin: 2rem auto;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 `;
 
 const DatosSolicitados = styled.div``;
@@ -109,6 +118,7 @@ const FormDatos = styled.form`
 
 const WrapperBotones = styled.div`
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
 `;
 
@@ -240,16 +250,15 @@ const UserProfile = () => {
 
   const modal = useRef();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const openModal = () => {
+
+  const HandleOpenModal = (id) => {
     setIsOpenModal(true);
     modal.current.showModal();
-  };
-  const HandleOpenModal = (id) => {
-    openModal();
     setIdMascota(id);
   };
 
   const cerrarModal = () => {
+    setIsOpenModal(false);
     modal.current.close();
   };
 
@@ -278,6 +287,7 @@ const UserProfile = () => {
       }
     });
   };
+  console.log(isOpenModal);
 
   return (
     <WrapperUserProfile>
@@ -399,8 +409,8 @@ const UserProfile = () => {
           </WrapperListadoCards>
         </WrapperMascotasRegistradas>
       </WrapperTodasLasMascotas>
-      {isOpenModal
-      && <Modal close method="dialog" ref={modal}>
+      <Modal method="dialog" ref={modal}>
+        <WrapperModal>
         <h3>Se perdio tu mascota?</h3>
         <p>Necesitamos un par de datos para poder publicarla</p>
         <FormDatos>
@@ -417,7 +427,7 @@ const UserProfile = () => {
             </label>
             <div>
               <p>Fue en...</p>
-              <MapContainer
+              {isOpenModal && <MapContainer
                 style={{ height: '600px', width: '600px' }}
                 center={[-38.169114135560854, -65.75208708742923]}
                 zoom={5}
@@ -428,21 +438,21 @@ const UserProfile = () => {
                   url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                 />
                 <LocationMarker handleChange={handleChangePoint} />
-              </MapContainer>
+              </MapContainer>}
             </div>
           </DatosSolicitados>
-            {<p>{city.country}, {city.state}</p>}
+            {city && <p>{city.country}, {city.state}</p>}
           <WrapperBotones>
             <ButtonComponentShort
               as={'button'}
               texto={'Enviar'}
               onClick={(e) => handlePet(e)}
-            />
+              />
+          <ButtonComponentShort as={'button'} type={'button'} texto={'Cancelar'} onClick={cerrarModal} />
           </WrapperBotones>
           </FormDatos>
-          <ButtonComponentShort as={'button'} type={'button'} texto={'Cancelar'} onClick={cerrarModal} />
+              </WrapperModal>
       </Modal>
-      }
     </WrapperUserProfile>
   );
 };

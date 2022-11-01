@@ -108,11 +108,24 @@ const WrapperModal = styled.div`
   flex-direction: column;
 `;
 
-const DatosSolicitados = styled.div``;
+const DatosSolicitados = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+const LabelMascotaPerdida = styled.label`
+  font-weight: bolder;
+`;
+
+const InputMarcarPedido = styled.input`
+    padding: 0.5rem;
+`;
+
 const FormDatos = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 `;
 
@@ -134,19 +147,17 @@ const UserProfile = () => {
     token,
   );
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
-
   const MascotasPerdidas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/loss',
     token,
   );
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
-
   const MascotasRescatadas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/rescues',
     token,
   );
   const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
-
+  console.log(MascotasRescatadas);
   const handleDelete = async (id) => {
     Swal.fire({
       title: 'Estas seguro?',
@@ -182,19 +193,33 @@ const UserProfile = () => {
   const schemaSendToLosts = yup
     .object({
       date: yup.string().required('Este campo es requerido'),
-      name: yup.string().required('Este campo es requerido'),
-      location: yup.string().required('Este campo es requerido'),
-      publicContact: yup.string().phone().required('Este campo es requerido'),
+      publicContact: yup.string().phone('', '', 'Ingrese un numero valido').required('Este campo es requerido'),
     })
     .required();
 
   const {
     register,
+    handleSubmit,
     formState: { errors },
-    watch,
+    reset,
   } = useForm({
     resolver: yupResolver(schemaSendToLosts),
   });
+  const [idMascota, setIdMascota] = useState('');
+  const [city, setCity] = useState('');
+  const modal = useRef();
+  const handleAddLikeLost = async (data) => {
+    await axios.post(
+      `https://pet-spaces-production.up.railway.app/api/loss/${idMascota}`,
+      {
+        ...data,
+        location: city,
+      },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+    modal.current.close();
+    reset();
+  };
 
   function LocationMarker({ setPos, handleChange }) {
     const [position, setPosition] = useState(null);
@@ -220,7 +245,6 @@ const UserProfile = () => {
     );
   }
 
-  const [city, setCity] = useState('');
   async function getCity(latitude, longitud) {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
@@ -232,26 +256,9 @@ const UserProfile = () => {
     getCity(coord.lat, coord.lng);
   };
 
-  const objDatos = {
-    date: watch('date'),
-    publicContact: watch('publicContact'),
-    location: `${city.country}, ${city.state}`,
-  };
-
-  const [idMascota, setIdMascota] = useState('');
-  const handlePet = async (e) => {
-    e.preventDefault();
-    await axios.post(
-      `https://pet-spaces-production.up.railway.app/api/loss/${idMascota}`,
-      objDatos,
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
-  };
-
-  const modal = useRef();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const HandleOpenModal = (id) => {
+  const OpenModalMarcarPedida = (id) => {
     setIsOpenModal(true);
     modal.current.showModal();
     setIdMascota(id);
@@ -260,9 +267,11 @@ const UserProfile = () => {
   const cerrarModal = () => {
     setIsOpenModal(false);
     modal.current.close();
+    reset();
   };
 
   const handleMascotaRcuperada = async (id) => {
+    console.log(id);
     await Swal.fire({
       title: 'He recuperado esta mascota',
       text: 'Ya no necesito buscar mas',
@@ -275,9 +284,7 @@ const UserProfile = () => {
       if (result.isConfirmed) {
         axios.put(
           ` https://pet-spaces-production.up.railway.app/api/loss/${id}/recovered`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
+          { headers: { Authorization: `Bearer ${token}` } },
         );
         Swal.fire(
           'Que bueno!!',
@@ -287,7 +294,6 @@ const UserProfile = () => {
       }
     });
   };
-  console.log(isOpenModal);
 
   return (
     <WrapperUserProfile>
@@ -333,7 +339,7 @@ const UserProfile = () => {
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   editFunction={() => handleEdit(mascota)}
-                  openModal={() => HandleOpenModal(mascota?.id)}
+                  openModal={() => OpenModalMarcarPedida(mascota?.id)}
                 />
               ))
             ) : (
@@ -357,7 +363,8 @@ const UserProfile = () => {
           <WrapperListadoCards>
             {MascotasPerdidasData?.length !== 0 ? (
               MascotasPerdidasData?.map((mascota) => (
-                <CardMascota
+                !mascota?.isRecovered
+                && <CardMascota
                   key={mascota?.id}
                   path={`/detail-pet/loss/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
@@ -371,6 +378,7 @@ const UserProfile = () => {
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   openModalRecuperado={() => handleMascotaRcuperada(mascota?.id)}
+                  isRecovered={mascota?.isRecovered}
                 />
               ))
             ) : (
@@ -386,7 +394,8 @@ const UserProfile = () => {
           <WrapperListadoCards>
             {MascotasRescatadasData?.length !== 0 ? (
               MascotasRescatadasData?.map((mascota) => (
-                <CardMascota
+                !mascota?.isRecovered
+                && <CardMascota
                   key={mascota?.id}
                   path={`/detail-pet/rescues/${mascota?.id}`}
                   nombre={mascota?.pet?.name}
@@ -413,18 +422,18 @@ const UserProfile = () => {
         <WrapperModal>
         <h3>Se perdio tu mascota?</h3>
         <p>Necesitamos un par de datos para poder publicarla</p>
-        <FormDatos>
+        <FormDatos onSubmit={handleSubmit(handleAddLikeLost)}>
           <DatosSolicitados>
-            <label>
+            <LabelMascotaPerdida>
               <p>Teléfono</p>
-              <input type='tel' {...register('publicContact')} />
+              <InputMarcarPedido type='tel' {...register('publicContact')} />
               {errors.publicContact && <p>{errors.publicContact.message}</p>}
-            </label>
-            <label>
+            </LabelMascotaPerdida>
+            <LabelMascotaPerdida>
               <p>Fecha</p>
-              <input type='date' {...register('date')} />
+              <InputMarcarPedido type='date' {...register('date')} />
               {errors.date && <p>{errors.date.message}</p>}
-            </label>
+            </LabelMascotaPerdida>
             <div>
               <p>Fue en...</p>
               {isOpenModal && <MapContainer
@@ -446,7 +455,6 @@ const UserProfile = () => {
             <ButtonComponentShort
               as={'button'}
               texto={'Enviar'}
-              onClick={(e) => handlePet(e)}
               />
           <ButtonComponentShort as={'button'} type={'button'} texto={'Cancelar'} onClick={cerrarModal} />
           </WrapperBotones>

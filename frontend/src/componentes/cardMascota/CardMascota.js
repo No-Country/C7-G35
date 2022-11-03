@@ -81,7 +81,7 @@ const CardMascota = (
     token,
     deleteFunction,
     editFunction,
-    openModal,
+    openModalSePerdio,
     openModalRecuperado,
     openModalReunido,
     isRecovered,
@@ -101,11 +101,10 @@ const CardMascota = (
       {
       token
       && <WrapperButtons>
-        {(isRecovered || !isRecovered)
-        && <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>}
+        {estado === 'pets' && <ActionButton onClick={ deleteFunction }><RiDeleteBin6Fill/></ActionButton>}
         <ActionButton onClick={ editFunction }><RiFileEditFill/></ActionButton>
-        {estado === 'pets' && <ActionButton onClick={ openModal }><FaSearch/></ActionButton>}
-        {(estado === 'loss' && isRecovered) && <ActionButton onClick={ openModalRecuperado }><BsCheckLg/></ActionButton>}
+        {(estado === 'pets' && !isRecovered) && <ActionButton onClick={ openModalSePerdio }><FaSearch/></ActionButton>}
+        {estado === 'loss' && <ActionButton onClick={ openModalRecuperado }><BsCheckLg/></ActionButton>}
         {estado === 'rescues' && <ActionButton onClick={ openModalReunido }><FaHandsHelping/></ActionButton>}
       </WrapperButtons>
       }

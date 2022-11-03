@@ -147,17 +147,20 @@ const UserProfile = () => {
     token,
   );
   const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
+  console.log(MascotasRegistradas);
+
   const MascotasPerdidas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/loss',
     token,
   );
   const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+
   const MascotasRescatadas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/rescues',
     token,
   );
   const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
-  console.log(MascotasRescatadas);
+
   const handleDelete = async (id) => {
     Swal.fire({
       title: 'Estas seguro?',
@@ -339,7 +342,7 @@ const UserProfile = () => {
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   editFunction={() => handleEdit(mascota)}
-                  openModal={() => OpenModalMarcarPedida(mascota?.id)}
+                  openModalSePerdio={() => OpenModalMarcarPedida(mascota?.id)}
                 />
               ))
             ) : (

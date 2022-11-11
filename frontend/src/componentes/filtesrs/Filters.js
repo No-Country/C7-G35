@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import styled from 'styled-components';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { FaFilter } from 'react-icons/fa';
 import {
@@ -19,118 +18,24 @@ import {
   useQueryContext,
 } from '../../providers/QueryProviders';
 import { razasLista } from '../../helpers/ListaRazas';
-
-const MainWrapperVerTodos = styled.div`
-  padding-top: 2rem;
-  align-self: flex-start;
-`;
-const IconoFiltro = styled.button`
-  display: flex;
-  gap: 0.6rem;
-  font-size: 1.5rem;
-  background-color: var(--clr-blue-dark);
-  width: max-content;
-  padding: 1rem;
-  color: #fff;
-  border-radius: 0 7px 7px 0;
-  border: none;
-  cursor: pointer;
-`;
-
-const TextoFiltro = styled.p``;
-
-const ButtonReset = styled.button`
-  background-color: var(--clr-blue-dark);
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  padding: 1rem;
-  width: max-content;
-  height: min-content;
-`;
-
-const MainWrapperFilter = styled.form`
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  @media screen and (min-width: 1200px) {
-    flex-direction: row;
-  }
-`;
-
-const WrapperListFilters = styled.div`
-  display: ${(props) => (props.showFilter ? 'flex' : 'none')};
-  flex-wrap: nowrap;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  @media (min-width: 776px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-`;
-
-const Filtros = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  gap: 1rem;
-  @media (min-width: 776px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  `;
-
-const WrapperInputFilter = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
-  padding-bottom: 1rem;
-  border-radius: 7px;
-  overflow: hidden;
-  &&:nth-child(even) {
-    background-color: var(--clr-grey-medium);
-  }
-`;
-const TitleInput = styled.p`
-  padding: 0.8rem;
-  color: #fff;
-  background-color: var(--clr-blue-dark);
-`;
-const WrapperLabelInput = styled.div`
-  margin-inline: 1rem;
-`;
-const InputCheckeable = styled.input`
-  margin-right: 0.5rem;
-`;
-
-const InputList = styled.input`
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  width: 100%;
-`;
-const LabelInput = styled.label``;
-
-const InputDate = styled.input`
-  font-size: 2rem;
-  padding: 0.5rem;
-`;
-
-const WrapperGenerico = styled.div`
-  border-radius: 7px;
-  overflow: hidden;
-`;
-
-const WrapperMapa = styled.div`
-  width: min(700px, 100%);
-  height: 500px;
-  flex: 1;
-`;
+import {
+  ButtonReset,
+  Filtros,
+  IconoFiltro,
+  InputCheckeable,
+  InputDate,
+  InputList,
+  LabelInput,
+  MainWrapperFilter,
+  MainWrapperVerTodos,
+  TextoFiltro,
+  TitleInput,
+  WrapperGenerico,
+  WrapperInputFilter,
+  WrapperLabelInput,
+  WrapperListFilters,
+  WrapperMapa,
+} from './filters.styled';
 
 const schemaAddLostPet = yup
   .object({

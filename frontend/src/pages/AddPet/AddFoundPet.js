@@ -23,10 +23,8 @@ import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
-  Error,
   InputDate,
   InputTextComponent,
-  MensajeAclaracion,
   RadioButtonIconComponent,
 } from '../../componentes/inputs/Inputs';
 import {
@@ -45,6 +43,7 @@ import {
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
+import { Error, MensajeAclaracion } from '../../componentes/inputs/inputs.styled';
 
 function LocationMarker({ setPos, handleChange }) {
   const [position, setPosition] = useState(null);

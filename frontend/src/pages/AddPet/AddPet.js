@@ -14,9 +14,7 @@ import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
-  Error,
   InputTextComponent,
-  MensajeAclaracion,
   RadioButtonIconComponent,
   TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
@@ -36,6 +34,7 @@ import {
 import { ButtonComponent } from '../../componentes/buttom/Button';
 import { mascotaTamanio } from '../../helpers/Tamaño';
 import { colores } from '../../helpers/Colores';
+import { Error, MensajeAclaracion } from '../../componentes/inputs/inputs.styled';
 
 const WrapperMascotaPerdida = styled.form`
   display: flex;

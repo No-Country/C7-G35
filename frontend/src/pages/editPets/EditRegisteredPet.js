@@ -14,9 +14,7 @@ import {
   CheckboxComponent,
   CheckboxComponente,
   DataListComponent,
-  Error,
   InputTextComponent,
-  MensajeAclaracion,
   RadioButtonIconComponent,
   TextAreaComponent,
 } from '../../componentes/inputs/Inputs';
@@ -40,6 +38,7 @@ import {
   FotoSubida, Mensaje, Resalta, WrapperFoto, WrapperFotoPreview,
 } from '../AddPet/AddPhoto';
 import UploadImg from '../../componentes/uploadImage/UploadImg';
+import { Error, MensajeAclaracion } from '../../componentes/inputs/inputs.styled';
 
 const WrapperMascotaPerdida = styled.form`
   display: flex;

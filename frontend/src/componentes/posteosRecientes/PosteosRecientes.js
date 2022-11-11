@@ -1,43 +1,12 @@
-import styled from 'styled-components';
 import { ButtonComponent } from '../buttom/Button';
 import CardMascota from '../cardMascota/CardMascota';
-
-const WrapperPosteosRecientes = styled.section`
-  margin-bottom: 4rem;
-  display: grid;
-  place-items: center;
-`;
-
-const WrapperTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
-  width: 100%;
-`;
-
-const Line = styled.div`
-  height: 1px;
-  width: 30%;
-  background-color: #000;
-`;
-
-const Title = styled.h2`
-  width: max-content;
-  margin: 0 0.5rem;
-  line-height: 1.5rem;
-  font-family: 'Macondo', cursive;
-  font-size: 1.8rem;
-  text-align: center;
-`;
-
-const GroupCards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 3rem;
-`;
+import {
+  GroupCards,
+  Line,
+  Title,
+  WrapperPosteosRecientes,
+  WrapperTitle,
+} from './posteosRecientes.styled';
 
 const PosteosRecientes = ({
   titulo, datos, estado, pathVerTodos,

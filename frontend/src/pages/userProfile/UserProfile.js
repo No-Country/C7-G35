@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -23,117 +22,27 @@ import {
   ButtonComponentShort,
 } from '../../componentes/buttom/Button';
 import { useFormChangeContext } from '../../providers/FormProviders';
-
-const WrapperUserProfile = styled.div`
-  color: var(--clr-blue-dark);
-`;
-
-const WrapperSaludo = styled.div`
-  background-color: var(--clr-pink);
-  padding: 2rem;
-`;
-
-const Saludo = styled.p`
-  font-size: 2rem;
-`;
-
-const UserName = styled.h2`
-  font-size: 3.5rem;
-`;
-
-const WrapperButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const WrapperTodasLasMascotas = styled.div`
-  padding: 1rem;
-`;
-
-const WapperInfoSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const WrapperMascotasRegistradas = styled.div`
-  margin-bottom: 1.5rem;
-`;
-
-const Titulo = styled.h3`
-  padding-left: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-left: 1rem solid var(--clr-blue-dark);
-  border-radius: 5px;
-`;
-
-const Descripcion = styled.p`
-  margin-left: 0.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--clr-grey-dark);
-`;
-
-const DescripcionSinRegistro = styled.p`
-  padding: 1rem;
-  color: var(--clr-grey-dark);
-  background-color: var(--clr-grey-medium);
-`;
-
-export const WrapperListadoCards = styled.div`
-  padding: 1rem;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Modal = styled.dialog`
-    width: max-content;
-    height: auto;
-    border: none;
-    margin: 2rem auto;
-    box-shadow: rgba(0, 0, 0, .8) 0px 20px 30px -10px;
-    border-radius: 7px;
-    &&::backdrop{
-      background-color: rgba(0, 0, 0, .8);
-    }
-`;
-
-const WrapperModal = styled.div`
-  z-index: 4456;
-  border: none;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-`;
-
-const DatosSolicitados = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-const LabelMascotaPerdida = styled.label`
-  font-weight: bolder;
-`;
-
-const InputMarcarPedido = styled.input`
-    padding: 0.5rem;
-`;
-
-const FormDatos = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-`;
-
-const WrapperBotones = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-`;
+import {
+  DatosSolicitados,
+  Descripcion,
+  DescripcionSinRegistro,
+  FormDatos,
+  InputMarcarPedido,
+  LabelMascotaPerdida,
+  Modal,
+  Saludo,
+  Titulo,
+  UserName,
+  WapperInfoSection,
+  WrapperBotones,
+  WrapperButtons,
+  WrapperListadoCards,
+  WrapperMascotasRegistradas,
+  WrapperModal,
+  WrapperSaludo,
+  WrapperTodasLasMascotas,
+  WrapperUserProfile,
+} from './UserProfile.styled';
 
 const UserProfile = () => {
   const token = JSON.parse(localStorage.getItem('token'));
@@ -142,26 +51,40 @@ const UserProfile = () => {
     token,
   );
 
+  const [mascotaRegistradaData, setMascotaRegistradaData] = useState([]);
   const MascotasRegistradas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/pets',
     token,
   );
-  const MascotasRegistradasData = MascotasRegistradas?.data?.pets;
-  console.log(MascotasRegistradas);
 
+  useEffect(() => {
+    setMascotaRegistradaData(MascotasRegistradas?.data?.pets);
+  }, [MascotasRegistradas]);
+
+  const [mascotasPerdidasData, setMascotasPerdidasData] = useState([]);
   const MascotasPerdidas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/loss',
     token,
   );
-  const MascotasPerdidasData = MascotasPerdidas?.data?.petLoss;
+  useEffect(() => {
+    setMascotasPerdidasData(MascotasPerdidas?.data?.petLoss);
+  }, [MascotasPerdidas]);
+  const mascotasPerdidaNoDevueltas = mascotasPerdidasData?.filter(mascota => !mascota?.isRecovered);
 
-  const MascotasRescatadas = useFetch(
+  const [mascotasRescatadasData, setMascotasRescatadas] = useState([]);
+  const mascotasRescatadas = useFetch(
     'https://pet-spaces-production.up.railway.app/api/rescues',
     token,
   );
-  const MascotasRescatadasData = MascotasRescatadas?.data?.petRescue;
+  useEffect(() => {
+    setMascotasRescatadas(mascotasRescatadas?.data?.petRescue);
+  }, [mascotasRescatadas]);
+  const mascotasEncontradaNoDevuelta = mascotasRescatadasData?.filter(mascota => {
+    return !mascota?.isRecovered;
+  });
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
+    console.log(id);
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esto!',
@@ -171,19 +94,19 @@ const UserProfile = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borrar',
     }).then((result) => {
-      axios.delete(
-        ` https://pet-spaces-production.up.railway.app/api/pets/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
       if (result.isConfirmed) {
-        Swal.fire(
-          'Borrado!',
-          'Ya no veras esta mascota en tu lista.',
-          'success',
+        axios.delete(
+          ` https://pet-spaces-production.up.railway.app/api/pets/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
         );
       }
+      Swal.fire(
+        'Borrado!',
+        'Ya no veras esta mascota en tu lista.',
+        'success',
+      );
     });
   };
 
@@ -224,7 +147,7 @@ const UserProfile = () => {
     reset();
   };
 
-  function LocationMarker({ setPos, handleChange }) {
+  const LocationMarker = ({ setPos, handleChange }) => {
     const [position, setPosition] = useState(null);
 
     const map = useMapEvents({
@@ -246,14 +169,14 @@ const UserProfile = () => {
         <Popup>Fue por aquí!</Popup>
       </Marker>
     );
-  }
+  };
 
-  async function getCity(latitude, longitud) {
+  const getCity = async (latitude, longitud) => {
     const response = await axios.get(
       `https://us1.locationiq.com/v1/reverse.php?key=pk.90e4cbe0aae8a090aeae84bd1a0a9ee3&lat=${latitude}&lon=${longitud}&format=json`,
     );
     setCity(response?.data?.address);
-  }
+  };
 
   const handleChangePoint = (coord) => {
     getCity(coord.lat, coord.lng);
@@ -273,9 +196,8 @@ const UserProfile = () => {
     reset();
   };
 
-  const handleMascotaRcuperada = async (id) => {
-    console.log(id);
-    await Swal.fire({
+  const handleMascotaRcuperada = (id) => {
+    Swal.fire({
       title: 'He recuperado esta mascota',
       text: 'Ya no necesito buscar mas',
       icon: 'success',
@@ -287,14 +209,40 @@ const UserProfile = () => {
       if (result.isConfirmed) {
         axios.put(
           ` https://pet-spaces-production.up.railway.app/api/loss/${id}/recovered`,
+          '',
           { headers: { Authorization: `Bearer ${token}` } },
         );
-        Swal.fire(
-          'Que bueno!!',
-          'Ya no veras esta mascota en tu lista de mascotas perdidas.',
-          'success',
+      }
+      Swal.fire(
+        'Que bueno!!',
+        'Ya no veras esta mascota en tu lista de mascotas perdidas.',
+        'success',
+      );
+    });
+  };
+
+  const handleMascotaReunida = async (id) => {
+    await Swal.fire({
+      title: 'Reuni a esta mascota con su dueño',
+      text: 'Ya no necesito buscar mas',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Dejar de buscar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(
+          ` https://pet-spaces-production.up.railway.app/api/loss/${id}/recovered`,
+          '',
+          { headers: { Authorization: `Bearer ${token}` } },
         );
       }
+      Swal.fire(
+        'Que bueno!!',
+        'Ya no veras esta mascota en tu lista de mascotas encontradas.',
+        'success',
+      );
     });
   };
 
@@ -330,8 +278,8 @@ const UserProfile = () => {
             />
           </WapperInfoSection>
           <WrapperListadoCards>
-            {MascotasRegistradasData?.length !== 0 ? (
-              MascotasRegistradasData?.map((mascota) => (
+            {mascotaRegistradaData?.length !== 0 ? (
+              mascotaRegistradaData?.map((mascota) => (
                 <CardMascota
                   key={mascota?.id}
                   path={`/detail-pet/pets/${mascota?.id}`}
@@ -342,7 +290,7 @@ const UserProfile = () => {
                   token={token}
                   deleteFunction={() => handleDelete(mascota?.id)}
                   editFunction={() => handleEdit(mascota)}
-                  openModalSePerdio={() => OpenModalMarcarPedida(mascota?.id)}
+                  openModalSePerdio={() => OpenModalMarcarPedida(mascota?.pet?.id)}
                 />
               ))
             ) : (
@@ -364,8 +312,8 @@ const UserProfile = () => {
             Aquí verás la mascota marcada &quot;perdida&quot;
           </Descripcion>
           <WrapperListadoCards>
-            {MascotasPerdidasData?.length !== 0 ? (
-              MascotasPerdidasData?.map((mascota) => (
+            {mascotasPerdidaNoDevueltas?.length !== 0 ? (
+              mascotasPerdidaNoDevueltas?.map((mascota) => (
                 !mascota?.isRecovered
                 && <CardMascota
                   key={mascota?.id}
@@ -395,8 +343,8 @@ const UserProfile = () => {
           <Titulo>Mascotas que encontraste</Titulo>
           <Descripcion>Aquí verás la mascota que encontraste;</Descripcion>
           <WrapperListadoCards>
-            {MascotasRescatadasData?.length !== 0 ? (
-              MascotasRescatadasData?.map((mascota) => (
+            {mascotasEncontradaNoDevuelta?.length !== 0 ? (
+              mascotasEncontradaNoDevuelta?.map((mascota) => (
                 !mascota?.isRecovered
                 && <CardMascota
                   key={mascota?.id}
@@ -410,7 +358,7 @@ const UserProfile = () => {
                   fecha={mascota?.date}
                   estado={'rescues'}
                   token={token}
-                  deleteFunction={() => handleDelete(mascota?.id)}
+                  openModalReunido={() => handleMascotaReunida(mascota?.id)}
                 />
               ))
             ) : (

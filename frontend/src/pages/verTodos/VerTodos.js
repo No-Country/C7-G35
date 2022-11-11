@@ -4,10 +4,10 @@ import isEmpty from 'lodash/isEmpty';
 import { useParams } from 'react-router-dom';
 import CardMascota from '../../componentes/cardMascota/CardMascota';
 import useFetch from '../../customHooks/useFetch';
-import { WrapperListadoCards } from '../userProfile/UserProfile';
 import SinFotoMascota from '../../assets/sinFotoMascota.jpg';
 import Filters from '../../componentes/filtesrs/Filters';
 import { useQueryContext } from '../../providers/QueryProviders';
+import { WrapperListadoCards } from '../userProfile/UserProfile.styled';
 
 const MainWrapperVerTodo = styled.div`
   flex: 1;
